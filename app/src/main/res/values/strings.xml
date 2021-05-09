@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MotoRoutes</string>
+    <string name="toolbar_routes">Routes</string>
+    <string name="toolbar_addRoute">Add Route</string>
+    <string name="toolbar_emergency">Emergency</string>
+
 </resources>

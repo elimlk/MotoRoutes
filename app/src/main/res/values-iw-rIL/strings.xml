@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MotoRoutes</string>
+    <string name="toolbar_routes">מסלולים</string>
+    <string name="toolbar_addRoute">הוסף מסלול</string>
+    <string name="toolbar_emergency">חירום</string>
+</resources>
