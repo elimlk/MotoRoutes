@@ -12,15 +12,20 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
+    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -28,12 +33,32 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24);
 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                switch (itemId){
+                    case R.id.item_routes:
+                        Toast.makeText(MainActivity.this,"routes",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.item_addRoute:
+                        Toast.makeText(MainActivity.this,"addRoutes",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.item_emergency:
+                        Toast.makeText(MainActivity.this,"emergency",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                drawerLayout.closeDrawers();
+                return false;
+            }
+        });
+
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            Toast.makeText(this,"Menu open",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Menu open",Toast.LENGTH_SHORT).show();
             drawerLayout.openDrawer(GravityCompat.START);
         }
 
