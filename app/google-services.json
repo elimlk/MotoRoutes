@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "318134791279",
+    "project_id": "motoroutes-9ca81",
+    "storage_bucket": "motoroutes-9ca81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318134791279:android:75369c78769f76b86af19a",
+        "android_client_info": {
+          "package_name": "com.motoroutes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318134791279-ckokm4ttte9tip8fq0l1k6tgm5h9mo19.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.motoroutes",
+            "certificate_hash": "e8b8eebba0d876ef8cb5edb1fa1f6e7fd93607f3"
+          }
+        },
+        {
+          "client_id": "318134791279-hqf4a6n0935ai2j071b2gf21b7ctc3kg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxO38Xj4zqYLbLObyBni4PS9h3U-bBbxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "318134791279-hqf4a6n0935ai2j071b2gf21b7ctc3kg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

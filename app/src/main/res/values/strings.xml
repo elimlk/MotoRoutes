@@ -3,5 +3,11 @@
     <string name="toolbar_routes">Routes</string>
     <string name="toolbar_addRoute">Add Route</string>
     <string name="toolbar_emergency">Emergency</string>
+    <string name="banner_description">Find Your Route In Life</string>
+    <string name="hint_login">Email Address</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="tv_forgot_password">Forgot Password?</string>
+    <string name="tv_register">Register</string>
 
 </resources>

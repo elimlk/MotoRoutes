@@ -1,4 +1,8 @@
-package com.motoroutes;
+package com.motoroutes.view;
+
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -7,31 +11,26 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.MenuItem;
-import android.widget.Toast;
-
 import com.google.android.material.navigation.NavigationView;
+import com.motoroutes.R;
 
 public class MainActivity extends AppCompatActivity {
-
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_navigation);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24);
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -39,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
                 int itemId = item.getItemId();
                 switch (itemId){
                     case R.id.item_routes:
-                        Toast.makeText(MainActivity.this,"routes",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this,"routes",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.item_addRoute:
-                        Toast.makeText(MainActivity.this,"addRoutes",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this,"addRoutes",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.item_emergency:
-                        Toast.makeText(MainActivity.this,"emergency",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this,"emergency",Toast.LENGTH_SHORT).show();
                         break;
                 }
                 drawerLayout.closeDrawers();
@@ -64,4 +63,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
