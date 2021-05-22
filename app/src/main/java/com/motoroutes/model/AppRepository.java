@@ -19,12 +19,20 @@ public class AppRepository {
     private Application application;
     private FirebaseAuth firebaseAuth;
     private MutableLiveData<FirebaseUser> userMutableLiveData;
+    private MutableLiveData<Boolean> loggedOutMutableLiveData;
+
 
     public AppRepository(Application application) {
         this.application = application;
 
         firebaseAuth = FirebaseAuth.getInstance();
         userMutableLiveData = new MutableLiveData<FirebaseUser>();
+        loggedOutMutableLiveData = new MutableLiveData<>();
+
+        if(firebaseAuth.getCurrentUser() != null){
+            userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
+            loggedOutMutableLiveData.postValue(false);
+        }
 
     }
 
@@ -58,6 +66,15 @@ public class AppRepository {
                 }
             }
         });
+    }
+
+    public void logout(){
+        firebaseAuth.signOut();
+        loggedOutMutableLiveData.postValue(true);
+    }
+
+    public MutableLiveData<Boolean> getLoggedOutMutableLiveData() {
+        return loggedOutMutableLiveData;
     }
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
