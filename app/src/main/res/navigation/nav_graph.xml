@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/loginRegisterFragment"
         android:name="com.motoroutes.view.LoginRegisterFragment"
-        android:label="LoginRegisterFragment" />
+        android:label="LoginRegisterFragment" >
+        <action
+            android:id="@+id/action_loginRegisterFragment_to_loggedInFragmemt"
+            app:destination="@id/loggedInFragmemt" />
+    </fragment>
+    <fragment
+        android:id="@+id/loggedInFragmemt"
+        android:name="com.motoroutes.view.LoggedInFragmemt"
+        android:label="LoggedInFragmemt" />
 </navigation>

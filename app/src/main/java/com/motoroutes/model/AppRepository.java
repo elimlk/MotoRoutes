@@ -37,11 +37,27 @@ public class AppRepository {
                             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
                         }
                         else {
-                            Toast.makeText(application,"Registration Failed: " +task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application,"Registration Failed: " +task.getException()
+                                            .getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    public void login(String email, String password){
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
+                }
+                else{
+                    Toast.makeText(application,"Login Failed: " +task.getException()
+                            .getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {

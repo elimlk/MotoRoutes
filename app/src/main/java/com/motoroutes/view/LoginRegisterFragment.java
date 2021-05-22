@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.motoroutes.R;
 import com.motoroutes.viewmodel.LoginRegisterViewModel;
 
@@ -30,9 +34,20 @@ public class LoginRegisterFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //loginRegisterViewModel = ViewModelProviders.of(this).get(LoginRegisterViewModel.class);
         //TODO Might not work SO CHECK IT ELIRAN
         loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
-        //loginRegisterViewModel = ViewModelProviders(this).get(LoginRegisterViewModel.class);
+        loginRegisterViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                if(firebaseUser != null){
+                    Navigation.findNavController(getView())
+                            .navigate(R.id.action_loginRegisterFragment_to_loggedInFragmemt);
+                    //Toast.makeText(getContext(),"User created",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
     }
 
@@ -46,6 +61,26 @@ public class LoginRegisterFragment extends Fragment {
         btnLogin = view.findViewById(R.id.btn_login);
         tvRegister = view.findViewById(R.id.tv_register);
         tvForgotPassword = view.findViewById(R.id.tv_forgot_password);
+
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
+                //TODO Open registration fragment instead
+                loginRegisterViewModel.register(email,password);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
+                //TODO Open registration fragment instead
+                loginRegisterViewModel.login(email,password);
+            }
+        });
 
         return view;
     }
