@@ -2,22 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/loginRegisterFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/loginRegisterFragment"
-        android:name="com.motoroutes.view.LoginRegisterFragment"
+        android:id="@+id/loginFragment"
+        android:name="com.motoroutes.view.LoginFragment"
         android:label="LoginRegisterFragment" >
         <action
-            android:id="@+id/action_loginRegisterFragment_to_loggedInFragmemt"
+            android:id="@+id/action_loginFragment_to_loggedInFragmemt"
             app:destination="@id/loggedInFragmemt" />
     </fragment>
     <fragment
         android:id="@+id/loggedInFragmemt"
-        android:name="com.motoroutes.view.LoggedInFragmemt"
+        android:name="com.motoroutes.view.LoggedInFragment"
         android:label="LoggedInFragmemt" >
         <action
-            android:id="@+id/action_loggedInFragmemt_to_loginRegisterFragment"
-            app:destination="@id/loginRegisterFragment" />
+            android:id="@+id/action_loggedInFragmemt_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 </navigation>

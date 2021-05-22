@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,9 +17,9 @@ import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.motoroutes.R;
-import com.motoroutes.viewmodel.LoginRegisterViewModel;
+import com.motoroutes.viewmodel.LoginViewModel;
 
-public class LoginRegisterFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
     private EditText etEmail;
     private EditText etPassword;
@@ -28,7 +27,7 @@ public class LoginRegisterFragment extends Fragment {
     private TextView tvRegister;
     private TextView tvForgotPassword;
 
-    private LoginRegisterViewModel loginRegisterViewModel;
+    private LoginViewModel loginViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,14 +35,13 @@ public class LoginRegisterFragment extends Fragment {
 
         //loginRegisterViewModel = ViewModelProviders.of(this).get(LoginRegisterViewModel.class);
         //TODO Might not work SO CHECK IT ELIRAN
-        loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
-        loginRegisterViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if(firebaseUser != null){
                     Navigation.findNavController(getView())
-                            .navigate(R.id.action_loginRegisterFragment_to_loggedInFragmemt);
-                    //Toast.makeText(getContext(),"User created",Toast.LENGTH_SHORT).show();
+                            .navigate(R.id.action_loginFragment_to_loggedInFragmemt);
                 }
             }
         });
@@ -54,7 +52,7 @@ public class LoginRegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_loginregister, container,false);
+        View view = inflater.inflate(R.layout.fragment_login, container,false);
 
         etEmail = view.findViewById(R.id.et_email);
         etPassword = view.findViewById(R.id.et_password);
@@ -68,7 +66,7 @@ public class LoginRegisterFragment extends Fragment {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
                 //TODO Open registration fragment instead
-                loginRegisterViewModel.register(email,password);
+                loginViewModel.register(email,password);
             }
         });
 
@@ -78,7 +76,7 @@ public class LoginRegisterFragment extends Fragment {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
                 //TODO Open registration fragment instead
-                loginRegisterViewModel.login(email,password);
+                loginViewModel.login(email,password);
             }
         });
 

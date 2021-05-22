@@ -17,11 +17,10 @@ import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseUser;
 import com.motoroutes.R;
 import com.motoroutes.viewmodel.LoggedInViewModel;
-import com.motoroutes.viewmodel.LoginRegisterViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LoggedInFragmemt extends Fragment {
+public class LoggedInFragment extends Fragment {
 
     private TextView loggedInUserTextView;
     private Button logOutButton;
@@ -46,7 +45,7 @@ public class LoggedInFragmemt extends Fragment {
             @Override
             public void onChanged(Boolean loggedOut) {
                 if(loggedOut){
-                    Navigation.findNavController(getView()).navigate(R.id.action_loggedInFragmemt_to_loginRegisterFragment);
+                    Navigation.findNavController(getView()).navigate(R.id.action_loggedInFragmemt_to_loginFragment);
                 }
             }
         });
@@ -61,7 +60,7 @@ public class LoggedInFragmemt extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.fragment_register, container,false);
+        View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
         loggedInUserTextView = view.findViewById(R.id.fragment_loggedin_loggedInUser);
         logOutButton = view.findViewById(R.id.fragment_loggedin_logOut);
 

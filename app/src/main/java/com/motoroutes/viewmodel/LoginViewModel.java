@@ -11,12 +11,12 @@ import com.motoroutes.model.AppRepository;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LoginRegisterViewModel extends AndroidViewModel {
+public class LoginViewModel extends AndroidViewModel {
 
     private AppRepository appRepository;
     private MutableLiveData<FirebaseUser> userMutableLiveData;
 
-    public LoginRegisterViewModel(@NonNull @NotNull Application application) {
+    public LoginViewModel(@NonNull @NotNull Application application) {
         super(application);
 
         appRepository = new AppRepository(application);
