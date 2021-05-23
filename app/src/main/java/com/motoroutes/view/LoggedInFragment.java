@@ -33,16 +33,11 @@ public class LoggedInFragment extends Fragment {
     private TextView loggedInUserTextView;
     private Button logOutButton;
 
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-
     private LoggedInViewModel loggedInViewModel;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         loggedInViewModel =  new ViewModelProvider(this).get(LoggedInViewModel.class);
         loggedInViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
@@ -65,24 +60,12 @@ public class LoggedInFragment extends Fragment {
 
     }
 
-
-
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
 
-
         View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
-
-        drawerLayout = view.findViewById(R.id.drawer_layout);
-        navigationView = view.findViewById(R.id.nav_view);
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24);
 
         loggedInUserTextView = view.findViewById(R.id.fragment_loggedin_loggedInUser);
         logOutButton = view.findViewById(R.id.fragment_loggedin_logOut);
@@ -94,33 +77,6 @@ public class LoggedInFragment extends Fragment {
             }
         });
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                int itemId = item.getItemId();
-                switch (itemId){
-                    case R.id.item_routes:
-                        Toast.makeText(getContext(),"routes",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.item_addRoute:
-                        Toast.makeText(getContext(),"addRoutes",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.item_emergency:
-                        Toast.makeText(getContext(),"emergency",Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                drawerLayout.closeDrawers();
-                return false;
-            }
-        });
-
-
         return view;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
-
     }
 }
