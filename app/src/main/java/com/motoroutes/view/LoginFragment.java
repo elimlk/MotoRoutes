@@ -2,6 +2,7 @@ package com.motoroutes.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +19,8 @@ import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseUser;
 import com.motoroutes.R;
 import com.motoroutes.viewmodel.LoginViewModel;
+
+import org.jetbrains.annotations.NotNull;
 
 public class LoginFragment extends Fragment {
 
