@@ -33,8 +33,6 @@ public class LoginFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //loginRegisterViewModel = ViewModelProviders.of(this).get(LoginRegisterViewModel.class);
-        //TODO Might not work SO CHECK IT ELIRAN
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         loginViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
@@ -65,7 +63,6 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
-                //TODO Open registration fragment instead
                 loginViewModel.register(email,password);
             }
         });
@@ -75,8 +72,9 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
-                //TODO Open registration fragment instead
-                loginViewModel.login(email,password);
+                if(!email.isEmpty() && !password.isEmpty()) {
+                    loginViewModel.login(email, password);
+                }
             }
         });
 
