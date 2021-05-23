@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            Toast.makeText(this,"Menu open",Toast.LENGTH_LONG).show();
             Toast.makeText(this,"Menu open",Toast.LENGTH_SHORT).show();
             drawerLayout.openDrawer(GravityCompat.START);
         }
