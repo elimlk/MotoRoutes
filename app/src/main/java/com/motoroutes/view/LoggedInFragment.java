@@ -77,7 +77,7 @@ public class LoggedInFragment extends Fragment {
             }
         });
 
-
+        MainActivity.changeToolbarVisibility(true);
         return view;
     }
 }

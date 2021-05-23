@@ -46,8 +46,6 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-
-
     }
 
     @Nullable
@@ -80,6 +78,8 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
+
+        MainActivity.changeToolbarVisibility(false);
 
         return view;
     }
