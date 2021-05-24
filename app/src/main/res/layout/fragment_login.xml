@@ -72,7 +72,7 @@
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
-        style="?attr/materialButtonOutlinedStyle"
+        style="?attr/materialButtonStyle"
         android:text="@string/btn_login"
         android:id="@+id/btn_login"
         />

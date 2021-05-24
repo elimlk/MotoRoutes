@@ -10,5 +10,9 @@
     <string name="tv_forgot_password">Forgot Password?</string>
     <string name="tv_register">Register</string>
     <string name="btn_register">Register</string>
+    <string name="tv_register_capital">REGISTER</string>
+    <string name="signup_login_hint">Already have an account? Sign In</string>
+    <string name="hint_fullName">full name</string>
+    <string name="hint_phoneNumber">Phone number</string>
 
 </resources>
