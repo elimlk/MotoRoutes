@@ -12,7 +12,8 @@
     <string name="btn_register">Register</string>
     <string name="tv_register_capital">REGISTER</string>
     <string name="signup_login_hint">Already have an account? Sign In</string>
-    <string name="hint_fullName">full name</string>
+    <string name="hint_fullName">Full name</string>
     <string name="hint_phoneNumber">Phone number</string>
+    <string name="btn_signUp">Sign Up</string>
 
 </resources>

@@ -62,7 +62,7 @@ public class LoginFragment extends Fragment {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = etEmail.getText().toString();
+                String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString();
                 loginViewModel.register(email,password);
             }
@@ -71,7 +71,7 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = etEmail.getText().toString();
+                String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString();
                 if(!email.isEmpty() && !password.isEmpty()) {
                     loginViewModel.login(email, password);
