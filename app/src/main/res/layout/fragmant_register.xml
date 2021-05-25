@@ -134,7 +134,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_forgot_password"
+            android:id="@+id/tv_register_signIn"
             android:layout_alignParentStart="true"
             android:text="@string/signup_login_hint"
             android:textSize="15sp"

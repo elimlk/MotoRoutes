@@ -29,6 +29,7 @@ public class LoginFragment extends Fragment {
     private Button btnLogin;
     private TextView tvRegister;
     private TextView tvForgotPassword;
+    private TextView tvGuest;
 
     private LoginViewModel loginViewModel;
 
@@ -58,13 +59,14 @@ public class LoginFragment extends Fragment {
         btnLogin = view.findViewById(R.id.btn_login);
         tvRegister = view.findViewById(R.id.tv_register);
         tvForgotPassword = view.findViewById(R.id.tv_forgot_password);
+        tvGuest = view.findViewById(R.id.guest_login);
 
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = etEmail.getText().toString().trim();
-                String password = etPassword.getText().toString();
-                loginViewModel.register(email,password);
+                Navigation.findNavController(getView())
+                        .navigate(R.id.action_loginFragment_to_registerFragment);
+
             }
         });
 

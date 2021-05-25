@@ -63,6 +63,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style parent="viewParent" name="textView">
+        <item name="android:background">@drawable/login_button_bk</item>
+        <item name="android:textColor">@color/whiteTextColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+
     <!--onboarding designs-->
 
 

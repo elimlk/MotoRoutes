@@ -38,7 +38,7 @@ public class AppRepository {
 
     }
 
-    public void register(String email, String password){
+    public void register(String email, String password,String fullName,String phone){
         firebaseAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
                     @Override

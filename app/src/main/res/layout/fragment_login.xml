@@ -130,4 +130,18 @@
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="25dp"
+        android:text="@string/guest_login"
+        android:textSize="15sp"
+        android:layout_alignParentEnd="true"
+        style="bold"
+        android:id="@+id/guest_login"
+        android:layout_centerInParent="true"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
