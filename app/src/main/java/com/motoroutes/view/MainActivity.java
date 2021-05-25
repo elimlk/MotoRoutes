@@ -18,8 +18,9 @@ import com.motoroutes.R;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
+    private static NavigationView navigationView;
     private static Toolbar toolbar;
+    private static NavigationView drawerNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -62,6 +64,17 @@ public class MainActivity extends AppCompatActivity {
             toolbar.setVisibility(View.VISIBLE);
         else
             toolbar.setVisibility(View.GONE);
+    }
+
+    public static void loadGuestMenu(boolean isGuest){
+        if (isGuest){
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.guest_drawer_menu);
+        }else {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.drawer_menu);
+        }
+
     }
 
     @Override

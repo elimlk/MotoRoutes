@@ -73,11 +73,22 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity.loadGuestMenu(false);
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString();
                 if(!email.isEmpty() && !password.isEmpty()) {
                     loginViewModel.login(email, password);
                 }
+            }
+        });
+
+        tvGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.loadGuestMenu(true);
+                Navigation.findNavController(getView())
+                        .navigate(R.id.action_loginFragment_to_loggedInFragmemt);
+
             }
         });
 

@@ -65,8 +65,8 @@ public class LoggedInFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
 
+        View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
         loggedInUserTextView = view.findViewById(R.id.fragment_loggedin_loggedInUser);
         logOutButton = view.findViewById(R.id.fragment_loggedin_logOut);
 

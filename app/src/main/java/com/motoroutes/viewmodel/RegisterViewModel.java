@@ -8,11 +8,12 @@ import com.motoroutes.model.AppRepository;
 import org.jetbrains.annotations.NotNull;
 
 public class RegisterViewModel extends AndroidViewModel {
+
     private AppRepository appRepository;
 
-    public RegisterViewModel(@NonNull @NotNull Application application, AppRepository appRepository) {
+    public RegisterViewModel(@NonNull @NotNull Application application) {
         super(application);
-        this.appRepository = appRepository;
+        appRepository = new AppRepository(application);
     }
 
     public void register(String email, String password,String fullName,String phone){
