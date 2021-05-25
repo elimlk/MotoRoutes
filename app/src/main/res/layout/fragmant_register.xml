@@ -107,7 +107,6 @@
                 android:imeOptions="actionDone"
                 android:layout_margin="20dp"
                 android:ems="10"
-                android:inputType="textPassword"
                 android:id="@+id/et_register_phoneNumber"
                 />
 
