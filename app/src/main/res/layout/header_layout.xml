@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:gravity="bottom"
     android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
@@ -9,7 +9,13 @@
 
     <ImageView android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:src="@drawable/icon_bold"/>
-
-
-</LinearLayout>
+        android:src="@drawable/icon_bold"
+        android:id="@+id/image_header"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello guest"
+        android:layout_below="@id/image_header"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"/>
+</RelativeLayout>

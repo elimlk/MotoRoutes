@@ -16,5 +16,6 @@
     <string name="hint_phoneNumber">Phone number</string>
     <string name="btn_signUp">Sign Up</string>
     <string name="guest_login">Continue as a guest</string>
+    <string name="Registartion_success">Registartion success</string>
 
 </resources>

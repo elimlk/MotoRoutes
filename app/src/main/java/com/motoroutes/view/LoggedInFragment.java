@@ -44,7 +44,8 @@ public class LoggedInFragment extends Fragment {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null){
-                    loggedInUserTextView.setText("Logged In User: "+ firebaseUser.getEmail());
+                    loggedInUserTextView.setText("Logged In User: "+ firebaseUser.getPhoneNumber());
+
                 }
             }
         });
