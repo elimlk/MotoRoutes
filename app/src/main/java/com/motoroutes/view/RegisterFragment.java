@@ -6,14 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.motoroutes.R;
 import com.motoroutes.viewmodel.RegisterViewModel;
 
@@ -28,10 +31,20 @@ public class RegisterFragment extends Fragment {
     EditText etPassword;
     EditText etFullName;
     EditText etPhone;
+    ProgressBar progressBar;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        registerViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                if(firebaseUser != null){
+                    Navigation.findNavController(getView())
+                            .navigate(R.id.action_registerFragment_to_loginFragment);
+                }
+            }
+        });
     }
 
     @Nullable
@@ -45,7 +58,7 @@ public class RegisterFragment extends Fragment {
         etPassword = view.findViewById(R.id.et_register_password);
         etFullName = view.findViewById(R.id.et_register_fullName);
         etPhone = view.findViewById(R.id.et_register_phoneNumber);
-
+        progressBar = view.findViewById(R.id.RagisterPrograssBar);
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,10 +73,12 @@ public class RegisterFragment extends Fragment {
                 String password = etPassword.getText().toString();
                 String fullName = etFullName.getText().toString();
                 String phone = etPhone.getText().toString();
+                progressBar.setVisibility(View.VISIBLE);
                 registerViewModel.register(email,password,fullName,phone);
 
             }
         });
+
         MainActivity.changeToolbarVisibility(false);
         return view;
     }

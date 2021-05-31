@@ -1,11 +1,9 @@
 package com.motoroutes.model;
 
 import android.app.Application;
-import android.os.Build;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,7 +38,12 @@ public class AppRepository {
 
     }
 
-    public void register(String email, String password,String fullName,String phone){
+    public void register(String email, String password, String fullName, String phone){
+        if (email.isEmpty() || password.isEmpty())
+        {
+            Toast.makeText(application,"fill all the fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
         firebaseAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
                     @Override

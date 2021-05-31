@@ -23,7 +23,13 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.motoroutes.R;
+import com.motoroutes.model.User;
 import com.motoroutes.viewmodel.LoggedInViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +50,20 @@ public class LoggedInFragment extends Fragment {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null){
-                    loggedInUserTextView.setText("Logged In User: "+ firebaseUser.getPhoneNumber());
+                    String userID = firebaseUser.getUid();
+                    DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("Users");
+                    firebaseDatabase.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                            User userProfile = snapshot.getValue(User.class);
+                            loggedInUserTextView.setText("Hello "+userProfile.fullname);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                        }
+                    });;
 
                 }
             }

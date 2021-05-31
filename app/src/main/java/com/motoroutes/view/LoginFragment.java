@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class LoginFragment extends Fragment {
     private TextView tvRegister;
     private TextView tvForgotPassword;
     private TextView tvGuest;
+    private ProgressBar progressBar;
 
     private LoginViewModel loginViewModel;
 
@@ -60,7 +62,7 @@ public class LoginFragment extends Fragment {
         tvRegister = view.findViewById(R.id.tv_register);
         tvForgotPassword = view.findViewById(R.id.tv_forgot_password);
         tvGuest = view.findViewById(R.id.guest_login);
-
+        progressBar = view.findViewById(R.id.loginPrograssBar);
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
