@@ -62,8 +62,9 @@ public class RegisterFragment extends Fragment {
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(getView())
-                        .navigate(R.id.action_registerFragment_to_loginFragment);
+                progressBar.setVisibility(View.VISIBLE);
+/*                Navigation.findNavController(getView())
+                        .navigate(R.id.action_registerFragment_to_loginFragment);*/
             }
         });
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +74,6 @@ public class RegisterFragment extends Fragment {
                 String password = etPassword.getText().toString();
                 String fullName = etFullName.getText().toString();
                 String phone = etPhone.getText().toString();
-                progressBar.setVisibility(View.VISIBLE);
                 registerViewModel.register(email,password,fullName,phone);
 
             }

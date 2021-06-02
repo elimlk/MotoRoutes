@@ -17,5 +17,6 @@
     <string name="btn_signUp">Sign Up</string>
     <string name="guest_login">Continue as a guest</string>
     <string name="Registartion_success">Registartion success</string>
+    <string name="toolbar_logout">Logout</string>
 
 </resources>

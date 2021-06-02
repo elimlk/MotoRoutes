@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.motoroutes.R;
 import com.motoroutes.model.User;
 import com.motoroutes.viewmodel.LoggedInViewModel;
+import com.motoroutes.viewmodel.MainActivityViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,12 +41,14 @@ public class LoggedInFragment extends Fragment {
     private Button logOutButton;
 
     private LoggedInViewModel loggedInViewModel;
+    private MainActivityViewModel mainActivityViewModel;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         loggedInViewModel =  new ViewModelProvider(this).get(LoggedInViewModel.class);
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         loggedInViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
@@ -100,4 +103,8 @@ public class LoggedInFragment extends Fragment {
         MainActivity.changeToolbarVisibility(true);
         return view;
     }
+
+
+
+
 }

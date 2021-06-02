@@ -6,6 +6,8 @@
         <item android:title="@string/toolbar_routes" android:icon="@drawable/ic_routes_24" android:checked="true" android:id="@+id/item_routes"/>
         <item android:title="@string/toolbar_addRoute" android:icon="@drawable/ic_baseline_add_circle_24" android:id="@+id/item_addRoute"/>
         <item android:title="@string/toolbar_emergency" android:icon="@drawable/ic_baseline_emergency_24" android:id="@+id/item_emergency"/>
+        <item android:title="@string/toolbar_logout" android:icon="@drawable/ic_baseline_logout_24" android:id="@+id/item_logout"/>
+
     </group>
 
 </menu>
