@@ -14,6 +14,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,6 +68,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+        mainActivityViewModel.getLoggedOutMutableLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loggedOut) {
+                if(loggedOut){
+                    Navigation.findNavController(MainActivity.this,R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_loginFragment);
+                }
+            }
+        });
+
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -79,34 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24);
 
         setNavigationViewListener();
-/*        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                int itemId = item.getItemId();
-                switch (itemId){
-                    case R.id.item_routes:
-                        item.setChecked(true);
-                        Toast.makeText(MainActivity.this,"routes",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.item_addRoute:
-                        item.setChecked(true);
-                        Toast.makeText(MainActivity.this,"addRoutes",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.item_emergency:
-                        item.setChecked(true);
-                        Toast.makeText(MainActivity.this,"emergency",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.item_logout:
-                        item.setChecked(true);
-                        mainActivityViewModel.logOut();
-                        Toast.makeText(MainActivity.this,"logout",Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                //drawerLayout.closeDrawers();
-                return false;
-            }
-        });*/
     }
 
     public static void changeToolbarVisibility(boolean visible){

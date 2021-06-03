@@ -21,6 +21,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,12 +48,49 @@ public class LoggedInFragment extends Fragment {
 
     private LoggedInViewModel loggedInViewModel;
     private MainActivityViewModel mainActivityViewModel;
+    private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
+        /**
+         * Manipulates the map once available.
+         * This callback is triggered when the map is ready to be used.
+         * This is where we can add markers or lines, add listeners or move the camera.
+         * In this case, we just add a marker near Sydney, Australia.
+         * If Google Play services is not installed on the device, the user will be prompted to
+         * install it inside the SupportMapFragment. This method will only be triggered once the
+         * user has installed Google Play services and returned to the app.
+         */
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            LatLng hit_collage = new LatLng(32.015596, 34.77325);
+            googleMap.addMarker(new MarkerOptions().position(hit_collage).title("Marker in Sydney"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(hit_collage));
+        }
+    };
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
+        MainActivity.changeToolbarVisibility(true);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(callback);
+        }
+    }
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loggedInViewModel =  new ViewModelProvider(this).get(LoggedInViewModel.class);
+/*        loggedInViewModel =  new ViewModelProvider(this).get(LoggedInViewModel.class);
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         loggedInViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
@@ -102,9 +145,8 @@ public class LoggedInFragment extends Fragment {
 
         MainActivity.changeToolbarVisibility(true);
         return view;
+    }*/
+
+
     }
-
-
-
-
 }
