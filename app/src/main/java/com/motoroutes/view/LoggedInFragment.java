@@ -1,5 +1,6 @@
 package com.motoroutes.view;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.motoroutes.R;
+import com.motoroutes.model.Route;
 import com.motoroutes.model.User;
 import com.motoroutes.viewmodel.LoggedInViewModel;
 import com.motoroutes.viewmodel.MainActivityViewModel;
@@ -45,9 +48,12 @@ public class LoggedInFragment extends Fragment {
 
     private TextView loggedInUserTextView;
     private Button logOutButton;
-
     private LoggedInViewModel loggedInViewModel;
     private MainActivityViewModel mainActivityViewModel;
+
+    //test Route Class
+    private Route route;
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -61,6 +67,15 @@ public class LoggedInFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            route = new Route("test","test description","center",4.5f,"hard");
+            route.addRoutePoint(new LatLng(32.015596, 34.77325));
+            route.addRoutePoint(new LatLng(32.01505654218039, 34.761792183366666));
+            route.addRoutePoint(new LatLng(32.036756180283724, 34.76017340135148));
+            route.addRoutePoint(new LatLng(32.03760225918485, 34.761066422833));
+            route.addRoutePoint(new LatLng(32.03608821773392, 34.773936438301966));
+            route.addRoutePoint(new LatLng(32.03844833026754, 34.77850660706034));
+            googleMap.addPolyline(route.getPolyRoutes());
+
             LatLng hit_collage = new LatLng(32.015596, 34.77325);
             googleMap.addMarker(new MarkerOptions().position(hit_collage).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(hit_collage));
