@@ -34,4 +34,6 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MutableLiveData<Boolean> getLoggedOutMutableLiveData() {
         return loggedOutMutableLiveData;
     }
+
+
 }

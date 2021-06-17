@@ -14,7 +14,8 @@ public class Route {
     private String area;
     private float rank;
     private String difficulty;
-    private PolylineOptions polyRoutes = new PolylineOptions();
+    private ArrayList<Location> locations;
+    //private PolylineOptions polyRoutes = new PolylineOptions();
 
     public Route() {
     }
@@ -25,24 +26,26 @@ public class Route {
         this.area = area;
         this.rank = rank;
         this.difficulty = difficulty;
-        setPolyOptions("#CC0000FF",10);
+        this.locations = new ArrayList<Location>();
+        //setPolyOptions("#CC0000FF",10);
     }
 
 /*    public void addRoutePoint(LatLng point) {
         routePoints.add(point);
     }*/
 
-    public void addRoutePoint(LatLng point) {
-        polyRoutes.add(point);
+    public void addRoutePoint(Location point) {
+        locations.add(point);
+        //polyRoutes.add(point);
     }
-    public void setPolyOptions(String color, int width){
+/*    public void setPolyOptions(String color, int width){
         polyRoutes.color( Color.parseColor( "#CC0000FF" ) );
         polyRoutes.width( 10 );
         polyRoutes.visible( true );
-    }
+    }*/
 
-    public PolylineOptions getPolyRoutes() {
-        return polyRoutes;
+    public ArrayList<Location> getPointsRoutes() {
+        return locations;
     }
 
     public String getName() {

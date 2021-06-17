@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         @Override
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                             User userProfile = snapshot.getValue(User.class);
-                            tv_userName.setText("Hello "+userProfile.fullname);
+                            //v_userName.setText("Hello "+userProfile.fullname);
                         }
 
                         @Override

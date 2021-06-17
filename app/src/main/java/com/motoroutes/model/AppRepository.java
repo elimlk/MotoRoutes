@@ -22,6 +22,7 @@ public class AppRepository {
     private FirebaseAuth firebaseAuth;
     private MutableLiveData<FirebaseUser> userMutableLiveData;
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
+    private MutableLiveData<Route> routeMutableLiveData;
 
 
     public AppRepository(Application application) {
@@ -30,6 +31,7 @@ public class AppRepository {
         firebaseAuth = FirebaseAuth.getInstance();
         userMutableLiveData = new MutableLiveData<FirebaseUser>();
         loggedOutMutableLiveData = new MutableLiveData<>();
+        routeMutableLiveData = new MutableLiveData<Route>();
 
         if(firebaseAuth.getCurrentUser() != null){
             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
@@ -89,6 +91,23 @@ public class AppRepository {
         });
     }
 
+    public void addRoute(Route route){
+        FirebaseDatabase.getInstance().getReference("Routes").
+                child(FirebaseAuth.getInstance().getCurrentUser().getUid()).
+                setValue(route).addOnCompleteListener(new OnCompleteListener<Void>(){
+            @Override
+            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(application,application.getString(R.string.routeAdded), Toast.LENGTH_SHORT).show();
+                } else {
+                    //display a failure message
+                }
+
+            }
+        });
+
+    }
+
     public void logout(){
         firebaseAuth.signOut();
         loggedOutMutableLiveData.postValue(true);
@@ -100,5 +119,9 @@ public class AppRepository {
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return userMutableLiveData;
+    }
+
+    public MutableLiveData<Route> getRouteMutableLiveData() {
+        return routeMutableLiveData;
     }
 }
