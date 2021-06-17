@@ -19,5 +19,8 @@
     <string name="Registartion_success">Registartion success</string>
     <string name="toolbar_logout">Logout</string>
     <string name="routeAdded">route added successfuly</string>
+    <string name="title_add_route">Add Route</string>
+    <string name="hint_add_route_name">Route name</string>
+    <string name="hint_add_route_description">write something about the route</string>
 
 </resources>

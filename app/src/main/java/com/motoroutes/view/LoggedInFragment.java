@@ -56,7 +56,6 @@ public class LoggedInFragment extends Fragment {
             route.addRoutePoint(new Location(32.03760225918485, 34.761066422833));
             route.addRoutePoint(new Location(32.03608821773392, 34.773936438301966));
             route.addRoutePoint(new Location(32.03844833026754, 34.77850660706034));
-            loggedInViewModel.addRoute(route);
             PolylineOptions polyRoutes = new PolylineOptions();
             for (Location location : route.getPointsRoutes()){
                 LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
