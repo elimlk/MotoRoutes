@@ -14,6 +14,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
@@ -29,6 +31,7 @@ import com.motoroutes.viewmodel.LoggedInViewModel;
 import com.motoroutes.viewmodel.MainActivityViewModel;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -81,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24);
 
         setNavigationViewListener();
+
 
     }
 
@@ -132,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
         int itemId = item.getItemId();
@@ -142,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.item_addRoute:
                 item.setChecked(true);
+                mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_addRoute));
                 Toast.makeText(this,"addRoutes",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_emergency:

@@ -23,6 +23,7 @@ public class AppRepository {
     private MutableLiveData<FirebaseUser> userMutableLiveData;
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private MutableLiveData<Route> routeMutableLiveData;
+    private static MutableLiveData<String> toolBarItemStateMutableLiveData;
 
 
     public AppRepository(Application application) {
@@ -32,7 +33,7 @@ public class AppRepository {
         userMutableLiveData = new MutableLiveData<FirebaseUser>();
         loggedOutMutableLiveData = new MutableLiveData<>();
         routeMutableLiveData = new MutableLiveData<Route>();
-
+        toolBarItemStateMutableLiveData = new MutableLiveData<>();
         if(firebaseAuth.getCurrentUser() != null){
             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
             loggedOutMutableLiveData.postValue(false);
@@ -123,5 +124,11 @@ public class AppRepository {
 
     public MutableLiveData<Route> getRouteMutableLiveData() {
         return routeMutableLiveData;
+    }
+
+    public MutableLiveData<String> getToolBarItemStateMutableLiveData() { return toolBarItemStateMutableLiveData; }
+
+    public void setToolBarItemState(String ItemStateID){
+        toolBarItemStateMutableLiveData.setValue(ItemStateID);
     }
 }

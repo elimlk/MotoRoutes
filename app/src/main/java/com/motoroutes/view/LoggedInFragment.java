@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,13 +31,33 @@ import com.motoroutes.viewmodel.MainActivityViewModel;
 
 public class LoggedInFragment extends Fragment {
 
-    private TextView loggedInUserTextView;
-    private Button logOutButton;
     private LoggedInViewModel loggedInViewModel;
-    private MainActivityViewModel mainActivityViewModel;
-
-    //test Route Class
+    private int toolBarItemState;
     private Route route;
+    Observer<String> toolBarState = new Observer<String>() {
+        @Override
+        public void onChanged(String s) {
+            toolBarItemState = Integer.parseInt(s);
+            switch (toolBarItemState){
+                case R.id.item_routes:
+
+                    break;
+                case R.id.item_addRoute:
+                    CardView cardView = getView().findViewById(R.id.card_addRoute);
+                    if (cardView.getVisibility()==View.VISIBLE)
+                        cardView.setVisibility(View.GONE);
+                    else
+                        cardView.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.item_emergency:
+
+                    break;
+                case R.id.item_logout:
+
+                    break;
+            }
+        }
+    };
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -80,6 +103,7 @@ public class LoggedInFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
         MainActivity.changeToolbarVisibility(true);
+
         return view;
     }
 
@@ -91,6 +115,7 @@ public class LoggedInFragment extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+        loggedInViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
     }
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {

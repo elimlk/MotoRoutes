@@ -18,13 +18,14 @@ public class LoggedInViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private MutableLiveData<Route> routeMutableLiveData;
 
+
     public LoggedInViewModel(@NonNull @NotNull Application application) {
         super(application);
-
         appRepository = new AppRepository(application);
         userMutableLiveData = appRepository.getUserMutableLiveData();
         loggedOutMutableLiveData = appRepository.getLoggedOutMutableLiveData();
         routeMutableLiveData = appRepository.getRouteMutableLiveData();
+
     }
 
     public void logOut(){
@@ -45,5 +46,9 @@ public class LoggedInViewModel extends AndroidViewModel {
 
     public MutableLiveData<Route> getRouteMutableLiveData() {
         return routeMutableLiveData;
+    }
+
+    public MutableLiveData<String> getToolBarItemStateMutableLiveData() {
+        return appRepository.getToolBarItemStateMutableLiveData();
     }
 }

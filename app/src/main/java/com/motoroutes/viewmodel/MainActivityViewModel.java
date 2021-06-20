@@ -16,6 +16,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     private MutableLiveData<FirebaseUser> userMutableLiveData;
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
 
+
     public MainActivityViewModel(@NonNull @NotNull Application application) {
         super(application);
         appRepository = new AppRepository(application);
@@ -35,5 +36,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         return loggedOutMutableLiveData;
     }
 
-
+    public void setToolBarItemState(String itemState) {
+        appRepository.setToolBarItemState(itemState);
+    }
 }
