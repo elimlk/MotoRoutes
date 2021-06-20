@@ -41,6 +41,7 @@ public class LoggedInFragment extends Fragment {
             switch (toolBarItemState){
                 case R.id.item_routes:
 
+
                     break;
                 case R.id.item_addRoute:
                     CardView cardView = getView().findViewById(R.id.card_addRoute);
