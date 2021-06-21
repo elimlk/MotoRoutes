@@ -21,6 +21,9 @@
     <string name="routeAdded">route added successfuly</string>
     <string name="title_add_route">Add Route</string>
     <string name="hint_add_route_name">Route name</string>
-    <string name="hint_add_route_description">write something about the route</string>
+    <string name="hint_add_route_description">Description</string>
+    <string name="btn_addRoute">Add Route</string>
+    <string name="et_filePath">File path</string>
+    <string name="btn_chooseFile">Choose route file</string>
 
 </resources>

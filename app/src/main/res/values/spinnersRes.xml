@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="difficulty">
-        <item>easy</item>
-        <item>normal</item>
-        <item>hard</item>
+        <item>Beginner</item>
+        <item>Advanced</item>
+        <item>Expert</item>
+    </string-array>
+
+    <string-array name="area">
+        <item>Northern District</item>
+        <item>Haifa District</item>
+        <item>Central District</item>
+        <item>Jerusalem District</item>
+        <item>Judea and Samaria Area</item>
+        <item>Southern District</item>
     </string-array>
 </resources>

@@ -15,7 +15,6 @@ public class Route {
     private float rank;
     private String difficulty;
     private ArrayList<Location> locations;
-    //private PolylineOptions polyRoutes = new PolylineOptions();
 
     public Route() {
     }

@@ -5,19 +5,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".view.LoggedInFragment" />
-
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
+            android:paddingTop="30dp"
             app:cardCornerRadius="@dimen/loginCardRadius"
             android:elevation="5dp"
             android:layout_gravity="center"
@@ -29,82 +21,118 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp">
+                        <com.google.android.material.button.MaterialButtonToggleGroup android:layout_height="wrap_content" android:layout_width="wrap_content"
+                            tools:ignore="MissingConstraints"
+                            android:id="@+id/material_toggle_cancel">
+                                <Button android:id="@+id/btn_add_route_cancel"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content"
+                                    app:icon="@drawable/ic_baseline_cancel_24"
+                                    style="@style/Widget.App.Button.IconOnly"/>
+                        </com.google.android.material.button.MaterialButtonToggleGroup>
+
 
                         <EditText
                             android:id="@+id/et_addRoute_name"
-                            android:layout_width="match_parent"
+                            android:layout_width="250dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:paddingVertical="5dp"
+                            android:paddingHorizontal="10dp"
                             android:layout_margin="20dp"
                             android:ems="10"
                             android:hint="@string/hint_add_route_name"
                             android:imeOptions="actionNext"
-                            android:textSize="20sp"
-                            android:textAppearance="?attr/textAppearanceBody2"
-                            android:textColor="?android:attr/textColorSecondary"
+                            android:background="@drawable/green_outline"
+                            android:textSize="15sp"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            tools:ignore="MissingConstraints" />
+                            app:layout_constraintTop_toBottomOf="@id/material_toggle_cancel"
+                            tools:ignore="MissingConstraints"
+                            />
 
                         <EditText
                             android:id="@+id/et_addRoute_description"
-                            android:layout_width="match_parent"
+                            android:layout_width="250dp"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/green_outline"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="5dp"
                             android:layout_margin="20dp"
                             android:ems="10"
                             android:hint="@string/hint_add_route_description"
                             android:imeOptions="actionNext"
-                            android:textSize="20sp"
+                            android:textSize="15sp"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/et_addRoute_name" />
 
                         <Spinner
-                            android:id="@+id/sp_addRoute_difficulty"
-                            android:layout_width="match_parent"
+                            android:id="@+id/sp_addRoute_area"
+                            android:background="@drawable/green_outline"
+                            android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
-                            android:ems="10"
-                            android:prompt="@string/hint_phoneNumber"
                             android:imeOptions="actionNext"
-                            android:textSize="20sp"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            android:theme="@style/AppTheme.Spinner"
+                            android:entries="@array/area"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/et_addRoute_description"
-                            tools:ignore="MissingConstraints" />
+                            app:layout_constraintTop_toBottomOf="@id/et_addRoute_description"/>
 
-                        <EditText
-                            android:id="@+id/et_register_phoneNumber"
-                            android:layout_width="match_parent"
+                        <Spinner
+                            android:id="@+id/sp_addRoute_difficulty"
+                            android:background="@drawable/green_outline"
+                            android:layout_width="200dp"
+                            android:textAlignment="inherit"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
-                            android:ems="10"
-                            android:hint="@string/hint_phoneNumber"
-                            android:imeOptions="actionDone"
-                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:imeOptions="actionNext"
+                            android:textSize="25sp"
+                            android:entries="@array/difficulty"
+                            android:theme="@style/AppTheme.Spinner"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/sp_addRoute_area" />
+
+
+                        <Button
+                            android:id="@+id/btn_add_route_file_picker"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/Light_Green_700"
+                            android:text="@string/btn_chooseFile"
+                            android:layout_margin="20dp"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/sp_addRoute_difficulty" />
 
                         <Button
-                            android:id="@+id/btn_register"
+                            android:id="@+id/btn_add_route_add"
                             style="?attr/materialButtonStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="35dp"
                             android:backgroundTint="@color/Light_Green_700"
-                            android:text="@string/btn_signUp"
+                            android:text="@string/btn_addRoute"
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/et_register_phoneNumber" />
-
+                            app:layout_constraintTop_toBottomOf="@id/btn_add_route_file_picker" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                >
-
         </androidx.cardview.widget.CardView>
+                        <fragment
+                            android:id="@+id/map"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:context=".view.LoggedInFragment"
+                            tools:layout_editor_absoluteX="-66dp"
+                            tools:layout_editor_absoluteY="-177dp" />
 
 
 
