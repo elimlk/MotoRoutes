@@ -21,7 +21,8 @@ public class LoggedInViewModel extends AndroidViewModel {
 
     public LoggedInViewModel(@NonNull @NotNull Application application) {
         super(application);
-        appRepository = new AppRepository(application);
+        appRepository = appRepository = AppRepository.getInstance(application);
+        //appRepository = new AppRepository(application);
         userMutableLiveData = appRepository.getUserMutableLiveData();
         loggedOutMutableLiveData = appRepository.getLoggedOutMutableLiveData();
         routeMutableLiveData = appRepository.getRouteMutableLiveData();

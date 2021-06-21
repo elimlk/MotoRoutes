@@ -18,17 +18,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class AppRepository {
 
+    private static AppRepository appRepository =null;
     private Application application;
     private FirebaseAuth firebaseAuth;
     private MutableLiveData<FirebaseUser> userMutableLiveData;
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private MutableLiveData<Route> routeMutableLiveData;
-    private static MutableLiveData<String> toolBarItemStateMutableLiveData;
+    private MutableLiveData<String> toolBarItemStateMutableLiveData;
 
 
-    public AppRepository(Application application) {
+    private AppRepository(Application application) {
         this.application = application;
-
         firebaseAuth = FirebaseAuth.getInstance();
         userMutableLiveData = new MutableLiveData<FirebaseUser>();
         loggedOutMutableLiveData = new MutableLiveData<>();
@@ -38,6 +38,17 @@ public class AppRepository {
             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
             loggedOutMutableLiveData.postValue(false);
         }
+
+    }
+
+    public static AppRepository getInstance(Application application)
+    {
+        if (appRepository == null){
+            appRepository = new AppRepository(application);
+            return appRepository;
+        }
+        else
+            return appRepository;
 
     }
 

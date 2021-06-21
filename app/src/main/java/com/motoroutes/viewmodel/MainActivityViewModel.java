@@ -19,7 +19,8 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public MainActivityViewModel(@NonNull @NotNull Application application) {
         super(application);
-        appRepository = new AppRepository(application);
+        appRepository = AppRepository.getInstance(application);
+        //appRepository = new AppRepository(application);
         userMutableLiveData = appRepository.getUserMutableLiveData();
         loggedOutMutableLiveData = appRepository.getLoggedOutMutableLiveData();
     }

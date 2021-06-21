@@ -22,8 +22,8 @@
             android:elevation="5dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/Light_Green_50"
-
-            android:id="@+id/card_addRoute">
+            android:id="@+id/card_addRoute"
+            android:visibility="visible">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
@@ -58,13 +58,13 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/et_addRoute_name" />
 
-                        <EditText
-                            android:id="@+id/et_register_fullName"
+                        <Spinner
+                            android:id="@+id/sp_addRoute_difficulty"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
                             android:ems="10"
-                            android:hint="@string/hint_fullName"
+                            android:prompt="@string/hint_phoneNumber"
                             android:imeOptions="actionNext"
                             android:textSize="20sp"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -83,7 +83,7 @@
                             android:textSize="20sp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/et_register_fullName" />
+                            app:layout_constraintTop_toBottomOf="@id/sp_addRoute_difficulty" />
 
                         <Button
                             android:id="@+id/btn_register"

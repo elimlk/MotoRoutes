@@ -18,8 +18,8 @@ public class LoginViewModel extends AndroidViewModel {
 
     public LoginViewModel(@NonNull @NotNull Application application) {
         super(application);
-
-        appRepository = new AppRepository(application);
+        appRepository = AppRepository.getInstance(application);
+        //appRepository = new AppRepository(application);
         userMutableLiveData = appRepository.getUserMutableLiveData();
     }
 
