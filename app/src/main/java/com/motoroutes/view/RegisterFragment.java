@@ -32,6 +32,7 @@ public class RegisterFragment extends Fragment {
     EditText etFullName;
     EditText etPhone;
     ProgressBar progressBar;
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
