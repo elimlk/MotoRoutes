@@ -12,6 +12,8 @@ import com.motoroutes.model.Route;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 public class LoggedInViewModel extends AndroidViewModel {
     private AppRepository appRepository;
     private MutableLiveData<FirebaseUser> userMutableLiveData;
@@ -51,5 +53,8 @@ public class LoggedInViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> getToolBarItemStateMutableLiveData() {
         return appRepository.getToolBarItemStateMutableLiveData();
+    }
+    public ArrayList<Route> readRoutesFromDB(){
+        return appRepository.readRoutesFromDB();
     }
 }

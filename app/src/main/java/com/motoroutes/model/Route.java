@@ -1,12 +1,9 @@
 package com.motoroutes.model;
 
-import android.graphics.Color;
-
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Route {
     private String name;
@@ -14,28 +11,26 @@ public class Route {
     private String area;
     private float rank;
     private String difficulty;
-    private ArrayList<Location> locations;
+    private ArrayList<MyLocation> myLocations;
 
     public Route() {
     }
 
-    public Route(String name,String description, String area, float rank, String difficulty) {
+    public Route(String name, String description, String area, float rank, String difficulty) {
         this.name = name;
         this.description = description;
         this.area = area;
         this.rank = rank;
         this.difficulty = difficulty;
-        this.locations = new ArrayList<Location>();
+        this.myLocations = new ArrayList<MyLocation>();
     }
 
-
-
-    public void addRoutePoint(Location point) {
-        locations.add(point);
+    public void addRoutePoint(MyLocation point) {
+        myLocations.add(point);
     }
 
-    public ArrayList<Location> getPointsRoutes() {
-        return locations;
+    public ArrayList<MyLocation> getPointsRoutes() {
+        return myLocations;
     }
 
     public String getName() {
@@ -50,7 +45,16 @@ public class Route {
         return rank;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public String getDifficulty() {
         return difficulty;
     }
+
+    public void setMyLocations(ArrayList<MyLocation> myLocations) {
+        this.myLocations = myLocations;
+    }
+
 }

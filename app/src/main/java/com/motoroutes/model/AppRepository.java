@@ -11,10 +11,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.motoroutes.R;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class AppRepository {
 
@@ -25,6 +31,8 @@ public class AppRepository {
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private MutableLiveData<Route> routeMutableLiveData;
     private MutableLiveData<String> toolBarItemStateMutableLiveData;
+
+    private ArrayList<Route> routesList;
 
 
     private AppRepository(Application application) {
@@ -41,8 +49,7 @@ public class AppRepository {
 
     }
 
-    public static AppRepository getInstance(Application application)
-    {
+    public static AppRepository getInstance(Application application) {
         if (appRepository == null){
             appRepository = new AppRepository(application);
             return appRepository;
@@ -103,9 +110,15 @@ public class AppRepository {
         });
     }
 
+    public void logout(){
+        firebaseAuth.signOut();
+        userMutableLiveData.setValue(null);
+        loggedOutMutableLiveData.postValue(true);
+    }
+
     public void addRoute(Route route){
         FirebaseDatabase.getInstance().getReference("Routes").
-                child(FirebaseAuth.getInstance().getCurrentUser().getUid()).
+                child(route.getName()).
                 setValue(route).addOnCompleteListener(new OnCompleteListener<Void>(){
             @Override
             public void onComplete(@NonNull @NotNull Task<Void> task) {
@@ -120,9 +133,32 @@ public class AppRepository {
 
     }
 
-    public void logout(){
-        firebaseAuth.signOut();
-        loggedOutMutableLiveData.postValue(true);
+    public ArrayList<Route> readRoutesFromDB(){
+
+        DatabaseReference ref1= FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref2;
+        ref2 = ref1.child("Routes");
+        ref2.get();
+        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                routesList = new ArrayList<Route>();
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    routesList.add((Route) dsp.getValue()); //add result into array list
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        return routesList;
+    }
+
+    public void setToolBarItemState(String ItemStateID){
+        toolBarItemStateMutableLiveData.setValue(ItemStateID);
     }
 
     public MutableLiveData<Boolean> getLoggedOutMutableLiveData() {
@@ -139,7 +175,5 @@ public class AppRepository {
 
     public MutableLiveData<String> getToolBarItemStateMutableLiveData() { return toolBarItemStateMutableLiveData; }
 
-    public void setToolBarItemState(String ItemStateID){
-        toolBarItemStateMutableLiveData.setValue(ItemStateID);
-    }
+
 }
