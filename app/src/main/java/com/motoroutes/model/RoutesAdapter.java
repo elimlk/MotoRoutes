@@ -30,7 +30,7 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
     @NotNull
     @Override
     public RoutesViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.route_cell, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.route_cell,parent,false);
         return new RoutesViewHolder(v);
     }
 
@@ -59,10 +59,11 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
         public RoutesViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
-            //TODO intialize
-            //tv_name = itemView.findViewById(R.id....)
-            //...
-            //...
+            tv_name = itemView.findViewById(R.id.routes_list_cell_name);
+            tv_description = itemView.findViewById(R.id.routes_list_cell_description);
+            tv_difficulty = itemView.findViewById(R.id.routes_list_cell_difficulty);
+            tv_area = itemView.findViewById(R.id.routes_list_cell_area);
+
         }
     }
 }
