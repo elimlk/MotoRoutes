@@ -8,6 +8,7 @@
     <dimen name="loginViewsMargin">20dp</dimen>
     <dimen name="signup_text_margin_top">10dp</dimen>
     <dimen name="button_round_radius">8dp</dimen>
+    <dimen name="corner_radius">125dp</dimen>
 
 
 </resources>
