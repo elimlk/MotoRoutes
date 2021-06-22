@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_loggedInFragmemt_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_loggedInFragmemt_to_routesListFragment"
+            app:destination="@id/routesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -31,4 +34,8 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/routesListFragment"
+        android:name="com.motoroutes.view.RoutesListFragment"
+        android:label="RoutesListFragment" />
 </navigation>
