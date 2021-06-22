@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <RelativeLayout android:layout_height="match_parent"
+            android:layout_width="match_parent">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/routes_list_cell_image"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                app:srcCompat="@drawable/ic_routes_24"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/routes_list_cell_name"
+                android:text="Route Name"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:layout_alignParentLeft="true" />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/routes_list_cell_description"
+                android:text="Route description"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="15sp"
+                android:layout_below="@id/routes_list_cell_name"
+                android:layout_alignParentLeft="true" />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/routes_list_cell_area"
+                android:text="Area"
+                android:layout_marginRight="10dp"
+                android:layout_alignBaseline="@id/routes_list_cell_name"
+                android:layout_toLeftOf="@id/routes_list_cell_image"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/routes_list_cell_difficulty"
+                android:text="Difficulty"
+                android:layout_marginRight="10dp"
+                android:layout_alignBaseline="@id/routes_list_cell_description"
+                android:layout_toLeftOf="@id/routes_list_cell_image"
+                />
+        </RelativeLayout>>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
