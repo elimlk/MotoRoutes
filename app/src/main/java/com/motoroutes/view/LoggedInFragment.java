@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,10 +33,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.motoroutes.R;
 import com.motoroutes.model.FileUtils;
-import com.motoroutes.model.MyLocation;
 import com.motoroutes.model.Route;
 import com.motoroutes.model.RouteBuilder;
 import com.motoroutes.viewmodel.LoggedInViewModel;
@@ -54,13 +51,16 @@ public class LoggedInFragment extends Fragment {
     private String route_area;
     private Route route;
     private String gpxPath;
+    private String imagePath;
     private CardView cardView_add_route;
     private RouteBuilder routeBuilder = new RouteBuilder();
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
+    private static final int MY_RESULT_CODE_IMAGECHOOSER = 3000;
     private static final String LOG_TAG = "LoggedInFragment";
 
-    private Button buttonBrowse;
+    private Button buttonRouteBrowse;
+    private Button buttonImageBrowse;
 
 
     Observer<String> toolBarState = new Observer<String>() {
@@ -119,11 +119,19 @@ public class LoggedInFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
         MainActivity.changeToolbarVisibility(true);
-        buttonBrowse = view.findViewById(R.id.btn_add_route_file_picker);
-        buttonBrowse.setOnClickListener(new View.OnClickListener() {
+        buttonRouteBrowse = view.findViewById(R.id.btn_add_route_file_picker);
+        buttonRouteBrowse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                askPermissionAndBrowseFile();
+                askPermissionAndBrowseFile(MY_RESULT_CODE_FILECHOOSER);
+            }
+        });
+
+        buttonImageBrowse = view.findViewById(R.id.btn_add_route_image_picker);
+        buttonImageBrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                askPermissionAndBrowseFile(MY_RESULT_CODE_IMAGECHOOSER);
             }
         });
         return view;
@@ -209,7 +217,7 @@ public class LoggedInFragment extends Fragment {
 
     }
 
-    private void askPermissionAndBrowseFile() {
+    private void askPermissionAndBrowseFile(int requestCode) {
         // With Android Level >= 23, you have to ask the user
         // for permission to access External Storage.
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) { // Level 23
@@ -221,9 +229,7 @@ public class LoggedInFragment extends Fragment {
             if (permisson != PackageManager.PERMISSION_GRANTED) {
                 // If don't have permission so prompt the user.
                 this.requestPermissions(
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        MY_REQUEST_CODE_PERMISSION
-                );
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
                 return;
             }
         }
@@ -286,6 +292,23 @@ public class LoggedInFragment extends Fragment {
                     }
                 }
                 break;
+            case MY_RESULT_CODE_IMAGECHOOSER:
+                if (resultCode == Activity.RESULT_OK ) {
+                    if(data != null)  {
+                        Uri fileUri = data.getData();
+                        Log.i(LOG_TAG, "Uri: " + fileUri);
+
+                        String filePath = null;
+                        try {
+                            filePath = FileUtils.getPath(this.getContext(),fileUri);
+                        } catch (Exception e) {
+                            Log.e(LOG_TAG,"Error: " + e);
+                            Toast.makeText(this.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
+                        }
+                        imagePath = (filePath);
+                    }
+                }
+                break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -294,4 +317,5 @@ public class LoggedInFragment extends Fragment {
         return gpxPath;
     }
 
+    public String getImagePath() { return imagePath; }
 }
