@@ -48,7 +48,6 @@ import com.motoroutes.viewmodel.LoggedInViewModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.FileNotFoundException;
-import java.net.URI;
 
 public class LoggedInFragment extends Fragment {
 
@@ -59,6 +58,8 @@ public class LoggedInFragment extends Fragment {
     private Route route;
     private String gpxPath;
     private Uri imageUri;
+    private int resultCode_global;
+
     private CardView cardView_add_route;
     private RouteBuilder routeBuilder = new RouteBuilder();
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
@@ -109,7 +110,7 @@ public class LoggedInFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             if (route != null)
-                googleMap.addPolyline(routeBuilder.createPolygon(route.getPointsRoutes()));
+                googleMap.addPolyline(routeBuilder.createPolygon(route.getMyLocations()));
             LatLng hit_collage = new LatLng(32.015596, 34.77325);
             googleMap.addMarker(new MarkerOptions().position(hit_collage).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(hit_collage));
@@ -203,30 +204,16 @@ public class LoggedInFragment extends Fragment {
                 route = new Route(routeName,routeDescription,route_area,0f,route_difficulty);
                 try {
                     route.setMyLocations(routeBuilder.parseGpxToArray(getGPXPath()));
-                    loggedInViewModel.addRoute(route);
+                    setImageOnDBAndSetUrl();
                     SupportMapFragment mapFragment =
                             (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                     mapFragment.getMapAsync(callback);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                if (imageUri != null){
-                    StorageReference fileRef = FirebaseStorage.getInstance().getReference().
-                            child("uploads").child(System.currentTimeMillis()+"."+ getFileExtension(imageUri));
-                    fileRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) {
-                            fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    route.setImageUrl(uri.toString());
-                                }
-                            });
-                        }
-                    });
-                }
                 et_routeName.getText().clear();
                 et_description.getText().clear();
+                imageUri=null;
 
             }
         });
@@ -242,7 +229,7 @@ public class LoggedInFragment extends Fragment {
 
     }
 
-    private void askPermissionAndBrowseFile(int requestCode) {
+    private void askPermissionAndBrowseFile(int resultCode) {
         // With Android Level >= 23, you have to ask the user
         // for permission to access External Storage.
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) { // Level 23
@@ -254,21 +241,22 @@ public class LoggedInFragment extends Fragment {
             if (permisson != PackageManager.PERMISSION_GRANTED) {
                 // If don't have permission so prompt the user.
                 this.requestPermissions(
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, resultCode);
                 return;
             }
         }
-        this.doBrowseFile();
+        this.doBrowseFile(resultCode);
     }
 
-    private void doBrowseFile() {
+    private void doBrowseFile(int resultCode) {
         Intent chooseFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
         chooseFileIntent.setType("*/*");
         // Only return URIs that can be opened with ContentResolver
         chooseFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
 
         chooseFileIntent = Intent.createChooser(chooseFileIntent, "Choose a file");
-        startActivityForResult(chooseFileIntent, MY_RESULT_CODE_FILECHOOSER);
+        startActivityForResult(chooseFileIntent, resultCode);
+        resultCode_global = resultCode;
     }
 
     @Override
@@ -285,7 +273,7 @@ public class LoggedInFragment extends Fragment {
                     Log.i( LOG_TAG,"Permission granted!");
                     Toast.makeText(this.getContext(), "Permission granted!", Toast.LENGTH_SHORT).show();
 
-                    this.doBrowseFile();
+                    this.doBrowseFile(resultCode_global);
                 }
                 // Cancelled or denied.
                 else {
@@ -304,13 +292,10 @@ public class LoggedInFragment extends Fragment {
                 if (resultCode == Activity.RESULT_OK ) {
                     if(data != null)  {
                         Uri fileUri = data.getData();
-                        Log.i(LOG_TAG, "Uri: " + fileUri);
-
                         String filePath = null;
                         try {
                             filePath = FileUtils.getPath(this.getContext(),fileUri);
                         } catch (Exception e) {
-                            Log.e(LOG_TAG,"Error: " + e);
                             Toast.makeText(this.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
                         }
                         gpxPath = (filePath);
@@ -321,13 +306,10 @@ public class LoggedInFragment extends Fragment {
                 if (resultCode == Activity.RESULT_OK ) {
                     if(data != null)  {
                         Uri fileUri = data.getData();
-                        Log.i(LOG_TAG, "Uri: " + fileUri);
-
                         String filePath = null;
                         try {
                             filePath = FileUtils.getPath(this.getContext(),fileUri);
                         } catch (Exception e) {
-                            Log.e(LOG_TAG,"Error: " + e);
                             Toast.makeText(this.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
                         }
                         imageUri = (fileUri);
@@ -340,6 +322,25 @@ public class LoggedInFragment extends Fragment {
 
     public String getGPXPath()  {
         return gpxPath;
+    }
+
+    public void setImageOnDBAndSetUrl(){
+        StorageReference fileRef = FirebaseStorage.getInstance().getReference().
+                child("ImageUploads").child(System.currentTimeMillis()+"."+ getFileExtension(imageUri));
+        fileRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) {
+                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                     @Override
+                     public void onSuccess(Uri uri) {
+                         route.setImageUrl(uri.toString());
+                         loggedInViewModel.addRoute(route);
+                         Log.i("route url","set image url");
+
+                     }
+                 });
+            }
+        });
     }
 
     private String getFileExtension(Uri imageUri) {

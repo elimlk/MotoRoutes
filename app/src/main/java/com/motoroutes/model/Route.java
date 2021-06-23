@@ -23,16 +23,10 @@ public class Route {
         this.area = area;
         this.rank = rank;
         this.difficulty = difficulty;
+        this.imageUrl = null;
         this.myLocations = new ArrayList<MyLocation>();
     }
 
-    public void addRoutePoint(MyLocation point) {
-        myLocations.add(point);
-    }
-
-    public ArrayList<MyLocation> getPointsRoutes() {
-        return myLocations;
-    }
 
     public String getName() {
         return name;
