@@ -88,6 +88,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MainActivity.loadGuestMenu(true);
+                loginViewModel.login("geust","geust");
                 Navigation.findNavController(getView())
                         .navigate(R.id.action_loginFragment_to_loggedInFragmemt);
 

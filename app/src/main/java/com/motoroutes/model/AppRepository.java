@@ -102,6 +102,7 @@ public class AppRepository {
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
+                    loggedOutMutableLiveData.postValue(false);
                 }
                 else{
                     Toast.makeText(application,"Login Failed: " +task.getException()
@@ -109,6 +110,8 @@ public class AppRepository {
                 }
             }
         });
+        if (email == "geust" && password == "geust")
+            loggedOutMutableLiveData.postValue(false);
     }
 
     public void logout(){

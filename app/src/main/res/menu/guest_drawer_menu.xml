@@ -3,6 +3,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+        <item android:title="@string/toolbar_home" android:icon="@drawable/ic_baseline_map_24" android:checked="true" android:id="@+id/item_map"/>
         <item android:title="@string/toolbar_routes" android:icon="@drawable/ic_routes_24" android:checked="true" android:id="@+id/item_routes"/>
         <item android:title="@string/toolbar_emergency" android:icon="@drawable/ic_baseline_emergency_24" android:id="@+id/item_emergency"/>
     </group>
