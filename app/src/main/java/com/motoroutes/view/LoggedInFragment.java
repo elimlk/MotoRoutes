@@ -2,6 +2,7 @@ package com.motoroutes.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -59,6 +61,7 @@ public class LoggedInFragment extends Fragment {
     private static final String LOG_TAG = "LoggedInFragment";
 
     private Button buttonBrowse;
+
 
     Observer<String> toolBarState = new Observer<String>() {
         @Override
@@ -107,7 +110,6 @@ public class LoggedInFragment extends Fragment {
         }
 
     };
-
 
 
     @Nullable
@@ -198,6 +200,7 @@ public class LoggedInFragment extends Fragment {
             }
         });
     }
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

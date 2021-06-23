@@ -123,16 +123,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-/*        int count = getSupportFragmentManager().getBackStackEntryCount();
-
-        if (count == 0) {
-            super.onBackPressed();
-        } else {
-            getSupportFragmentManager().popBackStack();
-        }*/
-    }
+//    @Override
+//    public void onBackPressed() {
+//       int count = getSupportFragmentManager().getBackStackEntryCount();
+//
+//        if (count == 0) {
+//            super.onBackPressed();
+//        } else {
+//            getSupportFragmentManager().popBackStack();
+//        }
+//    }
 
 
 
