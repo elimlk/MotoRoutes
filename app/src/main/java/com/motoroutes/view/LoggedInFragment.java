@@ -91,6 +91,7 @@ public class LoggedInFragment extends Fragment {
                     break;
                 case R.id.item_logout:
                     loggedInViewModel.logOut();
+                    Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_loginFragment);
                     break;
                 case R.id.item_map:
 
