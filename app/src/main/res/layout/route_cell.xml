@@ -13,9 +13,10 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/routes_list_cell_image"
                 android:layout_width="80dp"
-                android:layout_height="60dp"
+                android:layout_height="80dp"
                 android:padding="5dp"
                 android:layout_margin="5dp"
+                app:shapeAppearanceOverlay="@style/circleImageView"
                 app:srcCompat="@drawable/ic_routes_24"
                 />
 
