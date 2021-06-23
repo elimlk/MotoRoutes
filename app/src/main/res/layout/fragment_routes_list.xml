@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-   <ImageView android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+   <com.google.android.material.imageview.ShapeableImageView
+       android:layout_width="match_parent"
+       android:layout_height="210dp"
+       android:layout_margin="10dp"
        android:id="@+id/iv_routes_lists_header"
-       android:src="@drawable/icon_bold"
+       android:src="@drawable/routes_header"
+       android:scaleType="centerCrop"
+       app:shapeAppearanceOverlay="@style/headerImageView"
        tools:ignore="MissingConstraints"/>
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
