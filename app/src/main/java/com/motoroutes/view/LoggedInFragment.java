@@ -2,6 +2,7 @@ package com.motoroutes.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.motoroutes.R;
 import com.motoroutes.model.FileUtils;
 import com.motoroutes.model.Route;
@@ -40,6 +48,7 @@ import com.motoroutes.viewmodel.LoggedInViewModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.FileNotFoundException;
+import java.net.URI;
 
 public class LoggedInFragment extends Fragment {
 
@@ -49,7 +58,7 @@ public class LoggedInFragment extends Fragment {
     private String route_area;
     private Route route;
     private String gpxPath;
-    private String imagePath;
+    private Uri imageUri;
     private CardView cardView_add_route;
     private RouteBuilder routeBuilder = new RouteBuilder();
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
@@ -193,7 +202,7 @@ public class LoggedInFragment extends Fragment {
                 String routeDescription = et_description.getText().toString();
                 route = new Route(routeName,routeDescription,route_area,0f,route_difficulty);
                 try {
-                    route.setMyLocations(routeBuilder.parseGpxToArray(getPath()));
+                    route.setMyLocations(routeBuilder.parseGpxToArray(getGPXPath()));
                     loggedInViewModel.addRoute(route);
                     SupportMapFragment mapFragment =
                             (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -201,11 +210,30 @@ public class LoggedInFragment extends Fragment {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                if (imageUri != null){
+                    StorageReference fileRef = FirebaseStorage.getInstance().getReference().
+                            child("uploads").child(System.currentTimeMillis()+"."+ getFileExtension(imageUri));
+                    fileRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) {
+                            fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    route.setImageUrl(uri.toString());
+                                }
+                            });
+                        }
+                    });
+                }
                 et_routeName.getText().clear();
                 et_description.getText().clear();
+
             }
         });
     }
+
+
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -302,7 +330,7 @@ public class LoggedInFragment extends Fragment {
                             Log.e(LOG_TAG,"Error: " + e);
                             Toast.makeText(this.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
                         }
-                        imagePath = (filePath);
+                        imageUri = (fileUri);
                     }
                 }
                 break;
@@ -310,9 +338,13 @@ public class LoggedInFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public String getPath()  {
+    public String getGPXPath()  {
         return gpxPath;
     }
 
-    public String getImagePath() { return imagePath; }
+    private String getFileExtension(Uri imageUri) {
+        ContentResolver contentResolver = getContext().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(imageUri));
+    }
 }

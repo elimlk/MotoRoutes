@@ -11,6 +11,7 @@ public class Route {
     private String area;
     private float rank;
     private String difficulty;
+    private String imageUrl;
     private ArrayList<MyLocation> myLocations;
 
     public Route() {
@@ -56,8 +57,15 @@ public class Route {
     public void setMyLocations(ArrayList<MyLocation> myLocations) {
         this.myLocations = myLocations;
     }
-
     public ArrayList<MyLocation> getMyLocations() {
         return myLocations;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
