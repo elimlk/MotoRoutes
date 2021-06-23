@@ -2,6 +2,7 @@ package com.motoroutes.model;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.motoroutes.R;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,10 @@ public class Route {
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        if (imageUrl!=null)
+            return imageUrl;
+        else
+            return null;
     }
 
     public void setImageUrl(String imageUrl) {

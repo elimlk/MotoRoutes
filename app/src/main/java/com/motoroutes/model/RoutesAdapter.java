@@ -1,6 +1,7 @@
 package com.motoroutes.model;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.motoroutes.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,8 +43,14 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
         holder.tv_area.setText(route.getArea());
         holder.tv_description.setText(route.getDescription());
         holder.tv_difficulty.setText(route.getDifficulty());
-        //TODO set image
-        //holder.iv_route_pic
+        String imageUrl = route.getImageUrl();
+        if(imageUrl!=null) {
+            Glide.with(context).load(imageUrl).into(holder.iv_route_pic);
+            holder.iv_route_pic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+        else
+            Glide.with(context).load(getURLForResource(R.drawable.default_route_image))
+                    .into(holder.iv_route_pic);
 
     }
 
@@ -63,7 +71,14 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
             tv_description = itemView.findViewById(R.id.routes_list_cell_description);
             tv_difficulty = itemView.findViewById(R.id.routes_list_cell_difficulty);
             tv_area = itemView.findViewById(R.id.routes_list_cell_area);
+            iv_route_pic = itemView.findViewById(R.id.routes_list_cell_image);
 
         }
+    }
+
+
+    public String getURLForResource (int resourceId) {
+        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
+        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
     }
 }

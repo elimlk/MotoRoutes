@@ -204,7 +204,10 @@ public class LoggedInFragment extends Fragment {
                 route = new Route(routeName,routeDescription,route_area,0f,route_difficulty);
                 try {
                     route.setMyLocations(routeBuilder.parseGpxToArray(getGPXPath()));
-                    setImageOnDBAndSetUrl();
+                    if(imageUri!=null)
+                        setImageOnDBAndSetUrl();
+                    else
+                        loggedInViewModel.addRoute(route);
                     SupportMapFragment mapFragment =
                             (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                     mapFragment.getMapAsync(callback);
@@ -342,7 +345,7 @@ public class LoggedInFragment extends Fragment {
             }
         });
     }
-
+    //get image details to name saving on firebase.
     private String getFileExtension(Uri imageUri) {
         ContentResolver contentResolver = getContext().getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
