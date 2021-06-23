@@ -90,6 +90,10 @@ public class LoggedInFragment extends Fragment {
 
                     break;
                 case R.id.item_logout:
+                    loggedInViewModel.logOut();
+                    break;
+                case R.id.item_map:
+
 
                     break;
             }

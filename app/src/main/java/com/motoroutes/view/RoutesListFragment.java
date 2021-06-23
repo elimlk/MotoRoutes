@@ -7,9 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,10 +28,38 @@ import java.util.ArrayList;
 public class RoutesListFragment extends Fragment {
 
     private RoutesListViewModel routesListViewModel;
+    private int toolBarItemState;
 
     RecyclerView recyclerView;
     ArrayList<Route> routesList;
     RoutesAdapter routesAdapter;
+
+    Observer<String> toolBarState = new Observer<String>() {
+        @Override
+        public void onChanged(String s) {
+            toolBarItemState = Integer.parseInt(s);
+            switch (toolBarItemState){
+                case R.id.item_routes:
+                    //Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_routesListFragment);
+                    break;
+                case R.id.item_addRoute:
+                    Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_routesListFragment_to_loggedInFragmemt);
+                    break;
+                case R.id.item_emergency:
+
+                    break;
+                case R.id.item_logout:
+                    routesListViewModel.logOut();
+                    Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_routesListFragment_to_loginFragment);
+                    break;
+                case R.id.item_map:
+                    Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_routesListFragment_to_loggedInFragmemt);
+
+
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -75,6 +106,7 @@ public class RoutesListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        routesListViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
 
     }
 

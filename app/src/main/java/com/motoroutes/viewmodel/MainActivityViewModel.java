@@ -20,7 +20,6 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MainActivityViewModel(@NonNull @NotNull Application application) {
         super(application);
         appRepository = AppRepository.getInstance(application);
-        //appRepository = new AppRepository(application);
         userMutableLiveData = appRepository.getUserMutableLiveData();
         loggedOutMutableLiveData = appRepository.getLoggedOutMutableLiveData();
     }
@@ -40,7 +39,9 @@ public class MainActivityViewModel extends AndroidViewModel {
     public void setToolBarItemState(String itemState) {
         appRepository.setToolBarItemState(itemState);
     }
-
+    public MutableLiveData<String> getToolBarItemStateMutableLiveData() {
+        return appRepository.getToolBarItemStateMutableLiveData();
+    }
     public void getRoutesFromDB() {
         appRepository.updateRoutesFromDB();
     }

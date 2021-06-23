@@ -4,4 +4,5 @@
     <string name="toolbar_routes">מסלולים</string>
     <string name="toolbar_addRoute">הוסף מסלול</string>
     <string name="toolbar_emergency">חירום</string>
+    <string name="toolbar_home">מפה</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.motoroutes.model.AppRepository;
 import com.motoroutes.model.Route;
@@ -23,7 +24,16 @@ public class RoutesListViewModel extends AndroidViewModel {
         appRepository = AppRepository.getInstance(application);
     }
 
+    public LiveData<String> getToolBarItemStateMutableLiveData() {
+        return appRepository.getToolBarItemStateMutableLiveData();
+    }
+
     public ArrayList<Route> getRoutes() {
         return (appRepository.getRoutes());
+    }
+
+
+    public void logOut() {
+        appRepository.logout();
     }
 }

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
@@ -74,8 +75,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mainActivityViewModel.getLoggedOutMutableLiveData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean loggedOut) {
-                if(loggedOut){
-                    Navigation.findNavController(MainActivity.this,R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_loginFragment);
+                if (loggedOut){
+                    int toolBarItemState = Integer.parseInt(mainActivityViewModel.getToolBarItemStateMutableLiveData().getValue());
+                    switch (toolBarItemState){
+                        case R.id.item_routes:
+                            Navigation.findNavController(MainActivity.this,R.id.activity_main_navHostFragment).navigate(R.id.action_routesListFragment_to_loginFragment);
+                            break;
+                        case R.id.item_addRoute:
+                            Navigation.findNavController(MainActivity.this,R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_loginFragment);
+                            break;
+                        case R.id.item_emergency:
+                            Navigation.findNavController(MainActivity.this,R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_loginFragment);
+                            break;
+                        case R.id.item_logout:
+                            break;
+                        case R.id.item_map:
+                            Navigation.findNavController(MainActivity.this,R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_loginFragment);
+                            break;
+                    }
                 }
             }
         });
@@ -156,8 +173,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.item_logout:
                 item.setChecked(true);
-                mainActivityViewModel.logOut();
+                //mainActivityViewModel.logOut();
+                mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_logout));
                 Toast.makeText(this,"logout",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item_map:
+                item.setChecked(true);
+                mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_map));
+                Toast.makeText(this,"map",Toast.LENGTH_SHORT).show();
                 break;
         }
         drawerLayout.closeDrawers();
