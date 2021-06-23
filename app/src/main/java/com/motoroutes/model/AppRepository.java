@@ -4,6 +4,7 @@ import android.app.Application;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -124,6 +125,7 @@ public class AppRepository {
             public void onComplete(@NonNull @NotNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(application,application.getString(R.string.routeAdded), Toast.LENGTH_SHORT).show();
+
                 } else {
                     //display a failure message
                 }
@@ -134,6 +136,7 @@ public class AppRepository {
     }
 
     public ArrayList<Route> getRoutes(){
+        updateRoutesFromDB();
         return routesList;
     }
 
@@ -147,6 +150,8 @@ public class AppRepository {
                 }
                 else {
                     //Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    if (routesList != null)
+                        routesList.clear();
                     for (DataSnapshot child : task.getResult().getChildren()) {
                         Route route = child.getValue(Route.class);
                         routesList.add(route);

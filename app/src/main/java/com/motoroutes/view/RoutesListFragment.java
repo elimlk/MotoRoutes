@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,6 +48,22 @@ public class RoutesListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         routesList = routesListViewModel.getRoutes();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                routesList = routesListViewModel.getRoutes();
+            }});
+
+        t.start(); // spawn thread
+
+        try {
+            t.join();  // wait for thread to finish
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
         routesAdapter = new RoutesAdapter(this.getContext(), routesList);
         recyclerView.setAdapter(routesAdapter);
 
@@ -58,5 +75,7 @@ public class RoutesListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
+
 }
