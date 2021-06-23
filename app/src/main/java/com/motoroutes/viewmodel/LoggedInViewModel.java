@@ -55,6 +55,6 @@ public class LoggedInViewModel extends AndroidViewModel {
         return appRepository.getToolBarItemStateMutableLiveData();
     }
     public ArrayList<Route> readRoutesFromDB(){
-        return appRepository.readRoutesFromDB();
+        return appRepository.getRoutes();
     }
 }

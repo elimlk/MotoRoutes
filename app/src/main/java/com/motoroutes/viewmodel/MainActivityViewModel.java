@@ -40,4 +40,8 @@ public class MainActivityViewModel extends AndroidViewModel {
     public void setToolBarItemState(String itemState) {
         appRepository.setToolBarItemState(itemState);
     }
+
+    public void getRoutesFromDB() {
+        appRepository.updateRoutesFromDB();
+    }
 }

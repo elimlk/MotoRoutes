@@ -12,10 +12,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.motoroutes.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,6 +35,7 @@ public class AppRepository {
 
     private AppRepository(Application application) {
         this.application = application;
+        routesList = new ArrayList<Route>();
         firebaseAuth = FirebaseAuth.getInstance();
         userMutableLiveData = new MutableLiveData<FirebaseUser>();
         loggedOutMutableLiveData = new MutableLiveData<>();
@@ -52,6 +51,7 @@ public class AppRepository {
     public static AppRepository getInstance(Application application) {
         if (appRepository == null){
             appRepository = new AppRepository(application);
+            appRepository.updateRoutesFromDB();
             return appRepository;
         }
         else
@@ -133,28 +133,27 @@ public class AppRepository {
 
     }
 
-    public ArrayList<Route> readRoutesFromDB(){
+    public ArrayList<Route> getRoutes(){
+        return routesList;
+    }
 
-        DatabaseReference ref1= FirebaseDatabase.getInstance().getReference();
-        DatabaseReference ref2;
-        ref2 = ref1.child("Routes");
-        ref2.get();
-        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void updateRoutesFromDB(){
+        DatabaseReference df = FirebaseDatabase.getInstance().getReference().child("Routes");
+        df.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                routesList = new ArrayList<Route>();
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    routesList.add((Route) dsp.getValue()); //add result into array list
+            public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    //Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    //Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    for (DataSnapshot child : task.getResult().getChildren()) {
+                        Route route = child.getValue(Route.class);
+                        routesList.add(route);
+                    }
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
         });
-        return routesList;
     }
 
     public void setToolBarItemState(String ItemStateID){
@@ -174,6 +173,5 @@ public class AppRepository {
     }
 
     public MutableLiveData<String> getToolBarItemStateMutableLiveData() { return toolBarItemStateMutableLiveData; }
-
 
 }

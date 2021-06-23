@@ -57,4 +57,7 @@ public class Route {
         this.myLocations = myLocations;
     }
 
+    public ArrayList<MyLocation> getMyLocations() {
+        return myLocations;
+    }
 }
