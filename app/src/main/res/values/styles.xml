@@ -93,12 +93,24 @@
         <item name="android:minWidth">48dp</item>
         <item name="android:minHeight">48dp</item>
     </style>
-    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
-        <item name="cornerSize">50%</item>
-    </style>
+
     <style name="circleImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="cardViewRounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15%</item>
+    </style>
+
+    <style name="autoscroll">
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:scrollHorizontally">true</item>
     </style>
 
 

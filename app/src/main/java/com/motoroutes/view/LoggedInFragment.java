@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -65,7 +66,7 @@ public class LoggedInFragment extends Fragment {
             toolBarItemState = Integer.parseInt(s);
             switch (toolBarItemState){
                 case R.id.item_routes:
-
+                    Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_routesListFragment);
 
                     break;
                 case R.id.item_addRoute:

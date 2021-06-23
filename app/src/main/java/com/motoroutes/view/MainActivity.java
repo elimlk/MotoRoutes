@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (itemId){
             case R.id.item_routes:
                 item.setChecked(true);
-                Navigation.findNavController(MainActivity.this,R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_routesListFragment);
+                mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_routes));
                 Toast.makeText(this,"routes",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_addRoute:

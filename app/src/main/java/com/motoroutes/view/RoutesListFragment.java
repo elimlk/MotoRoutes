@@ -56,12 +56,18 @@ public class RoutesListFragment extends Fragment {
                 "test area",0f,"test diff"));
         routsList.add(new Route("te21","t2t desc",
                 "te2area",1f,"te2 diff"));
+        routsList.add(new Route("test3","test3 description - long description test test3 description - long description test",
+                "Center",1f,"Expert"));
+        routsList.add(new Route("test4","test4 description - short",
+                "North",1f,"Advanced"));
+        routsList.add(new Route("test5","test5 description",
+                "Center",1f,"Beginner"));
         routesAdapter.notifyDataSetChanged();
 
 
 
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
     @Override
