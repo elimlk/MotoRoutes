@@ -17,6 +17,7 @@
                 android:layout_height="100dp"
                 android:padding="5dp"
                 android:layout_margin="5dp"
+                android:layout_alignParentRight="true"
                 app:shapeAppearanceOverlay="@style/circleImageView"
                 app:srcCompat="@drawable/default_route_image"
                 />
