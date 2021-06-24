@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.motoroutes.R;
 import com.motoroutes.model.Route;
 import com.motoroutes.model.RoutesAdapter;
@@ -29,6 +32,12 @@ public class RoutesListFragment extends Fragment {
 
     private RoutesListViewModel routesListViewModel;
     private int toolBarItemState;
+    private CardView popupCardView;
+    private TextView tv_pop_name;
+    private TextView tv_pop_area;
+    private TextView tv_pop_diff;
+    private TextView tv_pop_desc;
+    private ImageView imv_pop_image;
 
     RecyclerView recyclerView;
     ArrayList<Route> routesList;
@@ -65,6 +74,7 @@ public class RoutesListFragment extends Fragment {
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         routesListViewModel = new ViewModelProvider(this).get(RoutesListViewModel.class);
     }
 
@@ -78,9 +88,16 @@ public class RoutesListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        popupCardView = view.findViewById(R.id.route_popup_card);
+        tv_pop_name = view.findViewById(R.id.route_popup_name);
+        tv_pop_area = view.findViewById(R.id.route_popup_area);
+        tv_pop_diff = view.findViewById(R.id.route_popup_difficulty);
+        tv_pop_desc = view.findViewById(R.id.route_popup_description);
+        imv_pop_image = view.findViewById(R.id.route_popup_image);
+
         routesList = routesListViewModel.getRoutes();
 
-        Thread t = new Thread(new Runnable() {
+        /*Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 routesList = routesListViewModel.getRoutes();
@@ -93,9 +110,25 @@ public class RoutesListFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+*/
 
         routesAdapter = new RoutesAdapter(this.getContext(), routesList);
+        routesAdapter.setListener(new RoutesAdapter.MyRouteListener() {
+            @Override
+            public void onRouteClicked(int position, View view) {
+
+                popupCardView.setVisibility(View.VISIBLE);
+
+                tv_pop_name.setText(routesList.get(position).getName());
+                tv_pop_area.setText(routesList.get(position).getArea());
+                tv_pop_diff.setText(routesList.get(position).getDifficulty());
+                tv_pop_desc.setText(routesList.get(position).getDescription());
+
+                Glide.with(getContext()).load(routesList.get(position).getImageUrl()).into(imv_pop_image);
+
+            }
+        });
+
         recyclerView.setAdapter(routesAdapter);
 
         routesAdapter.notifyDataSetChanged();

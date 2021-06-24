@@ -22,15 +22,15 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
 
     Context context;
     ArrayList<Route> routesList;
-    private myRouteListener listener;
-
-    public interface myRouteListener{
-        void onRouteClicked(int postion ,View view);
-    }
+    private MyRouteListener listener;
 
     public RoutesAdapter(Context context, ArrayList<Route> routesList) {
         this.context = context;
         this.routesList = routesList;
+    }
+
+    public interface MyRouteListener{
+        void onRouteClicked(int postion ,View view);
     }
 
     @NonNull
@@ -65,6 +65,10 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
         return routesList.size();
     }
 
+    public void setListener(MyRouteListener listener){
+        this.listener = listener;
+    }
+
     public class RoutesViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv_name, tv_description, tv_difficulty, tv_area;
@@ -83,7 +87,7 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
                 @Override
                 public void onClick(View v) {
                     if(listener!=null){
-                        listener.onRouteClicked(getAdapterPosition(),v);
+                        listener.onRouteClicked(getAbsoluteAdapterPosition(),v);
                     }
                 }
             });
