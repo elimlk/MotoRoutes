@@ -96,22 +96,29 @@ public class AppRepository {
     }
 
     public void login(String email, String password){
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
-                    loggedOutMutableLiveData.postValue(false);
-                }
-                else{
-                    Toast.makeText(application,"Login Failed: " +task.getException()
-                            .getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        if (email == "geust" && password == "geust")
+        if (email == "geust" && password == "geust") {
             loggedOutMutableLiveData.postValue(false);
+            toolBarItemStateMutableLiveData.postValue(String.valueOf(R.id.map));
+        }
+        else{
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                loggedOutMutableLiveData.postValue(false);
+                                toolBarItemStateMutableLiveData.postValue(String.valueOf(R.id.map));
+                                userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
+                            }
+                            else{
+                                Toast.makeText(application,"Login Failed: " +task.getException()
+                                        .getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+
+
     }
 
     public void logout(){

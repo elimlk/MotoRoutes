@@ -57,4 +57,8 @@ public class LoggedInViewModel extends AndroidViewModel {
     public ArrayList<Route> readRoutesFromDB(){
         return appRepository.getRoutes();
     }
+
+    public void setToolBarItemState(String itemState) {
+        appRepository.setToolBarItemState(itemState);
+    }
 }

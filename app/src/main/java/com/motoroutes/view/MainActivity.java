@@ -173,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.item_logout:
                 item.setChecked(true);
-                //mainActivityViewModel.logOut();
                 mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_logout));
                 Toast.makeText(this,"logout",Toast.LENGTH_SHORT).show();
                 break;

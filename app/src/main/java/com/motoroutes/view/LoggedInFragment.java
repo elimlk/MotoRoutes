@@ -59,7 +59,6 @@ public class LoggedInFragment extends Fragment {
     private String gpxPath;
     private Uri imageUri;
     private int resultCode_global;
-
     private CardView cardView_add_route;
     private RouteBuilder routeBuilder = new RouteBuilder();
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
@@ -177,6 +176,8 @@ public class LoggedInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 cardView_add_route.setVisibility(View.GONE);
+                btn_add_route_cancel.clearFocus();
+
             }
         });
         spinnerDifficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
