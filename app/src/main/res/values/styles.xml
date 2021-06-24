@@ -95,10 +95,14 @@
         <item name="backgroundTint">@color/Light_Green_50</item>
         <item name="iconTint">@color/cardview_dark_background</item>
     </style>
-
+    cornerImageView
     <style name="circleImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+    <style name="cornerImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15%</item>
     </style>
     <style name="headerImageView" parent="">
         <item name="cornerFamily">rounded</item>
