@@ -22,6 +22,11 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
 
     Context context;
     ArrayList<Route> routesList;
+    private myRouteListener listener;
+
+    public interface myRouteListener{
+        void onRouteClicked(int postion ,View view);
+    }
 
     public RoutesAdapter(Context context, ArrayList<Route> routesList) {
         this.context = context;
@@ -52,6 +57,7 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
             Glide.with(context).load(getURLForResource(R.drawable.default_route_image))
                     .into(holder.iv_route_pic);
 
+
     }
 
     @Override
@@ -59,7 +65,7 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
         return routesList.size();
     }
 
-    public static class RoutesViewHolder extends RecyclerView.ViewHolder{
+    public class RoutesViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv_name, tv_description, tv_difficulty, tv_area;
         ImageView iv_route_pic;
@@ -72,6 +78,15 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.RoutesView
             tv_difficulty = itemView.findViewById(R.id.routes_list_cell_difficulty);
             tv_area = itemView.findViewById(R.id.routes_list_cell_area);
             iv_route_pic = itemView.findViewById(R.id.routes_list_cell_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!=null){
+                        listener.onRouteClicked(getAdapterPosition(),v);
+                    }
+                }
+            });
 
         }
     }
