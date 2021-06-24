@@ -19,6 +19,9 @@ import java.io.InputStream;
 
 public class FileUtils {
 
+    public static final int  LOCATION_SERVICE_ID = 175;
+    public static final String ACTION_START_LOCATION_SERVICE = "startLocationService";
+    public static final String ACTION_STOP_LOCATION_SERVICE = "stopLocationService";
     private static final String LOG_TAG = "FileUtils";
 
     private static Uri contentUri = null;

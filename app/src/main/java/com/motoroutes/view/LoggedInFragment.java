@@ -2,7 +2,9 @@ package com.motoroutes.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -22,11 +24,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,6 +46,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.motoroutes.R;
 import com.motoroutes.model.FileUtils;
+import com.motoroutes.model.LocationService;
 import com.motoroutes.model.Route;
 import com.motoroutes.model.RouteBuilder;
 import com.motoroutes.viewmodel.LoggedInViewModel;
@@ -66,6 +71,7 @@ public class LoggedInFragment extends Fragment {
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
     private static final int MY_RESULT_CODE_IMAGECHOOSER = 3000;
     private static final String LOG_TAG = "LoggedInFragment";
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
     private Button buttonRouteBrowse;
     private Button buttonImageBrowse;
@@ -134,13 +140,9 @@ public class LoggedInFragment extends Fragment {
 
     };
 
-
-
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         loggedInViewModel.getRouteMutableLiveData().observe(getViewLifecycleOwner(),routeObserver);
 
@@ -163,8 +165,6 @@ public class LoggedInFragment extends Fragment {
         });
         return view;
     }
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -241,9 +241,18 @@ public class LoggedInFragment extends Fragment {
 
             }
         });
+
+        view.findViewById(R.id.btn_record_route).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION); //TODO CHECK!!!!
+                }else{
+                    startLocationService();
+                }
+            }
+        });
     }
-
-
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -286,6 +295,13 @@ public class LoggedInFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0 ){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                startLocationService();
+            else
+                Toast.makeText(getContext(),"Permission Denied!", Toast.LENGTH_SHORT).show();
+        }
         switch (requestCode) {
             case MY_REQUEST_CODE_PERMISSION: {
 
@@ -371,5 +387,37 @@ public class LoggedInFragment extends Fragment {
         ContentResolver contentResolver = getContext().getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(imageUri));
+    }
+
+    private boolean isLocationServiceRunning(){
+        ActivityManager activityManager = (ActivityManager)getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager != null){
+            for (ActivityManager.RunningServiceInfo service : activityManager.getRunningServices(Integer.MAX_VALUE)){
+                if(LocationServices.class.getName().equals(service.service.getClassName())){
+                    if (service.foreground)
+                        return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    private void startLocationService(){
+        if(!isLocationServiceRunning()){
+            Intent intent = new Intent(getContext().getApplicationContext(), LocationService.class);
+            intent.setAction(FileUtils.ACTION_START_LOCATION_SERVICE);
+            getActivity().startService(intent);
+            Toast.makeText(getContext(),"Recording started!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void stopLocationService(){
+        if(isLocationServiceRunning()){
+            Intent intent = new Intent(getContext().getApplicationContext(), LocationService.class);
+            intent.setAction(FileUtils.ACTION_STOP_LOCATION_SERVICE);
+            getActivity().startService(intent);
+            Toast.makeText(getContext(),"Recording stopped!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
