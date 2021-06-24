@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.motoroutes.model.AppRepository;
 import com.motoroutes.model.Route;
@@ -32,6 +33,12 @@ public class RoutesListViewModel extends AndroidViewModel {
         return (appRepository.getRoutes());
     }
 
+    public MutableLiveData<Route> getRouteMutableLiveData(){
+        return appRepository.getRouteMutableLiveData();
+    }
+    public void setToolBarItemState(String itemState) {
+        appRepository.setToolBarItemState(itemState);
+    }
 
     public void logOut() {
         appRepository.logout();

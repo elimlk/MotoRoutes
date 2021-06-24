@@ -33,6 +33,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -55,7 +56,7 @@ public class LoggedInFragment extends Fragment {
     private int toolBarItemState;
     private String route_difficulty;
     private String route_area;
-    private Route route;
+    private Route tmpRoute;
     private String gpxPath;
     private Uri imageUri;
     private int resultCode_global;
@@ -68,6 +69,13 @@ public class LoggedInFragment extends Fragment {
 
     private Button buttonRouteBrowse;
     private Button buttonImageBrowse;
+
+    Observer<Route> routeObserver = new Observer<Route>() {
+        @Override
+        public void onChanged(Route route) {
+            tmpRoute = route;
+        }
+    };
 
     Observer<String> toolBarState = new Observer<String>() {
         @Override
@@ -113,8 +121,12 @@ public class LoggedInFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            if (route != null)
-                googleMap.addPolyline(routeBuilder.createPolygon(route.getMyLocations()));
+            PolylineOptions polyline =null;
+            if (tmpRoute != null){
+                polyline = routeBuilder.createPolygon(tmpRoute.getMyLocations());
+            }
+            if (polyline != null)
+                googleMap.addPolyline(polyline);
             LatLng hit_collage = new LatLng(32.015596, 34.77325);
             googleMap.addMarker(new MarkerOptions().position(hit_collage).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(hit_collage));
@@ -129,6 +141,9 @@ public class LoggedInFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        loggedInViewModel.getRouteMutableLiveData().observe(getViewLifecycleOwner(),routeObserver);
+
         View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
         MainActivity.changeToolbarVisibility(true);
         buttonRouteBrowse = view.findViewById(R.id.btn_add_route_file_picker);
@@ -207,13 +222,13 @@ public class LoggedInFragment extends Fragment {
             public void onClick(View v) {
                 String routeName = et_routeName.getText().toString();
                 String routeDescription = et_description.getText().toString();
-                route = new Route(routeName,routeDescription,route_area,0f,route_difficulty);
+                tmpRoute = new Route(routeName,routeDescription,route_area,0f,route_difficulty);
                 try {
-                    route.setMyLocations(routeBuilder.parseGpxToArray(getGPXPath()));
+                    tmpRoute.setMyLocations(routeBuilder.parseGpxToArray(getGPXPath()));
                     if(imageUri!=null)
                         setImageOnDBAndSetUrl();
                     else
-                        loggedInViewModel.addRoute(route);
+                        loggedInViewModel.addRoute(tmpRoute);
                     SupportMapFragment mapFragment =
                             (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                     mapFragment.getMapAsync(callback);
@@ -342,8 +357,8 @@ public class LoggedInFragment extends Fragment {
                  fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                      @Override
                      public void onSuccess(Uri uri) {
-                         route.setImageUrl(uri.toString());
-                         loggedInViewModel.addRoute(route);
+                         tmpRoute.setImageUrl(uri.toString());
+                         loggedInViewModel.addRoute(tmpRoute);
                          Log.i("route url","set image url");
 
                      }

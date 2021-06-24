@@ -86,6 +86,8 @@ public class RouteBuilder {
     }
 
     public PolylineOptions createPolygon(ArrayList<MyLocation> myLocations) {
+        if (myLocations==null)
+            return null;
         PolylineOptions polyRoutes = new PolylineOptions();
         for (MyLocation myLocation : myLocations){
             LatLng latLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
