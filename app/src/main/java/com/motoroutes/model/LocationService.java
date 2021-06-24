@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -35,12 +36,14 @@ public class LocationService extends Service {
             if (locationResult != null && locationResult.getLastLocation() != null) {
                 double latitude = locationResult.getLastLocation().getLatitude();
                 double longitude = locationResult.getLastLocation().getLongitude();
+                Log.i("LOCATION_SERVICE", latitude + " , " + longitude);
                 recordedLocations.add(new MyLocation(latitude, longitude));
             }
         }
     };
 
     private void startLocationService() {
+        recordedLocations = new ArrayList<MyLocation>();
         String channelId = "location_notification_channel";
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resultIntent = new Intent();

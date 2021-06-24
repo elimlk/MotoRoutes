@@ -95,6 +95,8 @@ public class RoutesListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+
+
         popupCardView = view.findViewById(R.id.route_popup_card);
         tv_pop_name = view.findViewById(R.id.route_popup_name);
         tv_pop_area = view.findViewById(R.id.route_popup_area);
