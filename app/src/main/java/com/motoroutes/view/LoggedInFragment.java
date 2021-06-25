@@ -7,6 +7,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +43,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -75,6 +79,7 @@ public class LoggedInFragment extends Fragment {
 
     private Button buttonRouteBrowse;
     private Button buttonImageBrowse;
+    private ExtendedFloatingActionButton btn_record_route;
 
     Observer<Route> routeObserver = new Observer<Route>() {
         @Override
@@ -148,6 +153,18 @@ public class LoggedInFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
         MainActivity.changeToolbarVisibility(true);
+        //handle record button and fill parms in accordance to state
+        btn_record_route = view.findViewById(R.id.btn_record_route);
+        if(!LocationService.isServiceState()){
+            btn_record_route.setText("RECORD");
+            btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF")));
+            btn_record_route.setIconResource(R.drawable.ic_icon_record);
+        }else {
+            btn_record_route.setText("STOP RECORDING");
+            btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFE53935")));
+            btn_record_route.setIconResource(R.drawable.ic_baseline_stop_24);
+        }
+
         buttonRouteBrowse = view.findViewById(R.id.btn_add_route_file_picker);
         buttonRouteBrowse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,7 +259,7 @@ public class LoggedInFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.btn_record_route).setOnClickListener(new View.OnClickListener() {
+        btn_record_route.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!LocationService.isServiceState()){
@@ -250,11 +267,17 @@ public class LoggedInFragment extends Fragment {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION); //TODO CHECK!!!!
                     }else{
                         startLocationService();
+                        btn_record_route.setText("STOP RECORDING");
+                        btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFE53935")));
+                        btn_record_route.setIconResource(R.drawable.ic_baseline_stop_24);
                         LocationService.setServiceState(true);
                     }
                 }
                 else {
                     stopLocationService();
+                    btn_record_route.setText("RECORD");
+                    btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF")));
+                    btn_record_route.setIconResource(R.drawable.ic_icon_record);
                     LocationService.setServiceState(false);
                 }
 

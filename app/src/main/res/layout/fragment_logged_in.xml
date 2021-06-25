@@ -145,29 +145,18 @@
             tools:layout_editor_absoluteX="-66dp"
             tools:layout_editor_absoluteY="-177dp" />
 
-        <RelativeLayout
-            android:layout_height="wrap_content"
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton            android:id="@+id/btn_record_route"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="35dp">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btn_record_route"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    app:backgroundTint="@color/white"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_record_button_background"
-                    />
-        </RelativeLayout>
-
-
-
-
-                />
+            android:layout_margin="25dp"
+            android:layout_centerHorizontal="true"
+            android:text="Record"
+            app:iconPadding="0dp"
+            app:icon="@drawable/ic_icon_record"
+            app:backgroundTint="@color/white"/>
 
 
 </RelativeLayout>
-

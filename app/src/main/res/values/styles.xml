@@ -123,6 +123,17 @@
         <item name="android:scrollHorizontally">true</item>
     </style>
 
+    <style name="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:paddingStart" >
+            @dimen/mtrl_extended_fab_start_padding_icon
+        </item>
+        <item name="android:paddingEnd">
+            @dimen/mtrl_extended_fab_end_padding_icon
+        </item>
+        <item name="android:paddingLeft">@dimen/mtrl_extended_fab_start_padding_icon</item>
+        <item name="android:paddingRight">@dimen/mtrl_extended_fab_end_padding_icon</item>
+    </style>
 
     <!--onboarding designs-->
 
