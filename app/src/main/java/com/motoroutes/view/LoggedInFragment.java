@@ -149,6 +149,7 @@ public class LoggedInFragment extends Fragment {
                 CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
                 googleMap.moveCamera(cu);
                 googleMap.animateCamera(cu);
+                googleMap.setLatLngBoundsForCameraTarget(null);
 
             }
             if (polyline != null) {
