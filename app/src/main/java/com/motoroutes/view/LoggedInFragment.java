@@ -31,11 +31,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +49,7 @@ import com.google.firebase.storage.UploadTask;
 import com.motoroutes.R;
 import com.motoroutes.model.FileUtils;
 import com.motoroutes.model.LocationService;
+import com.motoroutes.model.MyLocation;
 import com.motoroutes.model.Route;
 import com.motoroutes.model.RouteBuilder;
 import com.motoroutes.viewmodel.LoggedInViewModel;
@@ -87,14 +90,14 @@ public class LoggedInFragment extends Fragment {
         @Override
         public void onChanged(String s) {
             toolBarItemState = Integer.parseInt(s);
-            switch (toolBarItemState){
+            switch (toolBarItemState) {
                 case R.id.item_routes:
-                    Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_routesListFragment);
+                    Navigation.findNavController(getActivity(), R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_routesListFragment);
 
                     break;
                 case R.id.item_addRoute:
                     CardView cardView = getView().findViewById(R.id.card_addRoute);
-                    if (cardView.getVisibility()==View.VISIBLE)
+                    if (cardView.getVisibility() == View.VISIBLE)
                         cardView.setVisibility(View.GONE);
                     else
                         cardView.setVisibility(View.VISIBLE);
@@ -104,7 +107,7 @@ public class LoggedInFragment extends Fragment {
                     break;
                 case R.id.item_logout:
                     loggedInViewModel.logOut();
-                    Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_loginFragment);
+                    Navigation.findNavController(getActivity(), R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_loginFragment);
                     break;
                 case R.id.item_map:
 
@@ -127,15 +130,41 @@ public class LoggedInFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            PolylineOptions polyline =null;
-            if (tmpRoute != null){
+            PolylineOptions polyline = null;
+            if (tmpRoute != null) {
                 polyline = routeBuilder.createPolygon(tmpRoute.getMyLocations());
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                for (MyLocation loc : tmpRoute.getMyLocations()){
+                    builder.include(new LatLng(loc.getLatitude(),loc.getLongitude()));
+                }
+                LatLngBounds bounds = builder.build();
+                googleMap.setLatLngBoundsForCameraTarget(bounds);
+                int padding = 500; // offset from edges of the map in pixels
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                googleMap.moveCamera(cu);
+                googleMap.animateCamera(cu);
+
             }
-            if (polyline != null)
+            if (polyline != null) {
                 googleMap.addPolyline(polyline);
-            LatLng hit_collage = new LatLng(32.015596, 34.77325);
+            }
+/*            LatLng hit_collage = new LatLng(32.015596, 34.77325);
             googleMap.addMarker(new MarkerOptions().position(hit_collage).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(hit_collage));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(hit_collage));*/
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            googleMap.setMyLocationEnabled(true);
+
+
         }
 
     };
@@ -378,15 +407,15 @@ public class LoggedInFragment extends Fragment {
         fileRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) {
-                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                     @Override
-                     public void onSuccess(Uri uri) {
-                         tmpRoute.setImageUrl(uri.toString());
-                         loggedInViewModel.addRoute(tmpRoute);
-                         Log.i("route url","set image url");
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        tmpRoute.setImageUrl(uri.toString());
+                        loggedInViewModel.addRoute(tmpRoute);
+                        Log.i("route url","set image url");
 
-                     }
-                 });
+                    }
+                });
             }
         });
     }
@@ -412,7 +441,7 @@ public class LoggedInFragment extends Fragment {
     }
 
     private void startLocationService(){
-  //      if(!isLocationServiceRunning()){
+        //      if(!isLocationServiceRunning()){
         if(!LocationService.isServiceState()){
             Intent intent = new Intent(getContext().getApplicationContext(), LocationService.class);
             intent.setAction(FileUtils.ACTION_START_LOCATION_SERVICE);
@@ -423,7 +452,7 @@ public class LoggedInFragment extends Fragment {
     }
 
     private void stopLocationService(){
- //       if(isLocationServiceRunning()){
+        //       if(isLocationServiceRunning()){
         if(LocationService.isServiceState()){
             Intent intent = new Intent(getContext().getApplicationContext(), LocationService.class);
             intent.setAction(FileUtils.ACTION_STOP_LOCATION_SERVICE);
