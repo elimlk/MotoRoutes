@@ -28,5 +28,6 @@
     <string name="btn_chooseImage">Choose Image Route</string>
     <string name="toolbar_home">map</string>
     <string name="btn_show_route">Show on map</string>
+    <string name="hint_Record">Record route</string>
 
 </resources>

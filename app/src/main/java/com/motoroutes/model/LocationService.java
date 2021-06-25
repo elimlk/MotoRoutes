@@ -14,6 +14,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 public class LocationService extends Service {
 
     private ArrayList<MyLocation> recordedLocations;
+    private static boolean serviceState = false;
+
 
     private LocationCallback locationCallback = new LocationCallback() {
         @Override
@@ -41,6 +44,11 @@ public class LocationService extends Service {
             }
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
     private void startLocationService() {
         recordedLocations = new ArrayList<MyLocation>();
@@ -89,6 +97,7 @@ public class LocationService extends Service {
 
     private void stopLocationService(){
         LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
+        AppRepository.getInstance(getApplication()).listPointsArray = recordedLocations;
         stopForeground(true);
         stopSelf();
     }
@@ -112,4 +121,13 @@ public class LocationService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
+    public static boolean isServiceState() {
+        return serviceState;
+    }
+
+    public static void setServiceState(boolean serviceState) {
+        LocationService.serviceState = serviceState;
+    }
+
 }

@@ -245,11 +245,19 @@ public class LoggedInFragment extends Fragment {
         view.findViewById(R.id.btn_record_route).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION); //TODO CHECK!!!!
-                }else{
-                    startLocationService();
+                if (!LocationService.isServiceState()){
+                    if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION); //TODO CHECK!!!!
+                    }else{
+                        startLocationService();
+                        LocationService.setServiceState(true);
+                    }
                 }
+                else {
+                    stopLocationService();
+                    LocationService.setServiceState(false);
+                }
+
             }
         });
     }
@@ -393,7 +401,7 @@ public class LoggedInFragment extends Fragment {
         ActivityManager activityManager = (ActivityManager)getContext().getSystemService(Context.ACTIVITY_SERVICE);
         if (activityManager != null){
             for (ActivityManager.RunningServiceInfo service : activityManager.getRunningServices(Integer.MAX_VALUE)){
-                if(LocationServices.class.getName().equals(service.service.getClassName())){
+                if(LocationServices.class.getName().equals(service.service.getClass().getName())){
                     if (service.foreground)
                         return true;
                 }
@@ -404,19 +412,23 @@ public class LoggedInFragment extends Fragment {
     }
 
     private void startLocationService(){
-        if(!isLocationServiceRunning()){
+  //      if(!isLocationServiceRunning()){
+        if(!LocationService.isServiceState()){
             Intent intent = new Intent(getContext().getApplicationContext(), LocationService.class);
             intent.setAction(FileUtils.ACTION_START_LOCATION_SERVICE);
-            getActivity().startService(intent);
+            getContext().startService(intent);
+            //getActivity().startService(intent);
             Toast.makeText(getContext(),"Recording started!", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void stopLocationService(){
-        if(isLocationServiceRunning()){
+ //       if(isLocationServiceRunning()){
+        if(LocationService.isServiceState()){
             Intent intent = new Intent(getContext().getApplicationContext(), LocationService.class);
             intent.setAction(FileUtils.ACTION_STOP_LOCATION_SERVICE);
-            getActivity().startService(intent);
+            getContext().startService(intent);
+            //getActivity().startService(intent);
             Toast.makeText(getContext(),"Recording stopped!", Toast.LENGTH_SHORT).show();
         }
     }

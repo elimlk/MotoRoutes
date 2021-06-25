@@ -30,6 +30,7 @@ public class AppRepository {
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private MutableLiveData<Route> routeMutableLiveData;
     private MutableLiveData<String> toolBarItemStateMutableLiveData;
+    public static ArrayList<MyLocation> listPointsArray= new ArrayList<>();
 
     private ArrayList<Route> routesList;
 
