@@ -142,6 +142,7 @@ public class LoggedInFragment extends Fragment {
                 for (MyLocation loc : tmpRoute.getMyLocations()){
                     builder.include(new LatLng(loc.getLatitude(),loc.getLongitude()));
                 }
+
                 LatLngBounds bounds = builder.build();
                 googleMap.setLatLngBoundsForCameraTarget(bounds);
                 int padding = 500; // offset from edges of the map in pixels
