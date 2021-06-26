@@ -170,6 +170,7 @@ public class LoggedInFragment extends Fragment {
                 return;
             }
             googleMap.setMyLocationEnabled(true);
+            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
 
         }
