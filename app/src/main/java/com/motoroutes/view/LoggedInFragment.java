@@ -274,7 +274,9 @@ public class LoggedInFragment extends Fragment {
                 try {
                     if(buttonRouteBrowse.getVisibility()==View.VISIBLE)
                         tmpRoute.setMyLocations(routeBuilder.parseGpxToArray(getGPXPath()));
-                    tmpRoute.setMyLocations(loggedInViewModel.getListPointsArray());
+                    else{
+                        tmpRoute.setMyLocations(loggedInViewModel.getListPointsArray());
+                    }
                     if(imageUri!=null)
                         setImageOnDBAndSetUrl();
                     else
