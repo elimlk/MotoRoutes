@@ -94,14 +94,7 @@ public class RoutesListFragment extends Fragment {
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_routes_list, container,false);
-        recyclerView = view.findViewById(R.id.recycler_view_routes_list);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
-
-
         popupCardView = view.findViewById(R.id.route_popup_card);
         tv_pop_name = view.findViewById(R.id.route_popup_name);
         tv_pop_area = view.findViewById(R.id.route_popup_area);
@@ -109,8 +102,47 @@ public class RoutesListFragment extends Fragment {
         tv_pop_desc = view.findViewById(R.id.route_popup_description);
         imv_pop_image = view.findViewById(R.id.route_popup_image);
         btn_pop_show = view.findViewById(R.id.route_popup_show_btn);
+        recyclerView = view.findViewById(R.id.recycler_view_routes_list);
+        ProgressBar progressBar = view.findViewById(R.id.route_popup_progressbar);
+        LinearLayout linearLayout = view.findViewById(R.id.recycler_view_routes_list_layout);
 
-        routesList = routesListViewModel.getRoutes();
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        linearLayout.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        new AsyncTask<Object, Void, Void>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                routesList = routesListViewModel.getRoutes();
+            }
+
+            @Override
+            protected void onPostExecute(Void unused) {
+                progressBar.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
+                super.onPostExecute(unused);
+            }
+
+            @Override
+            protected Void doInBackground(Object... objects) {
+                if (routesList == null)  {
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                return null;
+            }
+        }.execute();
+
+
+
+
+
 
         routesAdapter = new RoutesAdapter(this.getContext(), routesList);
         routesAdapter.setListener(new RoutesAdapter.MyRouteListener() {
@@ -144,30 +176,11 @@ public class RoutesListFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         routesListViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
-        ProgressBar progressBar = view.findViewById(R.id.route_popup_progressbar);
-        LinearLayout linearLayout = view.findViewById(R.id.recycler_view_routes_list_layout);
-        linearLayout.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
 
-        new AsyncTask<Object, Void, Void>() {
-            @Override
-            protected void onPostExecute(Void unused) {
-                progressBar.setVisibility(View.GONE);
-                linearLayout.setVisibility(View.VISIBLE);
-                super.onPostExecute(unused);
-            }
 
-            @Override
-            protected Void doInBackground(Object... objects) {
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        }.execute();
-            RelativeLayout routes_list_layout = view.findViewById(R.id.routes_list_layout);
+
+
+        RelativeLayout routes_list_layout = view.findViewById(R.id.routes_list_layout);
         routes_list_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
