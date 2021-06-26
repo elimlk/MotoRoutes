@@ -1,13 +1,17 @@
 package com.motoroutes.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +23,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.AsyncListUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -105,24 +110,7 @@ public class RoutesListFragment extends Fragment {
         imv_pop_image = view.findViewById(R.id.route_popup_image);
         btn_pop_show = view.findViewById(R.id.route_popup_show_btn);
 
-
-
         routesList = routesListViewModel.getRoutes();
-
-        /*Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                routesList = routesListViewModel.getRoutes();
-            }});
-
-        t.start(); // spawn thread
-
-        try {
-            t.join();  // wait for thread to finish
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-*/
 
         routesAdapter = new RoutesAdapter(this.getContext(), routesList);
         routesAdapter.setListener(new RoutesAdapter.MyRouteListener() {
@@ -156,7 +144,30 @@ public class RoutesListFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         routesListViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
-        RelativeLayout routes_list_layout = view.findViewById(R.id.routes_list_layout);
+        ProgressBar progressBar = view.findViewById(R.id.route_popup_progressbar);
+        LinearLayout linearLayout = view.findViewById(R.id.recycler_view_routes_list_layout);
+        linearLayout.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        new AsyncTask<Object, Void, Void>() {
+            @Override
+            protected void onPostExecute(Void unused) {
+                progressBar.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
+                super.onPostExecute(unused);
+            }
+
+            @Override
+            protected Void doInBackground(Object... objects) {
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();
+            RelativeLayout routes_list_layout = view.findViewById(R.id.routes_list_layout);
         routes_list_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,7 +185,6 @@ public class RoutesListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 routesListViewModel.getRouteMutableLiveData().postValue(routeClicked);
-                Activity activity = getActivity();
                 routesListViewModel.setToolBarItemState(String.valueOf(R.id.item_map));
             }
         });

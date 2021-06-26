@@ -1,5 +1,7 @@
 package com.motoroutes.view;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,11 +14,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.dialog.MaterialDialogs;
 import com.google.firebase.auth.FirebaseUser;
 import com.motoroutes.R;
 import com.motoroutes.viewmodel.LoginViewModel;
@@ -63,6 +67,7 @@ public class LoginFragment extends Fragment {
         tvForgotPassword = view.findViewById(R.id.tv_forgot_password);
         tvGuest = view.findViewById(R.id.guest_login);
         progressBar = view.findViewById(R.id.loginPrograssBar);
+        CardView cardViewLogin = view.findViewById(R.id.card_login);
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,14 +78,39 @@ public class LoginFragment extends Fragment {
         });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View view) {
-                MainActivity.loadGuestMenu(false);
-                String email = etEmail.getText().toString().trim();
-                String password = etPassword.getText().toString();
-                if(!email.isEmpty() && !password.isEmpty()) {
-                    loginViewModel.login(email, password);
-                }
+
+                new AsyncTask<Object, Void, Void>() {
+                    @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        progressBar.setVisibility(View.VISIBLE);
+                        cardViewLogin.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void unused) {
+                        super.onPostExecute(unused);
+                        MainActivity.loadGuestMenu(false);
+                        String email = etEmail.getText().toString().trim();
+                        String password = etPassword.getText().toString();
+                        if (!email.isEmpty() && !password.isEmpty()) {
+                            loginViewModel.login(email, password);
+                        }
+                    }
+                    @Override
+                    protected Void doInBackground(Object... objects) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+                }.execute();
+
             }
         });
 
