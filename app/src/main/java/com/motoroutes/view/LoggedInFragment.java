@@ -279,8 +279,8 @@ public class LoggedInFragment extends Fragment {
                     }
                     if(imageUri!=null)
                         setImageOnDBAndSetUrl();
-                    else
-                        loggedInViewModel.addRoute(tmpRoute);
+
+                    loggedInViewModel.addRoute(tmpRoute);
                     SupportMapFragment mapFragment =
                             (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                     mapFragment.getMapAsync(callback);
@@ -290,6 +290,7 @@ public class LoggedInFragment extends Fragment {
                 et_routeName.getText().clear();
                 et_description.getText().clear();
                 imageUri=null;
+                cardView_add_route.setVisibility(View.GONE);
 
             }
         });
