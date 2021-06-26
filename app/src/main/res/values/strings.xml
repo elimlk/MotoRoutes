@@ -29,5 +29,6 @@
     <string name="toolbar_home">map</string>
     <string name="btn_show_route">Show on map</string>
     <string name="hint_Record">Record route</string>
+    <string name="helper_required">*Required</string>
 
 </resources>

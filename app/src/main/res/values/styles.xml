@@ -135,7 +135,7 @@
         <item name="android:paddingRight">@dimen/mtrl_extended_fab_end_padding_icon</item>
     </style>
 
-    <!--onboarding designs-->
+
 
 
 </resources>

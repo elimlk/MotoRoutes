@@ -5,4 +5,8 @@
     <string name="toolbar_addRoute">הוסף מסלול</string>
     <string name="toolbar_emergency">חירום</string>
     <string name="toolbar_home">מפה</string>
+    <string name="helper_required">*חובה</string>
+    <string name="hint_login">כתובת מייל</string>
+    <string name="hint_password">סיסמא</string>
+
 </resources>
