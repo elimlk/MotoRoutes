@@ -8,5 +8,27 @@
     <string name="helper_required">*חובה</string>
     <string name="hint_login">כתובת מייל</string>
     <string name="hint_password">סיסמא</string>
+    <string name="btn_login">היכנס</string>
+    <string name="tv_forgot_password">שכחת סיסמא?</string>
+    <string name="tv_register">הרשמה</string>
+    <string name="btn_register">רישום</string>
+    <string name="tv_register_capital">רישום</string>
+    <string name="signup_login_hint">כבר נרשמת ? הכנס</string>
+    <string name="hint_fullName">שם מלא</string>
+    <string name="hint_phoneNumber">טלפון</string>
+    <string name="btn_signUp">הירשם</string>
+    <string name="guest_login">המשך כאורח</string>
+    <string name="Registartion_success">רישום הצליח</string>
+    <string name="toolbar_logout">יצאיה</string>
+    <string name="routeAdded">המסלול התווסף בהצלחה</string>
+    <string name="title_add_route">הוסף מסלול</string>
+    <string name="hint_add_route_name">שם המסלול</string>
+    <string name="hint_add_route_description">תיאור</string>
+    <string name="btn_addRoute">הוסף מסלול</string>
+    <string name="et_filePath">File path</string>
+    <string name="btn_chooseFile">בחר קובץ מסלול(gpx)</string>
+    <string name="btn_chooseImage">בחר תמונת מסלול</string>
+    <string name="btn_show_route">הצג על המפה</string>
+    <string name="hint_Record">הקלט מסלול</string>
 
 </resources>
