@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.motoroutes.model.AppRepository;
+import com.motoroutes.model.MyLocation;
 import com.motoroutes.model.Route;
 
 import org.jetbrains.annotations.NotNull;
@@ -31,11 +32,11 @@ public class LoggedInViewModel extends AndroidViewModel {
 
     }
 
-    public void logOut(){
+    public void logOut() {
         appRepository.logout();
     }
 
-    public void addRoute(Route route){
+    public void addRoute(Route route) {
         appRepository.addRoute(route);
     }
 
@@ -54,11 +55,16 @@ public class LoggedInViewModel extends AndroidViewModel {
     public MutableLiveData<String> getToolBarItemStateMutableLiveData() {
         return appRepository.getToolBarItemStateMutableLiveData();
     }
-    public ArrayList<Route> readRoutesFromDB(){
+
+    public ArrayList<Route> readRoutesFromDB() {
         return appRepository.getRoutes();
     }
 
     public void setToolBarItemState(String itemState) {
         appRepository.setToolBarItemState(itemState);
+    }
+
+    public ArrayList<MyLocation> getListPointsArray() {
+        return appRepository.getListPointsArray();
     }
 }

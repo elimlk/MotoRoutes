@@ -272,7 +272,9 @@ public class LoggedInFragment extends Fragment {
                 String routeDescription = et_description.getText().toString();
                 tmpRoute = new Route(routeName,routeDescription,route_area,0f,route_difficulty);
                 try {
-                    tmpRoute.setMyLocations(routeBuilder.parseGpxToArray(getGPXPath()));
+                    if(buttonRouteBrowse.getVisibility()==View.VISIBLE)
+                        tmpRoute.setMyLocations(routeBuilder.parseGpxToArray(getGPXPath()));
+                    tmpRoute.setMyLocations(loggedInViewModel.getListPointsArray());
                     if(imageUri!=null)
                         setImageOnDBAndSetUrl();
                     else
@@ -309,6 +311,9 @@ public class LoggedInFragment extends Fragment {
                     btn_record_route.setText("RECORD");
                     btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF")));
                     btn_record_route.setIconResource(R.drawable.ic_icon_record);
+                    cardView_add_route.setVisibility(View.VISIBLE);
+                    buttonRouteBrowse.setVisibility(View.INVISIBLE);
+
                     LocationService.setServiceState(false);
                 }
 

@@ -172,6 +172,10 @@ public class AppRepository {
         });
     }
 
+    public ArrayList<MyLocation> getListPointsArray() {
+        return listPointsArray;
+    }
+
     public void setToolBarItemState(String ItemStateID){
         toolBarItemStateMutableLiveData.setValue(ItemStateID);
     }
