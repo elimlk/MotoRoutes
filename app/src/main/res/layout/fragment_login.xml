@@ -39,8 +39,10 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:hint="@string/hint_login"
-                        android:imeOptions="actionNext"
                         android:gravity="center_horizontal"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"
+                        android:inputType="text"
                         tools:ignore="MissingConstraints" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -57,7 +59,7 @@
                         android:hint="@string/hint_password"
                         android:layout_margin="20dp"
                         android:gravity="center_horizontal"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:id="@+id/et_password"
                         />
@@ -104,24 +106,14 @@
         android:orientation="horizontal"
         android:paddingHorizontal="15dp"
         app:layout_constraintTop_toBottomOf="@id/card_login">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_forgot_password"
-            android:layout_alignParentStart="true"
-            android:text="@string/tv_forgot_password"
-            android:textSize="15sp"
-            style="bold"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="25dp"
-            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_register"
             android:text="@string/tv_register"
             android:textSize="15sp"
-            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
             style="bold"
             android:layout_centerInParent="true"
             />
