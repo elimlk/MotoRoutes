@@ -56,6 +56,8 @@
                     android:layout_margin="20dp"
                     android:hint="@string/hint_login"
                     android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:inputType="text"
                     android:gravity="center_horizontal"
                     tools:ignore="MissingConstraints" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -76,6 +78,7 @@
                     android:layout_margin="20dp"
                     android:gravity="center_horizontal"
                     android:imeOptions="actionNext"
+                    android:maxLines="1"
                     android:inputType="textPassword"
                     android:id="@+id/et_register_password"
                     />
@@ -98,6 +101,8 @@
                     android:hint="@string/hint_fullName"
                     android:gravity="center_horizontal"
                     android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:inputType="text"
                     android:layout_below="@id/text_layout_password_register"
                     tools:ignore="MissingConstraints" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -115,6 +120,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_phoneNumber"
                     android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:inputType="phone"
                     android:gravity="center_horizontal"
                     android:layout_margin="20dp"
                     android:ems="10"
