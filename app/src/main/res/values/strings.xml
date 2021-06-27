@@ -46,5 +46,6 @@
     <string name="hello_guest">Hello Guest</string>
     <string name="hint_choose_area">Choose area</string>
     <string name="hint_choose_difficulty">choose difficulty</string>
+    <string name="header_add_route">Route details</string>
 
 </resources>

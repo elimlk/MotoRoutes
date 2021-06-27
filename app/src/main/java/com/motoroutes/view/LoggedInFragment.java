@@ -536,7 +536,7 @@ public class LoggedInFragment extends Fragment {
                             Toast.makeText(this.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
                         }
                         gpxPath = (filePath);
-                        buttonRouteBrowse.setBackgroundColor(Color.parseColor("#E53935"));
+                        buttonRouteBrowse.setBackgroundColor(Color.parseColor("#FFFB8C00"));
                     }
                 }
                 break;
@@ -551,7 +551,7 @@ public class LoggedInFragment extends Fragment {
                             Toast.makeText(this.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
                         }
                         imageUri = (fileUri);
-                        buttonImageBrowse.setBackgroundColor(Color.parseColor("#E53935"));
+                        buttonImageBrowse.setBackgroundColor(Color.parseColor("#FFFB8C00"));
                     }
                 }
                 break;

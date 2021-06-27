@@ -164,29 +164,41 @@
             android:layout_centerInParent="true"
             android:paddingTop="30dp"
             app:cardCornerRadius="@dimen/loginCardRadius"
-            android:elevation="5dp"
-            android:layout_marginHorizontal="10dp"
+            android:elevation="10dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="15dp"
             android:layout_gravity="center"
-            android:backgroundTint="@color/Light_Green_50"
             android:id="@+id/card_addRoute"
-            android:visibility="visible">
+            android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp">
-
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/material_toggle_cancel"
+                            android:text="@string/header_add_route"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginVertical="10dp"
+                            android:textStyle="bold"
+                            android:textSize="25sp"
+                            android:textColor="@color/Light_Green_900"
+                            />
                         <com.google.android.material.button.MaterialButtonToggleGroup
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:id="@+id/material_toggle_cancel">
-                                <Button android:id="@+id/btn_add_route_cancel"
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btn_add_route_cancel"
                                     android:layout_height="wrap_content"
                                     android:layout_width="wrap_content"
                                     app:icon="@drawable/ic_baseline_cancel_24"
-                                    style="@style/Widget.App.Button.IconOnly"/>
+                                    style="@style/Widget.App.Button.IconOnly"
+                                    app:backgroundTint="@color/design_default_color_background"/>
                         </com.google.android.material.button.MaterialButtonToggleGroup>
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_below="@id/material_toggle_cancel"
@@ -309,8 +321,8 @@
                             app:icon="@drawable/ic_baseline_add_circle_24"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="35dp"
-                            android:backgroundTint="@color/Light_Green_700"
+                            android:layout_margin="25dp"
+                            android:backgroundTint="@color/Light_Green_900"
                             android:text="@string/btn_addRoute"
                             android:textColor="@color/white"
                             android:textSize="20sp"
