@@ -83,7 +83,7 @@ public class LoggedInFragment extends Fragment {
     private static final String LOG_TAG = "LoggedInFragment";
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private FusedLocationProviderClient fusedLocationClient;
-    LatLng currentLatLng;
+    private LatLng currentLatLng;
 
 
     private Button buttonRouteBrowse;
@@ -108,21 +108,28 @@ public class LoggedInFragment extends Fragment {
                     break;
                 case R.id.item_addRoute:
                     CardView cardView = getView().findViewById(R.id.card_addRoute);
-                    if (cardView.getVisibility() != View.VISIBLE){
+                    if (cardView.getVisibility() != View.VISIBLE) {
                         cardView.setVisibility(View.VISIBLE);
                         emergency_card.setVisibility(View.GONE);
-                    }
-                    else
+                    } else
                         cardView.setVisibility(View.GONE);
                     break;
                 case R.id.item_emergency:
-                        if(emergency_card.getVisibility()!=View.VISIBLE){
-                            emergency_card.setVisibility(View.VISIBLE);
-                            cardView_add_route.setVisibility(View.GONE);
-                            myGpsLocation.setText("1111111");
+                    if (emergency_card.getVisibility() != View.VISIBLE) {
+                        emergency_card.setVisibility(View.VISIBLE);
+                        cardView_add_route.setVisibility(View.GONE);
+                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            return;
                         }
-                        else
+                        fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                myGpsLocation.setText(location.getLatitude()+" / "+location.getLongitude());
+                            }
+                        });}
+                        else {
                             emergency_card.setVisibility(View.GONE);
+                        }
                     break;
                 case R.id.item_logout:
                     loggedInViewModel.logOut();

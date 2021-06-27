@@ -10,12 +10,11 @@
             android:id="@+id/card_emergency"
             android:layout_centerInParent="true"
             android:paddingTop="30dp"
-            android:layout_margin="30dp"
+            android:layout_margin="20dp"
             app:cardCornerRadius="@dimen/loginCardRadius"
-            android:elevation="5dp"
+            android:elevation="16dp"
             android:layout_gravity="center"
-            android:backgroundTint="@color/Light_Green_50"
-            android:visibility="visible">
+            android:visibility="gone">
 
                 <LinearLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -33,7 +32,8 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginHorizontal="5dp"
+                            app:cardCornerRadius="@dimen/loginCardRadius"
                             android:layout_marginVertical="10dp"
                             android:layout_weight="1">
                                 <LinearLayout
@@ -60,15 +60,16 @@
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="2"
+                                            android:layout_gravity="center"
                                             android:padding="5dp"
-                                            android:gravity="center"
                                             android:text="@string/emergency_phone1"/>
                                 </LinearLayout>
                         </androidx.cardview.widget.CardView>
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
+                            app:cardCornerRadius="@dimen/loginCardRadius"
+                            android:layout_marginHorizontal="5dp"
                             android:layout_marginVertical="10dp"
                             android:layout_weight="1">
                                 <LinearLayout
@@ -96,14 +97,14 @@
                                             android:layout_height="wrap_content"
                                             android:layout_weight="2"
                                             android:padding="5dp"
-                                            android:gravity="center"
                                             android:text="@string/emergency_phone2"/>
                                 </LinearLayout>
                         </androidx.cardview.widget.CardView>
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
+                            app:cardCornerRadius="@dimen/loginCardRadius"
+                            android:layout_marginHorizontal="5dp"
                             android:layout_marginVertical="10dp"
                             android:layout_weight="1">
                                 <LinearLayout
@@ -118,21 +119,20 @@
                                             android:layout_weight="2"
                                             android:padding="5dp"
                                             android:textStyle="bold"
-                                            android:text="@string/emergency_name2"
+                                            android:text="@string/emergency_name3"
                                             />
                                         <TextView
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="4"
                                             android:padding="5dp"
-                                            android:text="@string/emergency_details2"/>
+                                            android:text="@string/emergency_details3"/>
                                         <TextView
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="2"
                                             android:padding="5dp"
-                                            android:gravity="center"
-                                            android:text="@string/emergency_phone2"/>
+                                            android:text="@string/emergency_phone3"/>
                                 </LinearLayout>
                         </androidx.cardview.widget.CardView>
                         <TextView android:layout_height="wrap_content"
@@ -147,6 +147,7 @@
                             android:id="@+id/my_gps_location"
                             android:layout_width="wrap_content"
                             android:layout_gravity="center"
+                            android:gravity="center"
                             android:text="Lat / lng"
                             android:textStyle="bold"
                             android:textSize="15sp"

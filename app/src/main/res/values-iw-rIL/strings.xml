@@ -31,6 +31,18 @@
     <string name="btn_show_route">הצג על המפה</string>
     <string name="hint_Record">הקלט מסלול</string>
     <string name="fill_all">אנא מלא את כל השדות</string>
+    <string name="emergency_title">מוקדי חירופ</string>
+    <string name="my_location">המיקום שלי:</string>
+    <string name="emergency_name1">ידידים</string>
+    <string name="emergency_details1">הארגון מספק עזרה ראשונה לא רפואית ללא כל עלות,</string>
+    <string name="emergency_phone1">1230</string>
+    <string name="emergency_name2">תופעת טבע</string>
+    <string name="emergency_details2">סיוע חירום בשטח 24/7</string>
+    <string name="emergency_phone2">1700-707-609</string>
+    <string name="emergency_name3">חילוץ מוסק - משל"ט</string>
+    <string name="emergency_details3">במקרה חירום רפואי חייגו 101</string>
+    <string name="emergency_phone3">03-6062264</string>
+
 
 
 </resources>

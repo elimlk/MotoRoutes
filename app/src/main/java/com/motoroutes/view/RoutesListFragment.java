@@ -63,11 +63,10 @@ public class RoutesListFragment extends Fragment {
                     //Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_loggedInFragmemt_to_routesListFragment);
                     break;
                 case R.id.item_addRoute:
-                    Activity activity = getActivity();
                     Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_routesListFragment_to_loggedInFragmemt);
                     break;
                 case R.id.item_emergency:
-
+                    Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_routesListFragment_to_loggedInFragmemt);
                     break;
                 case R.id.item_logout:
                     routesListViewModel.logOut();
