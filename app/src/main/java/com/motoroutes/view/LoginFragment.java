@@ -37,6 +37,7 @@ public class LoginFragment extends Fragment {
     private TextView tvForgotPassword;
     private TextView tvGuest;
     private ProgressBar progressBar;
+    private CardView cardViewLogin;
 
     private LoginViewModel loginViewModel;
 
@@ -59,6 +60,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if(firebaseUser != null){
+                    progressBar.setVisibility(View.GONE);
+                    cardViewLogin.setVisibility(View.VISIBLE);
                     Navigation.findNavController(getView())
                             .navigate(R.id.action_loginFragment_to_loggedInFragmemt);
                 }
@@ -77,7 +80,7 @@ public class LoginFragment extends Fragment {
         tvRegister = view.findViewById(R.id.tv_register);
         tvGuest = view.findViewById(R.id.guest_login);
         progressBar = view.findViewById(R.id.loginPrograssBar);
-        CardView cardViewLogin = view.findViewById(R.id.card_login);
+        cardViewLogin = view.findViewById(R.id.card_login);
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,13 +94,21 @@ public class LoginFragment extends Fragment {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                cardViewLogin.setVisibility(View.INVISIBLE);
+                MainActivity.loadGuestMenu(false);
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString();
+                if (!email.isEmpty() && !password.isEmpty()) {
+                    loginViewModel.login(email, password);
+                }
 
-                new AsyncTask<Object, Void, Void>() {
+
+                /*new AsyncTask<Object, Void, Void>() {
                     @Override
                     protected void onPreExecute() {
                         super.onPreExecute();
-                        progressBar.setVisibility(View.VISIBLE);
-                        cardViewLogin.setVisibility(View.INVISIBLE);
+
                     }
 
                     @Override
@@ -114,7 +125,7 @@ public class LoginFragment extends Fragment {
                     protected Void doInBackground(Object... objects) {
                         return null;
                     }
-                }.execute();
+                }.execute();*/
 
             }
         });

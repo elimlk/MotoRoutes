@@ -1,6 +1,8 @@
 package com.motoroutes.view;
 
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                             if (!mainActivityViewModel.getLoggedOutMutableLiveData().getValue()) {
                                 navUsername.setText(getResources().getText(R.string.hello)+" "+snapshot.getValue(User.class).getFullname());
+                                navUsername.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
                             }
 
                         }
