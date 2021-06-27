@@ -30,5 +30,13 @@
     <string name="btn_show_route">Show on map</string>
     <string name="hint_Record">Record route</string>
     <string name="helper_required">*Required</string>
+    <string name="emergency_title">Emergency phones</string>
+    <string name="my_location">My Location:</string>
+    <string name="emergency_name1">Yedidim</string>
+    <string name="emergency_details1">The organization provides non-medical first aid at no cost</string>
+    <string name="emergency_phone1">1230</string>
+    <string name="emergency_name2">Toffat teva</string>
+    <string name="emergency_details2">Voluntary roads and off roads rescues 24/7</string>
+    <string name="emergency_phone2">1700-707-609</string>
 
 </resources>

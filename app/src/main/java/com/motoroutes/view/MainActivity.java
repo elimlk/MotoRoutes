@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.item_emergency:
                 item.setChecked(true);
+                mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_emergency));
                 Toast.makeText(this,"emergency",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_logout:

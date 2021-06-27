@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -73,13 +74,14 @@ public class LoggedInFragment extends Fragment {
     private Uri imageUri;
     private int resultCode_global;
     private CardView cardView_add_route;
+    private CardView emergency_card;
+    private TextView myGpsLocation;
     private RouteBuilder routeBuilder = new RouteBuilder();
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
     private static final int MY_RESULT_CODE_IMAGECHOOSER = 3000;
     private static final String LOG_TAG = "LoggedInFragment";
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-
     private Button buttonRouteBrowse;
     private Button buttonImageBrowse;
     private ExtendedFloatingActionButton btn_record_route;
@@ -102,13 +104,21 @@ public class LoggedInFragment extends Fragment {
                     break;
                 case R.id.item_addRoute:
                     CardView cardView = getView().findViewById(R.id.card_addRoute);
-                    if (cardView.getVisibility() == View.VISIBLE)
-                        cardView.setVisibility(View.GONE);
-                    else
+                    if (cardView.getVisibility() != View.VISIBLE){
                         cardView.setVisibility(View.VISIBLE);
+                        emergency_card.setVisibility(View.GONE);
+                    }
+                    else
+                        cardView.setVisibility(View.GONE);
                     break;
                 case R.id.item_emergency:
-
+                        if(emergency_card.getVisibility()!=View.VISIBLE){
+                            emergency_card.setVisibility(View.VISIBLE);
+                            cardView_add_route.setVisibility(View.GONE);
+                            myGpsLocation.setText("1111111");
+                        }
+                        else
+                            emergency_card.setVisibility(View.GONE);
                     break;
                 case R.id.item_logout:
                     loggedInViewModel.logOut();
@@ -221,6 +231,14 @@ public class LoggedInFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
         cardView_add_route = view.findViewById(R.id.card_addRoute);
+        emergency_card = view.findViewById(R.id.card_emergency);
+        emergency_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emergency_card.setVisibility(View.GONE);
+            }
+        });
+        myGpsLocation = view.findViewById(R.id.my_gps_location);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {

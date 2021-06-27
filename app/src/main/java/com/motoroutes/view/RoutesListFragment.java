@@ -92,6 +92,7 @@ public class RoutesListFragment extends Fragment {
 
     @Nullable
     @org.jetbrains.annotations.Nullable
+    @SuppressLint("StaticFieldLeak")
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_routes_list, container,false);
@@ -127,6 +128,7 @@ public class RoutesListFragment extends Fragment {
 
             @Override
             protected Void doInBackground(Object... objects) {
+/*
                 if (routesList == null)  {
                     try {
                         Thread.sleep(1500);
@@ -134,7 +136,7 @@ public class RoutesListFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-
+*/
                 return null;
             }
         }.execute();
