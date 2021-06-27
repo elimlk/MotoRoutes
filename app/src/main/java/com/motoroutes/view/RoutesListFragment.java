@@ -14,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -50,9 +52,24 @@ public class RoutesListFragment extends Fragment {
     private Button btn_pop_show;
     private Route routeClicked;
 
+    private ProgressBar progressBar;
+    private LinearLayout linearLayout;
+
     RecyclerView recyclerView;
     ArrayList<Route> routesList;
     RoutesAdapter routesAdapter;
+
+    Observer<Boolean> routesUpdatedObserver = new Observer<Boolean>() {
+        @Override
+        public void onChanged(Boolean state) {
+            if(state) {
+                routesAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
+                routesListViewModel.getRouteListUpdatedLiveData().setValue(false);
+            }
+        }
+    };
 
     Observer<String> toolBarState = new Observer<String>() {
         @Override
@@ -74,8 +91,6 @@ public class RoutesListFragment extends Fragment {
                     break;
                 case R.id.item_map:
                     Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_routesListFragment_to_loggedInFragmemt);
-
-
                     break;
             }
         }
@@ -84,6 +99,20 @@ public class RoutesListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+//                Toast.makeText(getContext(),"Backpressed", Toast.LENGTH_SHORT).show();
+                if(popupCardView.getVisibility()==View.VISIBLE)
+                    popupCardView.setVisibility(View.GONE);
+                else
+                    routesListViewModel.setToolBarItemState(String.valueOf(R.id.item_map));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        callback.setEnabled(true);
 
 
         routesListViewModel = new ViewModelProvider(this).get(RoutesListViewModel.class);
@@ -103,15 +132,17 @@ public class RoutesListFragment extends Fragment {
         imv_pop_image = view.findViewById(R.id.route_popup_image);
         btn_pop_show = view.findViewById(R.id.route_popup_show_btn);
         recyclerView = view.findViewById(R.id.recycler_view_routes_list);
-        ProgressBar progressBar = view.findViewById(R.id.route_popup_progressbar);
-        LinearLayout linearLayout = view.findViewById(R.id.recycler_view_routes_list_layout);
+        progressBar = view.findViewById(R.id.route_popup_progressbar);
+        linearLayout = view.findViewById(R.id.recycler_view_routes_list_layout);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         linearLayout.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-        new AsyncTask<Object, Void, Void>() {
+        routesList = routesListViewModel.getRoutes();
+
+        /*new AsyncTask<Object, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -127,7 +158,7 @@ public class RoutesListFragment extends Fragment {
 
             @Override
             protected Void doInBackground(Object... objects) {
-/*
+*//*
                 if (routesList == null)  {
                     try {
                         Thread.sleep(1500);
@@ -135,10 +166,10 @@ public class RoutesListFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-*/
+*//*
                 return null;
             }
-        }.execute();
+        }.execute();*/
 
         routesAdapter = new RoutesAdapter(this.getContext(), routesList);
         routesAdapter.setListener(new RoutesAdapter.MyRouteListener() {
@@ -162,6 +193,7 @@ public class RoutesListFragment extends Fragment {
             }
         });
 
+
         recyclerView.setAdapter(routesAdapter);
 
         routesAdapter.notifyDataSetChanged();
@@ -174,8 +206,8 @@ public class RoutesListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         routesListViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
 
-
-
+        routesListViewModel.getRouteListUpdatedLiveData().observe(getViewLifecycleOwner(),routesUpdatedObserver);
+        routesListViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
 
         RelativeLayout routes_list_layout = view.findViewById(R.id.routes_list_layout);
         routes_list_layout.setOnClickListener(new View.OnClickListener() {

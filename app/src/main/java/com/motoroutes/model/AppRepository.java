@@ -30,6 +30,7 @@ public class AppRepository {
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private MutableLiveData<Route> routeMutableLiveData;
     private MutableLiveData<String> toolBarItemStateMutableLiveData;
+    private MutableLiveData<Boolean> routeListUpdatedLiveData;
     public static ArrayList<MyLocation> listPointsArray= new ArrayList<>();
 
     private ArrayList<Route> routesList;
@@ -42,6 +43,8 @@ public class AppRepository {
         userMutableLiveData = new MutableLiveData<FirebaseUser>();
         loggedOutMutableLiveData = new MutableLiveData<>();
         routeMutableLiveData = new MutableLiveData<Route>();
+        routeListUpdatedLiveData = new MutableLiveData<Boolean>();
+        routeListUpdatedLiveData.setValue(false);
         toolBarItemStateMutableLiveData = new MutableLiveData<>();
         if(firebaseAuth.getCurrentUser() != null){
             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
@@ -148,6 +151,7 @@ public class AppRepository {
 
     public ArrayList<Route> getRoutes(){
         updateRoutesFromDB();
+
         return routesList;
     }
 
@@ -167,6 +171,7 @@ public class AppRepository {
                         Route route = child.getValue(Route.class);
                         routesList.add(route);
                     }
+                    routeListUpdatedLiveData.setValue(true);
                 }
             }
         });
@@ -190,6 +195,14 @@ public class AppRepository {
 
     public MutableLiveData<Route> getRouteMutableLiveData() {
         return routeMutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> getRouteListUpdatedLiveData(){
+        return routeListUpdatedLiveData;
+    }
+
+    public void setRouteListUpdatedLiveData(Boolean state){
+        routeListUpdatedLiveData.setValue(state);
     }
 
 

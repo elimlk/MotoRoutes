@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -36,6 +37,17 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+//                Toast.makeText(getContext(),"Backpressed", Toast.LENGTH_SHORT).show();
+                getActivity().moveTaskToBack(true);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        callback.setEnabled(true);
+
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         registerViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
@@ -64,8 +76,8 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-/*                Navigation.findNavController(getView())
-                        .navigate(R.id.action_registerFragment_to_loginFragment);*/
+                Navigation.findNavController(getView())
+                        .navigate(R.id.action_registerFragment_to_loginFragment);
             }
         });
         btnSignUp.setOnClickListener(new View.OnClickListener() {

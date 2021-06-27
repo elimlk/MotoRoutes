@@ -40,6 +40,12 @@ public class RoutesListViewModel extends AndroidViewModel {
         appRepository.setToolBarItemState(itemState);
     }
 
+    public MutableLiveData<Boolean> getRouteListUpdatedLiveData(){
+        return appRepository.getRouteListUpdatedLiveData();
+    }
+
+
+
     public void logOut() {
         appRepository.logout();
     }
