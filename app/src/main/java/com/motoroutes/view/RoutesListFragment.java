@@ -52,9 +52,24 @@ public class RoutesListFragment extends Fragment {
     private Button btn_pop_show;
     private Route routeClicked;
 
+    private ProgressBar progressBar;
+    private LinearLayout linearLayout;
+
     RecyclerView recyclerView;
     ArrayList<Route> routesList;
     RoutesAdapter routesAdapter;
+
+    Observer<Boolean> routesUpdatedObserver = new Observer<Boolean>() {
+        @Override
+        public void onChanged(Boolean state) {
+            if(state) {
+                routesAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
+                routesListViewModel.getRouteListUpdatedLiveData().setValue(false);
+            }
+        }
+    };
 
     Observer<String> toolBarState = new Observer<String>() {
         @Override
@@ -117,15 +132,17 @@ public class RoutesListFragment extends Fragment {
         imv_pop_image = view.findViewById(R.id.route_popup_image);
         btn_pop_show = view.findViewById(R.id.route_popup_show_btn);
         recyclerView = view.findViewById(R.id.recycler_view_routes_list);
-        ProgressBar progressBar = view.findViewById(R.id.route_popup_progressbar);
-        LinearLayout linearLayout = view.findViewById(R.id.recycler_view_routes_list_layout);
+        progressBar = view.findViewById(R.id.route_popup_progressbar);
+        linearLayout = view.findViewById(R.id.recycler_view_routes_list_layout);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         linearLayout.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-        new AsyncTask<Object, Void, Void>() {
+        routesList = routesListViewModel.getRoutes();
+
+        /*new AsyncTask<Object, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -141,7 +158,7 @@ public class RoutesListFragment extends Fragment {
 
             @Override
             protected Void doInBackground(Object... objects) {
-/*
+*//*
                 if (routesList == null)  {
                     try {
                         Thread.sleep(1500);
@@ -149,10 +166,10 @@ public class RoutesListFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-*/
+*//*
                 return null;
             }
-        }.execute();
+        }.execute();*/
 
         routesAdapter = new RoutesAdapter(this.getContext(), routesList);
         routesAdapter.setListener(new RoutesAdapter.MyRouteListener() {
@@ -176,6 +193,7 @@ public class RoutesListFragment extends Fragment {
             }
         });
 
+
         recyclerView.setAdapter(routesAdapter);
 
         routesAdapter.notifyDataSetChanged();
@@ -188,9 +206,7 @@ public class RoutesListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         routesListViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
 
-
-
-
+        routesListViewModel.getRouteListUpdatedLiveData().observe(getViewLifecycleOwner(),routesUpdatedObserver);
         routesListViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
 
         RelativeLayout routes_list_layout = view.findViewById(R.id.routes_list_layout);
