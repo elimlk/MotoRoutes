@@ -44,5 +44,7 @@
     <string name="emergency_phone3">03-6062264</string>
     <string name="hello">Hello</string>
     <string name="hello_guest">Hello Guest</string>
+    <string name="hint_choose_area">Choose area</string>
+    <string name="hint_choose_difficulty">choose difficulty</string>
 
 </resources>

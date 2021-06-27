@@ -165,17 +165,22 @@
             android:paddingTop="30dp"
             app:cardCornerRadius="@dimen/loginCardRadius"
             android:elevation="5dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/Light_Green_50"
             android:id="@+id/card_addRoute"
-            android:visibility="gone">
+            android:visibility="visible">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp">
-                        <com.google.android.material.button.MaterialButtonToggleGroup android:layout_height="wrap_content" android:layout_width="wrap_content"
-                            tools:ignore="MissingConstraints"
+
+                        <com.google.android.material.button.MaterialButtonToggleGroup
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
                             android:id="@+id/material_toggle_cancel">
                                 <Button android:id="@+id/btn_add_route_cancel"
                                     android:layout_height="wrap_content"
@@ -183,97 +188,125 @@
                                     app:icon="@drawable/ic_baseline_cancel_24"
                                     style="@style/Widget.App.Button.IconOnly"/>
                         </com.google.android.material.button.MaterialButtonToggleGroup>
-
-
-                        <EditText
-                            android:id="@+id/et_addRoute_name"
-                            android:layout_width="250dp"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_below="@id/material_toggle_cancel"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:paddingVertical="5dp"
-                            android:paddingHorizontal="10dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginHorizontal="20dp"
-                            android:ems="10"
+                            app:startIconDrawable="@drawable/ic_baseline_edit_road_24"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginVertical="5dp"
                             android:hint="@string/hint_add_route_name"
-                            android:imeOptions="actionNext"
-                            android:background="@drawable/green_outline"
-                            android:textSize="15sp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/material_toggle_cancel"
-                            tools:ignore="MissingConstraints"
-                            />
+                            app:endIconMode="clear_text"
+                            android:id="@+id/et_addRoute_name_layout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            >
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/et_addRoute_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:imeOptions="actionNext"
+                                    android:background="@drawable/green_outline"
+                                    android:textSize="15sp"
+                                    />
 
-                        <EditText
-                            android:id="@+id/et_addRoute_description"
-                            android:layout_width="250dp"
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/green_outline"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="5dp"
-                            android:layout_margin="20dp"
-                            android:ems="10"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginVertical="5dp"
+                            app:endIconMode="clear_text"
                             android:hint="@string/hint_add_route_description"
+                            app:startIconDrawable="@drawable/ic_baseline_edit_24"
+                            android:id="@+id/et_addRoute_description_layout"
+                            android:layout_below="@+id/et_addRoute_name_layout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_addRoute_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/green_outline"
+                            android:ems="10"
                             android:imeOptions="actionNext"
                             android:textSize="15sp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/et_addRoute_name" />
+                            />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <Spinner
-                            android:id="@+id/sp_addRoute_area"
-                            android:background="@drawable/green_outline"
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="20dp"
-                            android:imeOptions="actionNext"
-                            android:textSize="25sp"
-                            android:textStyle="bold"
-                            android:theme="@style/AppTheme.Spinner"
-                            android:entries="@array/area"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/et_addRoute_description"/>
-
-                        <Spinner
-                            android:id="@+id/sp_addRoute_difficulty"
-                            android:background="@drawable/green_outline"
-                            android:layout_width="200dp"
-                            android:textAlignment="inherit"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="20dp"
-                            android:textStyle="bold"
-                            android:imeOptions="actionNext"
-                            android:textSize="25sp"
-                            android:entries="@array/difficulty"
-                            android:theme="@style/AppTheme.Spinner"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/sp_addRoute_area" />
-
-
-                        <Button
-                            android:id="@+id/btn_add_route_file_picker"
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/Light_Green_700"
-                            android:text="@string/btn_chooseFile"
-                            android:layout_margin="20dp"
-                            android:textColor="@color/white"
-                            android:textSize="10sp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/sp_addRoute_difficulty" />
-                        <Button
-                            android:id="@+id/btn_add_route_image_picker"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginVertical="5dp"
+                            app:startIconDrawable="@drawable/ic_baseline_edit_location_alt_24"
+                            android:hint="@string/hint_choose_area"
+                            android:id="@+id/sp_addRoute_area_layout"
+                            android:layout_below="@+id/et_addRoute_description_layout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                            >
+                                <AutoCompleteTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/autoComplete_area"
+                                    android:padding="5dp"
+
+                                    android:inputType="none"
+                                    />
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/Light_Green_700"
-                            android:text="@string/btn_chooseImage"
-                            android:layout_margin="20dp"
-                            android:textColor="@color/white"
-                            android:textSize="10sp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/btn_add_route_file_picker" />
-                        <Button
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginVertical="5dp"
+                            android:hint="@string/hint_choose_difficulty"
+                            app:startIconDrawable="@drawable/ic_baseline_electric_bike_24"
+                            android:id="@+id/autoComplete_difficulty_layout"
+                            android:layout_below="@+id/sp_addRoute_area_layout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                            >
+                                <AutoCompleteTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/autoComplete_difficulty"
+                                    android:padding="5dp"
+
+                                    android:inputType="none"
+                                    />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/autoComplete_difficulty_layout"
+                            android:id="@+id/files_layout">
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btn_add_route_image_picker"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:layout_marginVertical="5dp"
+                                    android:backgroundTint="@color/Light_Green_700"
+                                    android:text="@string/btn_chooseImage"
+                                    app:icon="@drawable/ic_baseline_image_24" />
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btn_add_route_file_picker"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:layout_marginVertical="5dp"
+                                    android:backgroundTint="@color/Light_Green_700"
+                                    android:text="@string/btn_chooseFile"
+                                    app:icon="@drawable/ic_baseline_attach_file_24" />
+                        </LinearLayout>
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_add_route_add"
                             style="?attr/materialButtonStyle"
+                            app:icon="@drawable/ic_baseline_add_circle_24"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="35dp"
@@ -282,11 +315,9 @@
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             android:textStyle="bold"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/btn_add_route_image_picker" />
+                            android:layout_below="@id/files_layout" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
         <fragment

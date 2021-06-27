@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -97,6 +98,9 @@ public class LocationService extends Service {
 
     private void stopLocationService(){
         LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
+        Intent intent = new Intent();
+        intent.putExtra("recordedLocations",recordedLocations);
+
         AppRepository.getInstance(getApplication()).listPointsArray = recordedLocations;
         stopForeground(true);
         stopSelf();

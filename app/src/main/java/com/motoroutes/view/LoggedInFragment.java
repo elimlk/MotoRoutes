@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -77,6 +79,8 @@ public class LoggedInFragment extends Fragment {
     private CardView cardView_add_route;
     private CardView emergency_card;
     private TextView myGpsLocation;
+    private AutoCompleteTextView autoCompleteTextViewArea;
+    private AutoCompleteTextView autoCompleteTextViewDifficulty;
     private RouteBuilder routeBuilder = new RouteBuilder();
     private static final int MY_REQUEST_CODE_PERMISSION = 1000;
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
@@ -263,6 +267,9 @@ public class LoggedInFragment extends Fragment {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
+        autoCompleteTextViewArea = view.findViewById(R.id.autoComplete_area);
+        autoCompleteTextViewDifficulty = view.findViewById(R.id.autoComplete_difficulty);
+
         MainActivity.changeToolbarVisibility(true);
         //handle record button and fill parms in accordance to state
         btn_record_route = view.findViewById(R.id.btn_record_route);
@@ -295,6 +302,17 @@ public class LoggedInFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        ArrayAdapter areaArrayAdapter =new ArrayAdapter(getContext(),R.layout.drop_down_area,getResources().getStringArray(R.array.area));
+
+        autoCompleteTextViewArea.setAdapter(areaArrayAdapter);
+
+        ArrayAdapter difficultyArrayAdapter =new ArrayAdapter(getContext(),R.layout.drop_down_area,getResources().getStringArray(R.array.difficulty));
+        autoCompleteTextViewDifficulty.setAdapter(difficultyArrayAdapter);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
 
@@ -315,14 +333,18 @@ public class LoggedInFragment extends Fragment {
         }
         loggedInViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
 
+
+
+
         //define spinners for add_route cardView
-        Spinner spinnerDifficulty = view.findViewById(R.id.sp_addRoute_difficulty);
-        Spinner spinnerArea = view.findViewById(R.id.sp_addRoute_area);
+        //Spinner spinnerDifficulty = view.findViewById(R.id.sp_addRoute_difficulty);
+        //Spinner spinnerArea = view.findViewById(R.id.sp_addRoute_area);
         Button btn_add_route_cancel = view.findViewById(R.id.btn_add_route_cancel);
         Button btn_add_route_add = view.findViewById(R.id.btn_add_route_add);
         EditText et_routeName = view.findViewById(R.id.et_addRoute_name);
         EditText et_description = view.findViewById(R.id.et_addRoute_description);
-
+        route_difficulty = autoCompleteTextViewDifficulty.getText().toString();
+        route_area = autoCompleteTextViewArea.getText().toString();
         btn_add_route_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -331,7 +353,8 @@ public class LoggedInFragment extends Fragment {
 
             }
         });
-        spinnerDifficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+/*        spinnerDifficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 route_difficulty = String.valueOf(parent.getItemAtPosition(position));
@@ -352,7 +375,7 @@ public class LoggedInFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
         btn_add_route_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -513,6 +536,7 @@ public class LoggedInFragment extends Fragment {
                             Toast.makeText(this.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
                         }
                         gpxPath = (filePath);
+                        buttonRouteBrowse.setBackgroundColor(Color.parseColor("#E53935"));
                     }
                 }
                 break;
@@ -527,6 +551,7 @@ public class LoggedInFragment extends Fragment {
                             Toast.makeText(this.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
                         }
                         imageUri = (fileUri);
+                        buttonImageBrowse.setBackgroundColor(Color.parseColor("#E53935"));
                     }
                 }
                 break;
