@@ -64,7 +64,6 @@ public class LoginFragment extends Fragment {
         etPassword = view.findViewById(R.id.et_password);
         btnLogin = view.findViewById(R.id.btn_login);
         tvRegister = view.findViewById(R.id.tv_register);
-        tvForgotPassword = view.findViewById(R.id.tv_forgot_password);
         tvGuest = view.findViewById(R.id.guest_login);
         progressBar = view.findViewById(R.id.loginPrograssBar);
         CardView cardViewLogin = view.findViewById(R.id.card_login);
