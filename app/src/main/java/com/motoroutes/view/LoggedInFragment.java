@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.internal.location.zzas;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -79,6 +82,8 @@ public class LoggedInFragment extends Fragment {
     private static final int MY_RESULT_CODE_IMAGECHOOSER = 3000;
     private static final String LOG_TAG = "LoggedInFragment";
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
+    private FusedLocationProviderClient fusedLocationClient;
+
 
     private Button buttonRouteBrowse;
     private Button buttonImageBrowse;
@@ -139,8 +144,8 @@ public class LoggedInFragment extends Fragment {
             if (tmpRoute != null) {
                 polyline = routeBuilder.createPolygon(tmpRoute.getMyLocations());
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                for (MyLocation loc : tmpRoute.getMyLocations()){
-                    builder.include(new LatLng(loc.getLatitude(),loc.getLongitude()));
+                for (MyLocation loc : tmpRoute.getMyLocations()) {
+                    builder.include(new LatLng(loc.getLatitude(), loc.getLongitude()));
                 }
 
                 LatLngBounds bounds = builder.build();
@@ -150,6 +155,34 @@ public class LoggedInFragment extends Fragment {
                 googleMap.moveCamera(cu);
                 googleMap.animateCamera(cu);
                 googleMap.setLatLngBoundsForCameraTarget(null);
+
+            } else {
+                //Zoom to current location
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                fusedLocationClient.getLastLocation()
+                        .addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // Got last known location. In some rare situations this can be null.
+                                if (location != null) {
+                                    // Logic to handle location object
+                                    LatLng currentLatLang = new LatLng(location.getLatitude(),location.getLongitude());
+                                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLang);
+                                    googleMap.moveCamera(cameraUpdate);
+                                    googleMap.animateCamera(cameraUpdate);
+                                    googleMap.animateCamera( CameraUpdateFactory.zoomTo( 12.5f ) );
+                                }
+                            }
+                        });
 
             }
             if (polyline != null) {
@@ -182,6 +215,7 @@ public class LoggedInFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         loggedInViewModel.getRouteMutableLiveData().observe(getViewLifecycleOwner(),routeObserver);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
         MainActivity.changeToolbarVisibility(true);
@@ -323,6 +357,7 @@ public class LoggedInFragment extends Fragment {
 
             }
         });
+
     }
 
     @Override
