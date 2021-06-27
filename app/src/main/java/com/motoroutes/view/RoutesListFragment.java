@@ -139,28 +139,24 @@ public class RoutesListFragment extends Fragment {
             }
         }.execute();
 
-
-
-
-
-
         routesAdapter = new RoutesAdapter(this.getContext(), routesList);
         routesAdapter.setListener(new RoutesAdapter.MyRouteListener() {
             @Override
             public void onRouteClicked(int position, View view) {
-
-                popupCardView.setVisibility(View.VISIBLE);
-                routeClicked = routesList.get(position);
-                tv_pop_name.setText(routeClicked.getName());
-                tv_pop_area.setText(routeClicked.getArea());
-                tv_pop_diff.setText(routeClicked.getDifficulty());
-                tv_pop_desc.setText(routeClicked.getDescription());
-                if(routeClicked.getImageUrl()!=null) {
-                    Glide.with(getContext()).load(routeClicked.getImageUrl())
-                            .into(imv_pop_image);
-                }else
-                    Glide.with(getContext()).load(getURLForResource(R.drawable.default_route_image))
-                            .into(imv_pop_image);
+                if(popupCardView.getVisibility() != View.VISIBLE) {
+                    popupCardView.setVisibility(View.VISIBLE);
+                    routeClicked = routesList.get(position);
+                    tv_pop_name.setText(routeClicked.getName());
+                    tv_pop_area.setText(routeClicked.getArea());
+                    tv_pop_diff.setText(routeClicked.getDifficulty());
+                    tv_pop_desc.setText(routeClicked.getDescription());
+                    if (routeClicked.getImageUrl() != null) {
+                        Glide.with(getContext()).load(routeClicked.getImageUrl())
+                                .into(imv_pop_image);
+                    } else
+                        Glide.with(getContext()).load(getURLForResource(R.drawable.default_route_image))
+                                .into(imv_pop_image);
+                }
 
             }
         });
