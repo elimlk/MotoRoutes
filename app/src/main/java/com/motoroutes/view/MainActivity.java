@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -41,14 +42,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static Toolbar toolbar;
     private static NavigationView drawerNavigationView;
     private MainActivityViewModel mainActivityViewModel;
-    private TextView tv_userName;
+    private static TextView navUsername;
+    private FirebaseUser userProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.header_layout);
-        tv_userName = findViewById(R.id.tv_userHeader);
         setContentView(R.layout.activity_main);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+        View headerView = navigationView.getHeaderView(0);
+        navUsername = (TextView) headerView.findViewById(R.id.tv_userHeader);
         mainActivityViewModel =  new ViewModelProvider(this).get(MainActivityViewModel.class);
         mainActivityViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
@@ -57,10 +62,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String userID = firebaseUser.getUid();
                     DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("Users");
                     firebaseDatabase.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+
                         @Override
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                            User userProfile = snapshot.getValue(User.class);
-                            //v_userName.setText("Hello "+userProfile.fullname);
+                            if (!mainActivityViewModel.getLoggedOutMutableLiveData().getValue()) {
+                                navUsername.setText(getResources().getText(R.string.hello)+" "+snapshot.getValue(User.class).getFullname());
+                            }
+
                         }
 
                         @Override
@@ -98,9 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -112,15 +118,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
     public static void changeToolbarVisibility(boolean visible){
-        if (visible)
+        if (visible){
             toolbar.setVisibility(View.VISIBLE);
+
+        }
         else
             toolbar.setVisibility(View.GONE);
     }
 
     public static void loadGuestMenu(boolean isGuest){
         if (isGuest){
+            navUsername.setText(R.string.hello_guest);
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.guest_drawer_menu);
         }else {

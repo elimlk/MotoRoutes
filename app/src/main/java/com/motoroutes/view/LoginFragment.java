@@ -101,11 +101,6 @@ public class LoginFragment extends Fragment {
                     }
                     @Override
                     protected Void doInBackground(Object... objects) {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                         return null;
                     }
                 }.execute();

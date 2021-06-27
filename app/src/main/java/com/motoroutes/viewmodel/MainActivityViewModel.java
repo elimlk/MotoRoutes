@@ -29,7 +29,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
-        return userMutableLiveData;
+        return appRepository.getUserMutableLiveData();
     }
 
     public MutableLiveData<Boolean> getLoggedOutMutableLiveData() {

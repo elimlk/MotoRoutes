@@ -2,20 +2,20 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:gravity="bottom"
-    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
     android:padding="16dp" android:background="?attr/colorOnPrimary"
-    android:layout_height="105dp" android:layout_width="match_parent" >
+    android:layout_height="match_parent" android:layout_width="match_parent" >
 
-    <ImageView android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:src="@drawable/icon_bold"
+    <ImageView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/logo_moto_route_new"
         android:id="@+id/image_header"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_userHeader"
-        android:text="Hello guest"
+        android:text="Hello Geust"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:layout_below="@id/image_header"
         android:layout_centerInParent="true"
         android:layout_marginTop="5dp"/>
