@@ -33,7 +33,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.google.android.gms.internal.location.zzas;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -43,13 +42,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -83,6 +80,7 @@ public class LoggedInFragment extends Fragment {
     private static final String LOG_TAG = "LoggedInFragment";
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private FusedLocationProviderClient fusedLocationClient;
+    LatLng currentLatLng;
 
 
     private Button buttonRouteBrowse;
@@ -175,11 +173,11 @@ public class LoggedInFragment extends Fragment {
                                 // Got last known location. In some rare situations this can be null.
                                 if (location != null) {
                                     // Logic to handle location object
-                                    LatLng currentLatLang = new LatLng(location.getLatitude(),location.getLongitude());
+                                    LatLng currentLatLang = new LatLng(location.getLatitude(), location.getLongitude());
                                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLang);
                                     googleMap.moveCamera(cameraUpdate);
                                     googleMap.animateCamera(cameraUpdate);
-                                    googleMap.animateCamera( CameraUpdateFactory.zoomTo( 12.5f ) );
+                                    googleMap.animateCamera(CameraUpdateFactory.zoomTo(12.5f));
                                 }
                             }
                         });
@@ -209,6 +207,34 @@ public class LoggedInFragment extends Fragment {
         }
 
     };
+
+    private void updateCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                        } else {
+                            currentLatLng = null;
+                        }
+
+                    }
+                });
+    }
 
     @Nullable
     @Override

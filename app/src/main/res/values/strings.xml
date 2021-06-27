@@ -16,9 +16,9 @@
     <string name="hint_phoneNumber">Phone number</string>
     <string name="btn_signUp">Sign Up</string>
     <string name="guest_login">Continue as a guest</string>
-    <string name="Registartion_success">Registartion success</string>
+    <string name="Registartion_success">Registration success</string>
     <string name="toolbar_logout">Logout</string>
-    <string name="routeAdded">route added successfuly</string>
+    <string name="routeAdded">Route added successfully</string>
     <string name="title_add_route">Add Route</string>
     <string name="hint_add_route_name">Route name</string>
     <string name="hint_add_route_description">Description</string>
@@ -26,9 +26,10 @@
     <string name="et_filePath">File path</string>
     <string name="btn_chooseFile">Choose route file</string>
     <string name="btn_chooseImage">Choose Image Route</string>
-    <string name="toolbar_home">map</string>
+    <string name="toolbar_home">Map</string>
     <string name="btn_show_route">Show on map</string>
     <string name="hint_Record">Record route</string>
     <string name="helper_required">*Required</string>
+    <string name="fill_all">Please fill all fields</string>
 
 </resources>

@@ -30,5 +30,7 @@
     <string name="btn_chooseImage">בחר תמונת מסלול</string>
     <string name="btn_show_route">הצג על המפה</string>
     <string name="hint_Record">הקלט מסלול</string>
+    <string name="fill_all">אנא מלא את כל השדות</string>
+
 
 </resources>

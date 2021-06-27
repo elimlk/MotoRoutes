@@ -64,7 +64,7 @@ public class AppRepository {
     public void register(String email, String password, String fullName, String phone){
         if (email.isEmpty() || password.isEmpty())
         {
-            Toast.makeText(application,"fill all the fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(application,application.getString(R.string.fill_all), Toast.LENGTH_SHORT).show();
             return;
         }
         firebaseAuth.createUserWithEmailAndPassword(email,password)
