@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -415,8 +416,23 @@ public class LoggedInFragment extends Fragment {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loggedInViewModel =  new ViewModelProvider(this).get(LoggedInViewModel.class);
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+//                Toast.makeText(getContext(),"Backpressed", Toast.LENGTH_SHORT).show();
+                if(emergency_card.getVisibility() == View.VISIBLE || cardView_add_route.getVisibility() == View.VISIBLE) {
+                    emergency_card.setVisibility(View.GONE);
+                    cardView_add_route.setVisibility(View.GONE);
+                }
+                else
+                    getActivity().moveTaskToBack(true);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        callback.setEnabled(true);
+
+        loggedInViewModel =  new ViewModelProvider(this).get(LoggedInViewModel.class);
 
     }
 

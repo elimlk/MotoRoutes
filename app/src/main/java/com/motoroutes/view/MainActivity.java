@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            Toast.makeText(this,"Menu open",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,"Menu open",Toast.LENGTH_SHORT).show();
             drawerLayout.openDrawer(GravityCompat.START);
         }
 
@@ -160,27 +160,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.item_routes:
                 item.setChecked(true);
                 mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_routes));
-                Toast.makeText(this,"routes",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"routes",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_addRoute:
                 item.setChecked(true);
                 mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_addRoute));
-                Toast.makeText(this,"addRoutes",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"addRoutes",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_emergency:
                 item.setChecked(true);
                 mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_emergency));
-                Toast.makeText(this,"emergency",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this,"emergency",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_logout:
                 item.setChecked(true);
                 mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_logout));
-                Toast.makeText(this,"logout",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"logout",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_map:
                 item.setChecked(true);
                 mainActivityViewModel.setToolBarItemState(String.valueOf(R.id.item_map));
-                Toast.makeText(this,"map",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"map",Toast.LENGTH_SHORT).show();
                 break;
         }
         drawerLayout.closeDrawers();

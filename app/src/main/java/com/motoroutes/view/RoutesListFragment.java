@@ -14,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -74,8 +76,6 @@ public class RoutesListFragment extends Fragment {
                     break;
                 case R.id.item_map:
                     Navigation.findNavController(getActivity(),R.id.activity_main_navHostFragment).navigate(R.id.action_routesListFragment_to_loggedInFragmemt);
-
-
                     break;
             }
         }
@@ -84,6 +84,20 @@ public class RoutesListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+//                Toast.makeText(getContext(),"Backpressed", Toast.LENGTH_SHORT).show();
+                if(popupCardView.getVisibility()==View.VISIBLE)
+                    popupCardView.setVisibility(View.GONE);
+                else
+                    routesListViewModel.setToolBarItemState(String.valueOf(R.id.item_map));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        callback.setEnabled(true);
 
 
         routesListViewModel = new ViewModelProvider(this).get(RoutesListViewModel.class);
@@ -176,6 +190,8 @@ public class RoutesListFragment extends Fragment {
 
 
 
+
+        routesListViewModel.getToolBarItemStateMutableLiveData().observe(getViewLifecycleOwner(),toolBarState);
 
         RelativeLayout routes_list_layout = view.findViewById(R.id.routes_list_layout);
         routes_list_layout.setOnClickListener(new View.OnClickListener() {
