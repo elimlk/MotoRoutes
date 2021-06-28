@@ -3,8 +3,10 @@ package com.motoroutes.view;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -262,6 +265,7 @@ public class LoggedInFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+
         loggedInViewModel.getRouteMutableLiveData().observe(getViewLifecycleOwner(),routeObserver);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
@@ -316,7 +320,6 @@ public class LoggedInFragment extends Fragment {
 
 
         super.onViewCreated(view, savedInstanceState);
-
 
         cardView_add_route = view.findViewById(R.id.card_addRoute);
         emergency_card = view.findViewById(R.id.card_emergency);
@@ -413,7 +416,20 @@ public class LoggedInFragment extends Fragment {
                 if (!LocationService.isServiceState()){
                     if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FileUtils.REQUEST_CODE_LOCATION_PERMISSION);
-                    }else{
+                    }
+                    if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        CardView cardView = view.findViewById(R.id.card_permission);
+                        cardView.setVisibility(View.VISIBLE);
+                        Button gotIt = view.findViewById(R.id.btn_permission_gotIt);
+                        gotIt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, FileUtils.REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION);
+                                cardView.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                    else{
                         startLocationService();
                         btn_record_route.setText("STOP RECORDING");
                         btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFE53935")));
@@ -500,6 +516,11 @@ public class LoggedInFragment extends Fragment {
                 startLocationService();
             else
                 Toast.makeText(getContext(),"Permission Denied!", Toast.LENGTH_SHORT).show();
+        }
+
+        if (requestCode == FileUtils.REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION && grantResults.length > 0 ){
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED)
+                Toast.makeText(getContext(),"WTF DUDE", Toast.LENGTH_SHORT).show();
         }
         switch (requestCode) {
             case MY_REQUEST_CODE_PERMISSION: {

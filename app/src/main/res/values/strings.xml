@@ -48,5 +48,7 @@
     <string name="hint_choose_difficulty">choose difficulty</string>
     <string name="header_add_route">Route details</string>
     <string name="service_details">Recording new route in process</string>
+    <string name="backgruond_permssion_prompt">In order to record route on background please approve background location permission</string>
+    <string name="got_it">Got it!</string>
 
 </resources>

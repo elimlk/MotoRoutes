@@ -48,6 +48,7 @@
     <string name="hint_choose_difficulty">בחר רמת קושי</string>
     <string name="header_add_route">פרטי מסלול</string>
     <string name="service_details">הקלטת מסלול חדש בתהליך</string>
-
+    <string name="backgruond_permssion_prompt">על מנת להקליט מסלול באופן מיטבי אנא אשר שימוש בנתוני מיקום ברקע</string>
+    <string name="got_it">הבנתי!</string>
 
 </resources>

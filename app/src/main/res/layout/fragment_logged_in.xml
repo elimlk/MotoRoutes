@@ -5,6 +5,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_permission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/loginCardRadius"
+            android:layout_margin="35dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_permission"
+                    android:text="@string/backgruond_permssion_prompt"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:layout_margin="20dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/got_it"
+                    android:id="@+id/btn_permission_gotIt"
+                    android:layout_below="@+id/tv_permission"
+                    />
+                </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/card_emergency"

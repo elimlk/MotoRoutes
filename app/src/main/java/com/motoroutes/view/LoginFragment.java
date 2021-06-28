@@ -160,6 +160,7 @@ public class LoginFragment extends Fragment {
         if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FileUtils.REQUEST_CODE_LOCATION_PERMISSION);
         }
+
     }
 
     @Override
@@ -167,7 +168,7 @@ public class LoginFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == FileUtils.REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0 ){
-            if (grantResults[0] != PackageManager.PERMISSION_GRANTED)
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED || grantResults[1] != PackageManager.PERMISSION_GRANTED)
                 Toast.makeText(getContext(),"Permission Denied!", Toast.LENGTH_SHORT).show();
         }
     }
