@@ -74,6 +74,9 @@ public class AppRepository {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            if(loggedOutMutableLiveData.getValue() == null) {
+                                loggedOutMutableLiveData.postValue(false);
+                            }
                             User user = new User(email,password,fullName,phone);
                             FirebaseDatabase.getInstance().getReference("Users").
                                     child(FirebaseAuth.getInstance().getCurrentUser().getUid()).
