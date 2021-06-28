@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -92,7 +94,8 @@ public class LoggedInFragment extends Fragment {
     private FusedLocationProviderClient fusedLocationClient;
     private LatLng currentLatLng;
 
-
+    private Animation fadeInCardAnimation;
+    private Animation fadeOutCardAnimation;
     private Button buttonRouteBrowse;
     private Button buttonImageBrowse;
     private ExtendedFloatingActionButton btn_record_route;
@@ -272,6 +275,8 @@ public class LoggedInFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_logged_in, container,false);
         autoCompleteTextViewArea = view.findViewById(R.id.autoComplete_area);
         autoCompleteTextViewDifficulty = view.findViewById(R.id.autoComplete_difficulty);
+        fadeInCardAnimation = AnimationUtils.loadAnimation(getContext(),R.anim.fadein);
+        fadeOutCardAnimation = AnimationUtils.loadAnimation(getContext(),R.anim.fadeout);
 
         MainActivity.changeToolbarVisibility(true);
         //handle record button and fill parms in accordance to state
@@ -420,12 +425,14 @@ public class LoggedInFragment extends Fragment {
                     if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         CardView cardView = view.findViewById(R.id.card_permission);
                         cardView.setVisibility(View.VISIBLE);
+                        cardView.startAnimation(fadeInCardAnimation);
                         Button gotIt = view.findViewById(R.id.btn_permission_gotIt);
                         gotIt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, FileUtils.REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION);
                                 cardView.setVisibility(View.GONE);
+                                cardView.startAnimation(fadeOutCardAnimation);
+                                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, FileUtils.REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION);
                             }
                         });
                     }
