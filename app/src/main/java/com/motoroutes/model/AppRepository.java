@@ -4,7 +4,6 @@ import android.app.Application;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -117,8 +116,11 @@ public class AppRepository {
                             else{
                                 Toast.makeText(application,"Login Failed: " +task.getException()
                                         .getMessage(), Toast.LENGTH_SHORT).show();
+                                userMutableLiveData.postValue(null);
                             }
+
                         }
+
                     });
         }
 

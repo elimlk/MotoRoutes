@@ -59,9 +59,9 @@ public class LoginFragment extends Fragment {
         loginViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
+                progressBar.setVisibility(View.GONE);
+                cardViewLogin.setVisibility(View.VISIBLE);
                 if(firebaseUser != null){
-                    progressBar.setVisibility(View.GONE);
-                    cardViewLogin.setVisibility(View.VISIBLE);
                     Navigation.findNavController(getView())
                             .navigate(R.id.action_loginFragment_to_loggedInFragmemt);
                 }

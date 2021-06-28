@@ -32,7 +32,6 @@ public class LocationService extends Service {
     private ArrayList<MyLocation> recordedLocations;
     private static boolean serviceState = false;
 
-
     private LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
