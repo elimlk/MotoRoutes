@@ -24,7 +24,7 @@
     <string name="hint_add_route_description">Description</string>
     <string name="btn_addRoute">Add Route</string>
     <string name="et_filePath">File path</string>
-    <string name="btn_chooseFile">Choose route file</string>
+    <string name="btn_chooseFile">Choose route file(.GPX)</string>
     <string name="btn_chooseImage">Choose Image Route</string>
     <string name="toolbar_home">Map</string>
     <string name="btn_show_route">Show on map</string>
@@ -47,5 +47,6 @@
     <string name="hint_choose_area">Choose area</string>
     <string name="hint_choose_difficulty">choose difficulty</string>
     <string name="header_add_route">Route details</string>
+    <string name="service_details">Recording new route in process</string>
 
 </resources>

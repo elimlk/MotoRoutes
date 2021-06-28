@@ -60,9 +60,9 @@ public class LocationService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelId);
 
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("Location Service");
+        builder.setContentTitle("MotoRoutes");
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-        builder.setContentText("Running");
+        builder.setContentText(getResources().getText(R.string.service_details));
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(false);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);

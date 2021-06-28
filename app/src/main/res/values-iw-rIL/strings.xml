@@ -42,7 +42,12 @@
     <string name="emergency_name3">חילוץ מוסק - משל"ט</string>
     <string name="emergency_details3">במקרה חירום רפואי חייגו 101</string>
     <string name="emergency_phone3">03-6062264</string>
-
+    <string name="hello">שלום</string>
+    <string name="hello_guest">שלום אורח</string>
+    <string name="hint_choose_area">בחר אזור</string>
+    <string name="hint_choose_difficulty">בחר רמת קושי</string>
+    <string name="header_add_route">פרטי מסלול</string>
+    <string name="service_details">הקלטת מסלול חדש בתהליך</string>
 
 
 </resources>

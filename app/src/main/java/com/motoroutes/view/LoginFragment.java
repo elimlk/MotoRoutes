@@ -1,8 +1,11 @@
 package com.motoroutes.view;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -11,11 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,6 +30,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.dialog.MaterialDialogs;
 import com.google.firebase.auth.FirebaseUser;
 import com.motoroutes.R;
+import com.motoroutes.model.FileUtils;
 import com.motoroutes.viewmodel.LoginViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -95,7 +102,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                cardViewLogin.setVisibility(View.INVISIBLE);
+                cardViewLogin.setVisibility(View.GONE);
                 MainActivity.loadGuestMenu(false);
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString();
@@ -146,4 +153,22 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FileUtils.REQUEST_CODE_LOCATION_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == FileUtils.REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0 ){
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED)
+                Toast.makeText(getContext(),"Permission Denied!", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

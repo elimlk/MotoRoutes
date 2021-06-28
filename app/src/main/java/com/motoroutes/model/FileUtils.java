@@ -23,6 +23,7 @@ public class FileUtils {
     public static final String ACTION_START_LOCATION_SERVICE = "startLocationService";
     public static final String ACTION_STOP_LOCATION_SERVICE = "stopLocationService";
     private static final String LOG_TAG = "FileUtils";
+    public static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
     private static Uri contentUri = null;
 

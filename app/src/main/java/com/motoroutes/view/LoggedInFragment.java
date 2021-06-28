@@ -86,7 +86,6 @@ public class LoggedInFragment extends Fragment {
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
     private static final int MY_RESULT_CODE_IMAGECHOOSER = 3000;
     private static final String LOG_TAG = "LoggedInFragment";
-    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private FusedLocationProviderClient fusedLocationClient;
     private LatLng currentLatLng;
 
@@ -317,6 +316,8 @@ public class LoggedInFragment extends Fragment {
 
 
         super.onViewCreated(view, savedInstanceState);
+
+
         cardView_add_route = view.findViewById(R.id.card_addRoute);
         emergency_card = view.findViewById(R.id.card_emergency);
         emergency_card.setOnClickListener(new View.OnClickListener() {
@@ -411,7 +412,7 @@ public class LoggedInFragment extends Fragment {
             public void onClick(View v) {
                 if (!LocationService.isServiceState()){
                     if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION); //TODO CHECK!!!!
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FileUtils.REQUEST_CODE_LOCATION_PERMISSION);
                     }else{
                         startLocationService();
                         btn_record_route.setText("STOP RECORDING");
@@ -426,7 +427,7 @@ public class LoggedInFragment extends Fragment {
                     btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF")));
                     btn_record_route.setIconResource(R.drawable.ic_icon_record);
                     cardView_add_route.setVisibility(View.VISIBLE);
-                    buttonRouteBrowse.setVisibility(View.INVISIBLE);
+                    buttonRouteBrowse.setVisibility(View.GONE);
 
                     LocationService.setServiceState(false);
                 }
@@ -454,6 +455,7 @@ public class LoggedInFragment extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         callback.setEnabled(true);
+
 
         loggedInViewModel =  new ViewModelProvider(this).get(LoggedInViewModel.class);
 
@@ -493,7 +495,7 @@ public class LoggedInFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0 ){
+        if (requestCode == FileUtils.REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0 ){
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 startLocationService();
             else
