@@ -117,16 +117,20 @@ public class LoggedInFragment extends Fragment {
 
                     break;
                 case R.id.item_addRoute:
-                    CardView cardView = getView().findViewById(R.id.card_addRoute);
-                    if (cardView.getVisibility() != View.VISIBLE) {
-                        cardView.setVisibility(View.VISIBLE);
+                    if (cardView_add_route.getVisibility() != View.VISIBLE) {
+                        cardView_add_route.setVisibility(View.VISIBLE);
+                        cardView_add_route.startAnimation(fadeInCardAnimation);
                         emergency_card.setVisibility(View.GONE);
-                    } else
-                        cardView.setVisibility(View.GONE);
+                        emergency_card.clearAnimation();
+                    } else {
+                        cardView_add_route.setVisibility(View.GONE);
+                        cardView_add_route.clearAnimation();
+                    }
                     break;
                 case R.id.item_emergency:
                     if (emergency_card.getVisibility() != View.VISIBLE) {
                         emergency_card.setVisibility(View.VISIBLE);
+                        emergency_card.startAnimation(fadeInCardAnimation);
                         cardView_add_route.setVisibility(View.GONE);
                         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             return;
@@ -139,6 +143,7 @@ public class LoggedInFragment extends Fragment {
                         });}
                         else {
                             emergency_card.setVisibility(View.GONE);
+                            emergency_card.clearAnimation();
                         }
                     break;
                 case R.id.item_logout:
@@ -332,6 +337,7 @@ public class LoggedInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 emergency_card.setVisibility(View.GONE);
+                emergency_card.clearAnimation();
             }
         });
         myGpsLocation = view.findViewById(R.id.my_gps_location);
@@ -358,7 +364,7 @@ public class LoggedInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 cardView_add_route.setVisibility(View.GONE);
-                btn_add_route_cancel.clearFocus();
+                cardView_add_route.clearAnimation();
 
             }
         });
@@ -401,6 +407,7 @@ public class LoggedInFragment extends Fragment {
                         setImageOnDBAndSetUrl();
 
                     loggedInViewModel.addRoute(tmpRoute);
+
                     SupportMapFragment mapFragment =
                             (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                     mapFragment.getMapAsync(callback);
@@ -410,6 +417,7 @@ public class LoggedInFragment extends Fragment {
                 et_routeName.getText().clear();
                 et_description.getText().clear();
                 imageUri=null;
+                cardView_add_route.clearAnimation();
                 cardView_add_route.setVisibility(View.GONE);
 
             }
@@ -431,7 +439,7 @@ public class LoggedInFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 cardView.setVisibility(View.GONE);
-                                cardView.startAnimation(fadeOutCardAnimation);
+                                cardView.clearAnimation();
                                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, FileUtils.REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION);
                             }
                         });
@@ -450,6 +458,7 @@ public class LoggedInFragment extends Fragment {
                     btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF")));
                     btn_record_route.setIconResource(R.drawable.ic_icon_record);
                     cardView_add_route.setVisibility(View.VISIBLE);
+                    cardView_add_route.startAnimation(fadeInCardAnimation);
                     buttonRouteBrowse.setVisibility(View.GONE);
 
                     LocationService.setServiceState(false);
@@ -470,7 +479,9 @@ public class LoggedInFragment extends Fragment {
 //                Toast.makeText(getContext(),"Backpressed", Toast.LENGTH_SHORT).show();
                 if(emergency_card.getVisibility() == View.VISIBLE || cardView_add_route.getVisibility() == View.VISIBLE) {
                     emergency_card.setVisibility(View.GONE);
+                    emergency_card.clearAnimation();
                     cardView_add_route.setVisibility(View.GONE);
+                    cardView_add_route.clearAnimation();
                 }
                 else
                     getActivity().moveTaskToBack(true);

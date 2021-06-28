@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,6 +57,9 @@ public class RoutesListFragment extends Fragment {
     private ProgressBar progressBar;
     private LinearLayout linearLayout;
 
+    private Animation fadeInCardAnimation;
+    private Animation fadeOutCardAnimation;
+
     RecyclerView recyclerView;
     ArrayList<Route> routesList;
     RoutesAdapter routesAdapter;
@@ -99,7 +104,8 @@ public class RoutesListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        fadeInCardAnimation = AnimationUtils.loadAnimation(getContext(),R.anim.fadein);
+        fadeOutCardAnimation = AnimationUtils.loadAnimation(getContext(),R.anim.fadeout);
         // This callback will only be called when MyFragment is at least Started.
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -177,6 +183,7 @@ public class RoutesListFragment extends Fragment {
             public void onRouteClicked(int position, View view) {
                 if(popupCardView.getVisibility() != View.VISIBLE) {
                     popupCardView.setVisibility(View.VISIBLE);
+                    popupCardView.startAnimation(fadeInCardAnimation);
                     routeClicked = routesList.get(position);
                     tv_pop_name.setText(routeClicked.getName());
                     tv_pop_area.setText(routeClicked.getArea());
@@ -213,13 +220,16 @@ public class RoutesListFragment extends Fragment {
         routes_list_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 popupCardView.setVisibility(View.GONE);
+                popupCardView.clearAnimation();
             }
         });
         popupCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupCardView.setVisibility(View.GONE);
+                popupCardView.clearAnimation();
             }
         });
 

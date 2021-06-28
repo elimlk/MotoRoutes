@@ -10,10 +10,12 @@
         android:label="LoginRegisterFragment" >
         <action
             android:id="@+id/action_loginFragment_to_loggedInFragmemt"
-            app:destination="@id/loggedInFragmemt" />
+            app:destination="@id/loggedInFragmemt"
+            app:enterAnim="@anim/fadein" />
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/fadein" />
     </fragment>
     <fragment
         android:id="@+id/loggedInFragmemt"
@@ -21,10 +23,12 @@
         android:label="LoggedInFragmemt" >
         <action
             android:id="@+id/action_loggedInFragmemt_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fadein" />
         <action
             android:id="@+id/action_loggedInFragmemt_to_routesListFragment"
-            app:destination="@id/routesListFragment" />
+            app:destination="@id/routesListFragment"
+            app:enterAnim="@anim/fadein" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -32,7 +36,8 @@
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fadein" />
     </fragment>
     <fragment
         android:id="@+id/routesListFragment"
@@ -40,9 +45,11 @@
         android:label="RoutesListFragment" >
         <action
             android:id="@+id/action_routesListFragment_to_loggedInFragmemt"
-            app:destination="@id/loggedInFragmemt" />
+            app:destination="@id/loggedInFragmemt"
+            app:enterAnim="@anim/fadein" />
         <action
             android:id="@+id/action_routesListFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fadein" />
     </fragment>
 </navigation>
