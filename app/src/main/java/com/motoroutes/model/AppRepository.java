@@ -137,20 +137,22 @@ public class AppRepository {
     }
 
     public void addRoute(Route route){
-        FirebaseDatabase.getInstance().getReference("Routes").
-                child(route.getName()).
-                setValue(route).addOnCompleteListener(new OnCompleteListener<Void>(){
-            @Override
-            public void onComplete(@NonNull @NotNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(application,application.getString(R.string.routeAdded), Toast.LENGTH_SHORT).show();
+        if(route.isValid()){
+            FirebaseDatabase.getInstance().getReference("Routes").
+                    child(route.getName()).
+                    setValue(route).addOnCompleteListener(new OnCompleteListener<Void>(){
+                @Override
+                public void onComplete(@NonNull @NotNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(application,application.getString(R.string.routeAdded), Toast.LENGTH_SHORT).show();
 
-                } else {
-                    //display a failure message
+                    } else {
+                        Toast.makeText(application,application.getString(R.string.err_add_route), Toast.LENGTH_SHORT).show();
+                    }
+
                 }
-
-            }
-        });
+            });
+        }
 
     }
 

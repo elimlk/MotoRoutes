@@ -50,5 +50,6 @@
     <string name="service_details">הקלטת מסלול חדש בתהליך</string>
     <string name="backgruond_permssion_prompt">על מנת להקליט מסלול באופן מיטבי אנא אשר שימוש בנתוני מיקום ברקע</string>
     <string name="got_it">הבנתי!</string>
+    <string name="err_add_route">שגיאה! אנא מלא את כל הפרטים</string>
 
 </resources>

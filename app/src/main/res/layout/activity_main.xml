@@ -14,39 +14,22 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <Button
-            style="Widget.MaterialComponents.Button.TextButton.Icon"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/toolbar_button"
-            android:backgroundTint="@android:color/transparent"
-            android:text="Menu"
-            android:textStyle="bold"
-            android:elevation="0dp"
-            app:icon="@drawable/ic_baseline_dehaze_24"
-            app:shapeAppearance="?attr/shapeAppearanceSmallComponent"
-            android:layout_margin="50dp"/>
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
 
-            android:visibility="visible"
-            android:id="@+id/toolbar_layout">
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                />
-        </com.google.android.material.appbar.AppBarLayout>
+                android:background="@color/white"/>
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".view.MainActivity"
-            android:layout_below="@id/toolbar_layout">
+            android:layout_below="@id/toolbar">
 
             <fragment
                 android:layout_width="match_parent"

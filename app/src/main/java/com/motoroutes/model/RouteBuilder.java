@@ -33,8 +33,13 @@ public class RouteBuilder {
     }
 
     public ArrayList<MyLocation> parseGpxToArray(String filePath) throws FileNotFoundException {
-        File gpxFile = new File(filePath);
-        ArrayList<MyLocation> gpxList = decodeGPX(filePath);
+        ArrayList<MyLocation> gpxList;
+        if(filePath !=null){
+            File gpxFile = new File(filePath);
+            gpxList = decodeGPX(filePath);
+        }
+        else
+            gpxList = null;
         return gpxList;
     }
 

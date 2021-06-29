@@ -172,7 +172,7 @@ public class LoggedInFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             PolylineOptions polyline = null;
-            if (tmpRoute != null) {
+            if (tmpRoute != null && tmpRoute.isValid()) {
                 polyline = routeBuilder.createPolygon(tmpRoute.getMyLocations());
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 for (MyLocation loc : tmpRoute.getMyLocations()) {
@@ -358,8 +358,6 @@ public class LoggedInFragment extends Fragment {
         Button btn_add_route_add = view.findViewById(R.id.btn_add_route_add);
         EditText et_routeName = view.findViewById(R.id.et_addRoute_name);
         EditText et_description = view.findViewById(R.id.et_addRoute_description);
-        route_difficulty = autoCompleteTextViewDifficulty.getText().toString();
-        route_area = autoCompleteTextViewArea.getText().toString();
         btn_add_route_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -396,30 +394,33 @@ public class LoggedInFragment extends Fragment {
             public void onClick(View v) {
                 String routeName = et_routeName.getText().toString();
                 String routeDescription = et_description.getText().toString();
+                route_area = autoCompleteTextViewArea.getText().toString();
+                route_difficulty = autoCompleteTextViewDifficulty.getText().toString();
+
                 tmpRoute = new Route(routeName,routeDescription,route_area,0f,route_difficulty);
                 try {
                     if(buttonRouteBrowse.getVisibility()==View.VISIBLE)
                         tmpRoute.setMyLocations(routeBuilder.parseGpxToArray(getGPXPath()));
-                    else{
+                    else
                         tmpRoute.setMyLocations(loggedInViewModel.getListPointsArray());
-                    }
-                    if(imageUri!=null)
-                        setImageOnDBAndSetUrl();
-
-                    loggedInViewModel.addRoute(tmpRoute);
-
-                    SupportMapFragment mapFragment =
-                            (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-                    mapFragment.getMapAsync(callback);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                et_routeName.getText().clear();
-                et_description.getText().clear();
-                imageUri=null;
-                cardView_add_route.clearAnimation();
-                cardView_add_route.setVisibility(View.GONE);
-
+                if(tmpRoute.isValid()){
+                    if(imageUri!=null)
+                        setImageOnDBAndSetUrl();
+                    loggedInViewModel.addRoute(tmpRoute);
+                    SupportMapFragment mapFragment =
+                            (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+                    mapFragment.getMapAsync(callback);
+                    et_routeName.getText().clear();
+                    et_description.getText().clear();
+                    imageUri=null;
+                    cardView_add_route.clearAnimation();
+                    cardView_add_route.setVisibility(View.GONE);
+                }else{
+                    Toast.makeText(getContext(),getContext().getString(R.string.err_add_route), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

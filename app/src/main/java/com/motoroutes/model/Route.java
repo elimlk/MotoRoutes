@@ -66,4 +66,16 @@ public class Route {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public boolean isValid() {
+        if(name != null && description!=null && area !=null && difficulty!=null  && myLocations !=null) {
+            if (!name.isEmpty() && !description.isEmpty() && !area.isEmpty() && !difficulty.isEmpty()) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        return false;
+    }
 }
