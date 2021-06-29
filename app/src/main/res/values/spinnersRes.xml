@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="difficulty">
-        <item>Beginner</item>
-        <item>Advanced</item>
-        <item>Expert</item>
+        <item>@string/beginner</item>
+        <item>@string/advanced</item>
+        <item>@string/expert</item>
     </string-array>
 
     <string-array name="area">
-        <item>Northern District</item>
-        <item>Haifa District</item>
-        <item>Central District</item>
-        <item>Jerusalem District</item>
-        <item>Judea and Samaria Area</item>
-        <item>Southern District</item>
+        <item>@string/northern_district</item>
+        <item>@string/haifa_district</item>
+        <item>@string/central_district</item>
+        <item>@string/jerusalem_district</item>
+        <item>@string/judea_and_samaria_area</item>
+        <item>@string/southern_area</item>
     </string-array>
+
+    <string name="beginner">Beginner</string>
+    <string name="advanced">Advanced</string>
+    <string name="expert">Expert</string>
+    <string name="northern_district">Northern_district</string>
+    <string name="haifa_district">Haifa District</string>
+    <string name="central_district">Central District</string>
+    <string name="jerusalem_district">Jerusalem District</string>
+    <string name="judea_and_samaria_area">Judea and Samaria Area</string>
+    <string name="southern_area">Southern Area</string>
 </resources>

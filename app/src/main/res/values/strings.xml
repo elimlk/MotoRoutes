@@ -51,5 +51,14 @@
     <string name="backgruond_permssion_prompt">In order to record route on background please approve background location permission</string>
     <string name="got_it">Got it!</string>
     <string name="err_add_route">Erorr! fill all fields</string>
+    <string name="btn_record">Record</string>
+    <string name="btn_stop_recording">Stop Recording</string>
+    <string name="register_failed">"Registration Failed: "</string>
+    <string name="login_failed">"Login Failed: "</string>
+    <string name="permission_denied">Permission Denied!</string>
+    <string name="permission_granted">Permission Granted!</string>
+    <string name="error">"Error "</string>
+    <string name="recording_started">Recording Started!</string>
+    <string name="recording_stopped">Recording Stopped</string>
 
 </resources>

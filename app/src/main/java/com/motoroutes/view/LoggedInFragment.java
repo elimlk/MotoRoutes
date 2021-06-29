@@ -119,6 +119,7 @@ public class LoggedInFragment extends Fragment {
                 case R.id.item_addRoute:
                     if (cardView_add_route.getVisibility() != View.VISIBLE) {
                         cardView_add_route.setVisibility(View.VISIBLE);
+                        buttonRouteBrowse.setVisibility(View.VISIBLE);
                         cardView_add_route.startAnimation(fadeInCardAnimation);
                         emergency_card.setVisibility(View.GONE);
                         emergency_card.clearAnimation();
@@ -287,11 +288,11 @@ public class LoggedInFragment extends Fragment {
         //handle record button and fill parms in accordance to state
         btn_record_route = view.findViewById(R.id.btn_record_route);
         if(!LocationService.isServiceState()){
-            btn_record_route.setText("RECORD");
+            btn_record_route.setText(getResources().getText(R.string.btn_record));
             btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF")));
             btn_record_route.setIconResource(R.drawable.ic_icon_record);
         }else {
-            btn_record_route.setText("STOP RECORDING");
+            btn_record_route.setText(getResources().getText(R.string.btn_stop_recording));
             btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFE53935")));
             btn_record_route.setIconResource(R.drawable.ic_baseline_stop_24);
         }
@@ -447,7 +448,7 @@ public class LoggedInFragment extends Fragment {
                     }
                     else{
                         startLocationService();
-                        btn_record_route.setText("STOP RECORDING");
+                        btn_record_route.setText(getResources().getText(R.string.btn_stop_recording));
                         btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFE53935")));
                         btn_record_route.setIconResource(R.drawable.ic_baseline_stop_24);
                         LocationService.setServiceState(true);
@@ -455,7 +456,7 @@ public class LoggedInFragment extends Fragment {
                 }
                 else {
                     stopLocationService();
-                    btn_record_route.setText("RECORD");
+                    btn_record_route.setText(getResources().getText(R.string.btn_record));
                     btn_record_route.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF")));
                     btn_record_route.setIconResource(R.drawable.ic_icon_record);
                     cardView_add_route.setVisibility(View.VISIBLE);
@@ -534,12 +535,12 @@ public class LoggedInFragment extends Fragment {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 startLocationService();
             else
-                Toast.makeText(getContext(),"Permission Denied!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),getResources().getString(R.string.permission_granted), Toast.LENGTH_SHORT).show();
         }
 
         if (requestCode == FileUtils.REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION && grantResults.length > 0 ){
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED)
-                Toast.makeText(getContext(),"WTF DUDE", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),getResources().getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
         }
         switch (requestCode) {
             case MY_REQUEST_CODE_PERMISSION: {
@@ -550,14 +551,14 @@ public class LoggedInFragment extends Fragment {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     Log.i( LOG_TAG,"Permission granted!");
-                    Toast.makeText(this.getContext(), "Permission granted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this.getContext(), getResources().getString(R.string.permission_granted), Toast.LENGTH_SHORT).show();
 
                     this.doBrowseFile(resultCode_global);
                 }
                 // Cancelled or denied.
                 else {
                     Log.i(LOG_TAG,"Permission denied!");
-                    Toast.makeText(this.getContext(), "Permission denied!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this.getContext(), getResources().getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -590,7 +591,7 @@ public class LoggedInFragment extends Fragment {
                         try {
                             filePath = FileUtils.getPath(this.getContext(),fileUri);
                         } catch (Exception e) {
-                            Toast.makeText(this.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this.getContext(), getResources().getString(R.string.error) + e, Toast.LENGTH_SHORT).show();
                         }
                         imageUri = (fileUri);
                         buttonImageBrowse.setBackgroundColor(Color.parseColor("#FFFB8C00"));
@@ -651,7 +652,7 @@ public class LoggedInFragment extends Fragment {
             intent.setAction(FileUtils.ACTION_START_LOCATION_SERVICE);
             getContext().startService(intent);
             //getActivity().startService(intent);
-            Toast.makeText(getContext(),"Recording started!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),getResources().getString(R.string.recording_started), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -662,7 +663,7 @@ public class LoggedInFragment extends Fragment {
             intent.setAction(FileUtils.ACTION_STOP_LOCATION_SERVICE);
             getContext().startService(intent);
             //getActivity().startService(intent);
-            Toast.makeText(getContext(),"Recording stopped!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),getResources().getString(R.string.recording_stopped), Toast.LENGTH_SHORT).show();
         }
     }
 }

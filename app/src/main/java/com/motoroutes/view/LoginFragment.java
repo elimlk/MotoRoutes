@@ -169,7 +169,7 @@ public class LoginFragment extends Fragment {
 
         if (requestCode == FileUtils.REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0 ){
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED || grantResults[1] != PackageManager.PERMISSION_GRANTED)
-                Toast.makeText(getContext(),"Permission Denied!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),getResources().getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
         }
     }
 }

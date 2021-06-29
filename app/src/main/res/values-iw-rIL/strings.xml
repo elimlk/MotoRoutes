@@ -19,7 +19,7 @@
     <string name="btn_signUp">הירשם</string>
     <string name="guest_login">המשך כאורח</string>
     <string name="Registartion_success">רישום הצליח</string>
-    <string name="toolbar_logout">יצאיה</string>
+    <string name="toolbar_logout">יציאה</string>
     <string name="routeAdded">המסלול התווסף בהצלחה</string>
     <string name="title_add_route">הוסף מסלול</string>
     <string name="hint_add_route_name">שם המסלול</string>
@@ -31,7 +31,7 @@
     <string name="btn_show_route">הצג על המפה</string>
     <string name="hint_Record">הקלט מסלול</string>
     <string name="fill_all">אנא מלא את כל השדות</string>
-    <string name="emergency_title">מוקדי חירופ</string>
+    <string name="emergency_title">מוקדי חירום</string>
     <string name="my_location">המיקום שלי:</string>
     <string name="emergency_name1">ידידים</string>
     <string name="emergency_details1">הארגון מספק עזרה ראשונה לא רפואית ללא כל עלות,</string>
@@ -51,5 +51,14 @@
     <string name="backgruond_permssion_prompt">על מנת להקליט מסלול באופן מיטבי אנא אשר שימוש בנתוני מיקום ברקע</string>
     <string name="got_it">הבנתי!</string>
     <string name="err_add_route">שגיאה! אנא מלא את כל הפרטים</string>
+    <string name="btn_record">הקלט</string>
+    <string name="btn_stop_recording">הפסק הקלטה</string>
+    <string name="register_failed">"הרשמה נכשלה: "</string>
+    <string name="login_failed">"כניסה נכשלה: "</string>
+    <string name="permission_denied">הרשאת גישה נדחתה!</string>
+    <string name="permission_granted">הרשאת גישה התקבלה!</string>
+    <string name="error">"שגיאה "</string>
+    <string name="recording_started">הקלטה החלה!</string>
+    <string name="recording_stopped">הקלטה הופסקה</string>
 
 </resources>

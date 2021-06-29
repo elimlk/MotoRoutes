@@ -381,7 +381,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="25dp"
             android:layout_centerHorizontal="true"
-            android:text="Record"
+            android:text="@string/btn_record"
             app:iconPadding="0dp"
             app:icon="@drawable/ic_icon_record"
             app:backgroundTint="@color/white"/>

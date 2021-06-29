@@ -94,7 +94,7 @@ public class AppRepository {
                             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
                         }
                         else {
-                            Toast.makeText(application,"Registration Failed: " +task.getException()
+                            Toast.makeText(application,application.getString(R.string.register_failed) +task.getException()
                                             .getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -117,7 +117,7 @@ public class AppRepository {
                                 userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
                             }
                             else{
-                                Toast.makeText(application,"Login Failed: " +task.getException()
+                                Toast.makeText(application,application.getString(R.string.login_failed) +task.getException()
                                         .getMessage(), Toast.LENGTH_SHORT).show();
                                 userMutableLiveData.postValue(null);
                             }

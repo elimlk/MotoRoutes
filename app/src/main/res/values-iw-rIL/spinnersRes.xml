@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="beginner">מתחיל</string>
+    <string name="advanced">מתקדם</string>
+    <string name="expert">מומחה</string>
+    <string name="northern_district">מחוז צפון</string>
+    <string name="haifa_district">מחוז חיפה</string>
+    <string name="central_district">מחוז מרכז</string>
+    <string name="jerusalem_district">מחוז ירושלים</string>
+    <string name="judea_and_samaria_area">יהודה ושומרון</string>
+    <string name="southern_area">מחוז דרום</string>
+</resources>
