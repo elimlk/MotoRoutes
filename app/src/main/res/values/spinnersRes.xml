@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="difficulty">
+
+        <item>@string/beginner</item>
+        <item>@string/advanced</item>
+        <item>@string/expert</item>
+    </string-array>
+
+    <string-array name="difficulty_sort">
+        <item>@string/all</item>
         <item>@string/beginner</item>
         <item>@string/advanced</item>
         <item>@string/expert</item>
     </string-array>
 
     <string-array name="area">
+        <item>@string/northern_district</item>
+        <item>@string/haifa_district</item>
+        <item>@string/central_district</item>
+        <item>@string/jerusalem_district</item>
+        <item>@string/judea_and_samaria_area</item>
+        <item>@string/southern_area</item>
+    </string-array>
+
+    <string-array name="area_sort">
+        <item>@string/all</item>
         <item>@string/northern_district</item>
         <item>@string/haifa_district</item>
         <item>@string/central_district</item>
@@ -24,4 +42,5 @@
     <string name="jerusalem_district">Jerusalem District</string>
     <string name="judea_and_samaria_area">Judea and Samaria Area</string>
     <string name="southern_area">Southern Area</string>
+    <string name="all">All</string>
 </resources>

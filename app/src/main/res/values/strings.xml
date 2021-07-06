@@ -60,5 +60,7 @@
     <string name="error">"Error "</string>
     <string name="recording_started">Recording Started!</string>
     <string name="recording_stopped">Recording Stopped</string>
+    <string name="btn_sort">Filter</string>
+    <string name="btn_waze_route">Navigate</string>
 
 </resources>

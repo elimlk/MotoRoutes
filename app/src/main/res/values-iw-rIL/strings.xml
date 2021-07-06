@@ -60,5 +60,8 @@
     <string name="error">"שגיאה "</string>
     <string name="recording_started">הקלטה החלה!</string>
     <string name="recording_stopped">הקלטה הופסקה</string>
+    <string name="btn_sort">מיין</string>
+    <string name="btn_waze_route">נווט</string>
+
 
 </resources>

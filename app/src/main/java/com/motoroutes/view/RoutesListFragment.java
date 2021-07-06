@@ -2,6 +2,7 @@ package com.motoroutes.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.motoroutes.R;
+import com.motoroutes.model.MyLocation;
 import com.motoroutes.model.Route;
 import com.motoroutes.model.RoutesAdapter;
 import com.motoroutes.viewmodel.RoutesListViewModel;
@@ -52,8 +56,11 @@ public class RoutesListFragment extends Fragment {
     private TextView tv_pop_desc;
     private ImageView imv_pop_image;
     private Button btn_pop_show;
+    private Button btn_pop_waze;
+    private Button btn_recycler_sort;
     private Route routeClicked;
-
+    private AutoCompleteTextView autoCompleteTextViewArea;
+    private AutoCompleteTextView autoCompleteTextViewDifficulty;
     private ProgressBar progressBar;
     private LinearLayout linearLayout;
 
@@ -137,6 +144,8 @@ public class RoutesListFragment extends Fragment {
         tv_pop_desc = view.findViewById(R.id.route_popup_description);
         imv_pop_image = view.findViewById(R.id.route_popup_image);
         btn_pop_show = view.findViewById(R.id.route_popup_show_btn);
+        btn_pop_waze = view.findViewById(R.id.route_popup_waze_btn);
+        btn_recycler_sort = view.findViewById(R.id.btn_recycler_sort);
         recyclerView = view.findViewById(R.id.recycler_view_routes_list);
         progressBar = view.findViewById(R.id.route_popup_progressbar);
         linearLayout = view.findViewById(R.id.recycler_view_routes_list_layout);
@@ -147,35 +156,8 @@ public class RoutesListFragment extends Fragment {
         linearLayout.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         routesList = routesListViewModel.getRoutes();
-
-        /*new AsyncTask<Object, Void, Void>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                routesList = routesListViewModel.getRoutes();
-            }
-
-            @Override
-            protected void onPostExecute(Void unused) {
-                progressBar.setVisibility(View.GONE);
-                linearLayout.setVisibility(View.VISIBLE);
-                super.onPostExecute(unused);
-            }
-
-            @Override
-            protected Void doInBackground(Object... objects) {
-*//*
-                if (routesList == null)  {
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-*//*
-                return null;
-            }
-        }.execute();*/
+        autoCompleteTextViewArea = view.findViewById(R.id.autoComplete_area_sort);
+        autoCompleteTextViewDifficulty = view.findViewById(R.id.autoComplete_difficulty_sort);
 
         routesAdapter = new RoutesAdapter(this.getContext(), routesList);
         routesAdapter.setListener(new RoutesAdapter.MyRouteListener() {
@@ -241,6 +223,57 @@ public class RoutesListFragment extends Fragment {
             }
         });
 
+        btn_pop_waze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyLocation startLocation = routeClicked.getMyLocations().get(0);
+                String uri = "waze://?ll="+startLocation.getLatitude()+", "+startLocation.getLongitude()+"&navigate=yes";
+                startActivity(new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(uri)));
+            }
+        });
+        btn_recycler_sort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Route> sorted_list = new ArrayList<>();
+                String route_area = autoCompleteTextViewArea.getText().toString();
+                String route_difficulty = autoCompleteTextViewDifficulty.getText().toString();
+                for (Route route : routesList) {
+                    String area = route.getArea();
+                    String diff = route.getDifficulty();
+                    if (!route_area.equals(getString(R.string.all)) && !route_difficulty.equals(getString(R.string.all))) {
+                        if (area.equals(route_area) && diff.equals(route_difficulty))
+                            sorted_list.add(route);
+                    } else {
+                        if (!route_difficulty.equals(getString(R.string.all)) && route_area.equals(getString(R.string.all))) {
+                            if (diff.equals(route_difficulty))
+                                sorted_list.add(route);
+                        }
+                        if (route_difficulty.equals(getString(R.string.all)) && !route_area.equals(getString(R.string.all))) {
+                            if (area.equals(route_area))
+                                sorted_list.add(route);
+                        }
+                        if (route_difficulty.equals(getString(R.string.all)) && route_area.equals(getString(R.string.all))) {
+                            sorted_list.add(route);
+                        }
+                    }
+                }
+                routesAdapter = new RoutesAdapter(getContext(), sorted_list);
+                recyclerView.setAdapter(routesAdapter);
+                routesAdapter.notifyDataSetChanged();
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ArrayAdapter areaArrayAdapter =new ArrayAdapter(getContext(),R.layout.drop_down_area,getResources().getStringArray(R.array.area_sort));
+        autoCompleteTextViewArea.setAdapter(areaArrayAdapter);
+        ArrayAdapter difficultyArrayAdapter =new ArrayAdapter(getContext(),R.layout.drop_down_area,getResources().getStringArray(R.array.difficulty_sort));
+        autoCompleteTextViewDifficulty.setAdapter(difficultyArrayAdapter);
     }
 
     public String getURLForResource (int resourceId) {

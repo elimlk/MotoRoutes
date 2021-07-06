@@ -10,7 +10,7 @@
    <com.google.android.material.imageview.ShapeableImageView
        android:layout_width="match_parent"
        android:layout_height="210dp"
-       android:layout_margin="10dp"
+       android:layout_marginHorizontal="10dp"
        android:id="@+id/iv_routes_lists_header"
        android:src="@drawable/routes_header"
        android:scaleType="centerCrop"
@@ -19,8 +19,67 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
+        android:orientation="vertical"
         android:id="@+id/recycler_view_routes_list_layout"
         android:layout_below="@id/iv_routes_lists_header">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:ems="7"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:hint="@string/hint_choose_difficulty"
+                app:startIconDrawable="@drawable/ic_baseline_electric_bike_24"
+                android:id="@+id/autoComplete_difficulty_layout_sort"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                >
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:id="@+id/autoComplete_difficulty_sort"
+                    android:padding="5dp"
+                    android:inputType="none"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                app:startIconDrawable="@drawable/ic_baseline_edit_location_alt_24"
+                android:hint="@string/hint_choose_area"
+                android:id="@+id/sp_area_layout_sort"
+                android:ems="7"
+                android:layout_toEndOf="@+id/autoComplete_difficulty_layout_sort"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                >
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="7"
+                    android:id="@+id/autoComplete_area_sort"
+                    android:padding="5dp"
+                    android:inputType="none"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_recycler_sort"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@color/Light_Green_700"
+                app:icon="@drawable/ic_baseline_sort_24" />
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_routes_list"
             android:layout_width="match_parent"
@@ -31,7 +90,7 @@
         android:layout_height="100dp"
         android:layout_below="@id/iv_routes_lists_header"
         android:layout_centerInParent="true"
-        android:layout_marginVertical="30dp"
+        android:layout_marginVertical="40dp"
         android:visibility="gone"
         android:id="@+id/route_popup_progressbar"
         />
@@ -97,8 +156,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_show_route"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/route_popup_description"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/route_popup_waze_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_waze_route"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:layout_below="@id/route_popup_description"/>
         </RelativeLayout>
 
