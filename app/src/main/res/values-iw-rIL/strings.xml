@@ -62,6 +62,8 @@
     <string name="recording_stopped">הקלטה הופסקה</string>
     <string name="btn_sort">מיין</string>
     <string name="btn_waze_route">נווט</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 
 
 </resources>

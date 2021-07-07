@@ -69,6 +69,7 @@ public class RoutesListFragment extends Fragment {
 
     RecyclerView recyclerView;
     ArrayList<Route> routesList;
+    ArrayList<Route> routesListdb;
     RoutesAdapter routesAdapter;
 
     Observer<Boolean> routesUpdatedObserver = new Observer<Boolean>() {
@@ -156,6 +157,7 @@ public class RoutesListFragment extends Fragment {
         linearLayout.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         routesList = routesListViewModel.getRoutes();
+        routesListdb = (ArrayList<Route>) routesList.clone();
         autoCompleteTextViewArea = view.findViewById(R.id.autoComplete_area_sort);
         autoCompleteTextViewDifficulty = view.findViewById(R.id.autoComplete_difficulty_sort);
 
@@ -236,30 +238,32 @@ public class RoutesListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ArrayList<Route> sorted_list = new ArrayList<>();
+                routesList.clear();
                 String route_area = autoCompleteTextViewArea.getText().toString();
                 String route_difficulty = autoCompleteTextViewDifficulty.getText().toString();
-                for (Route route : routesList) {
+                for (Route route : routesListdb ) {
                     String area = route.getArea();
                     String diff = route.getDifficulty();
                     if (!route_area.equals(getString(R.string.all)) && !route_difficulty.equals(getString(R.string.all))) {
                         if (area.equals(route_area) && diff.equals(route_difficulty))
-                            sorted_list.add(route);
+                            routesList.add(route);
                     } else {
                         if (!route_difficulty.equals(getString(R.string.all)) && route_area.equals(getString(R.string.all))) {
                             if (diff.equals(route_difficulty))
-                                sorted_list.add(route);
+                                routesList.add(route);
                         }
                         if (route_difficulty.equals(getString(R.string.all)) && !route_area.equals(getString(R.string.all))) {
                             if (area.equals(route_area))
-                                sorted_list.add(route);
+                                routesList.add(route);
                         }
                         if (route_difficulty.equals(getString(R.string.all)) && route_area.equals(getString(R.string.all))) {
-                            sorted_list.add(route);
+                            routesList.add(route);
                         }
                     }
                 }
-                routesAdapter = new RoutesAdapter(getContext(), sorted_list);
-                recyclerView.setAdapter(routesAdapter);
+                //routesList = sorted_list;
+                //routesAdapter = new RoutesAdapter(getContext(), sorted_list);
+                //recyclerView.setAdapter(routesAdapter);
                 routesAdapter.notifyDataSetChanged();
             }
         });

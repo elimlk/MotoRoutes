@@ -62,5 +62,7 @@
     <string name="recording_stopped">Recording Stopped</string>
     <string name="btn_sort">Filter</string>
     <string name="btn_waze_route">Navigate</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 
 </resources>

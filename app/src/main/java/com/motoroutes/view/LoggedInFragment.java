@@ -49,8 +49,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -219,6 +221,20 @@ public class LoggedInFragment extends Fragment {
             }
             if (polyline != null) {
                 googleMap.addPolyline(polyline);
+                MarkerOptions markerStartOptions = new MarkerOptions();
+                markerStartOptions.position(new LatLng(tmpRoute.getMyLocations().get(0).getLatitude(),
+                        tmpRoute.getMyLocations().get(0).getLongitude()));
+                markerStartOptions.title(getString(R.string.start));
+                markerStartOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                googleMap.addMarker(markerStartOptions);
+
+                MarkerOptions markerEndOptions = new MarkerOptions();
+                int lastIndex = tmpRoute.getMyLocations().size()-1;
+                markerEndOptions.position(new LatLng(tmpRoute.getMyLocations().get(lastIndex).getLatitude(),
+                        tmpRoute.getMyLocations().get(lastIndex).getLongitude()));
+                markerEndOptions.title(getString(R.string.end));
+                markerEndOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                googleMap.addMarker(markerEndOptions);
             }
 /*            LatLng hit_collage = new LatLng(32.015596, 34.77325);
             googleMap.addMarker(new MarkerOptions().position(hit_collage).title("Marker in Sydney"));
