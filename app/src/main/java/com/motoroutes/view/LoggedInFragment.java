@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
@@ -225,7 +227,7 @@ public class LoggedInFragment extends Fragment {
                 markerStartOptions.position(new LatLng(tmpRoute.getMyLocations().get(0).getLatitude(),
                         tmpRoute.getMyLocations().get(0).getLongitude()));
                 markerStartOptions.title(getString(R.string.start));
-                markerStartOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                markerStartOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.bmp_start));
                 googleMap.addMarker(markerStartOptions);
 
                 MarkerOptions markerEndOptions = new MarkerOptions();
@@ -233,7 +235,7 @@ public class LoggedInFragment extends Fragment {
                 markerEndOptions.position(new LatLng(tmpRoute.getMyLocations().get(lastIndex).getLatitude(),
                         tmpRoute.getMyLocations().get(lastIndex).getLongitude()));
                 markerEndOptions.title(getString(R.string.end));
-                markerEndOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                markerEndOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.bmp_end));
                 googleMap.addMarker(markerEndOptions);
             }
 /*            LatLng hit_collage = new LatLng(32.015596, 34.77325);
